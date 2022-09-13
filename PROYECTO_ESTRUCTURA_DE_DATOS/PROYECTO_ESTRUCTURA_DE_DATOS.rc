@@ -1,0 +1,156 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Español (México) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESM)
+LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_MEXICAN
+#pragma code_page(1252)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+DLG_MENUPRINCIPAL DIALOGEX 0, 0, 390, 237
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Bienvendio al Menu Principal!!"
+FONT 9, "Comic Sans MS", 400, 0, 0x0
+BEGIN
+END
+
+DLG_INICIOSESION DIALOGEX 0, 0, 211, 140
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Validacion de Credenciales"
+FONT 9, "Comic Sans MS", 400, 0, 0x0
+BEGIN
+    LTEXT           "Bienvenido al Sistema de Control de Vacunacion FCFM!",IDC_STATIC,19,7,172,8
+    LTEXT           "Por favor, Inserte sus credenciales:",IDC_STATIC,48,19,115,8
+    LTEXT           "Usuario:",IDC_STATIC,19,44,28,8
+    LTEXT           "Contraseña:",IDC_STATIC,19,66,38,8
+    EDITTEXT        TXTB_USUARIO,70,41,122,14,ES_UPPERCASE | ES_AUTOHSCROLL
+    EDITTEXT        TXTB_CONTRASENA,70,63,122,14,ES_PASSWORD | ES_AUTOHSCROLL
+    PUSHBUTTON      "Ingresar",BTN_INGRESAR,19,86,173,23
+    PUSHBUTTON      "Cancelar / Salir",BTN_SALIR,105,109,87,24
+    PUSHBUTTON      "Registrarse",BTN_REGISTRARSE,19,109,86,24
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    DLG_MENUPRINCIPAL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 383
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 230
+    END
+
+    DLG_INICIOSESION, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 204
+        VERTGUIDE, 19
+        VERTGUIDE, 105
+        VERTGUIDE, 192
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 133
+        HORZGUIDE, 48
+        HORZGUIDE, 70
+        HORZGUIDE, 93
+        HORZGUIDE, 109
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+DLG_MENUPRINCIPAL AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+DLG_INICIOSESION AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU1 MENU
+BEGIN
+    POPUP "PAGINA 1"
+    BEGIN
+        MENUITEM "ELEMENTO 1",                  MENU_PAGINA1_ELEMENTO1
+        MENUITEM "ELEMENTO 2",                  ID_PAGINA1_ELEMENTO2
+    END
+    MENUITEM "PAGINA 2",                    0
+END
+
+#endif    // Español (México) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
