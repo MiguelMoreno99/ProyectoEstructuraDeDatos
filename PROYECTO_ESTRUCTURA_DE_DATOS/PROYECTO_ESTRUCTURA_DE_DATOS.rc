@@ -51,14 +51,14 @@ END
 //
 
 DLG_MENUPRINCIPAL DIALOGEX 0, 0, 390, 237
-STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SYSMODAL | DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "Bienvendio al Menu Principal!!"
 FONT 9, "Comic Sans MS", 400, 0, 0x0
 BEGIN
 END
 
 DLG_INICIOSESION DIALOGEX 0, 0, 211, 140
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SYSMODAL | DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Validacion de Credenciales"
 FONT 9, "Comic Sans MS", 400, 0, 0x0
 BEGIN
@@ -131,12 +131,28 @@ END
 
 IDR_MENU1 MENU
 BEGIN
-    POPUP "PAGINA 1"
+    POPUP "REGISTRO"
     BEGIN
-        MENUITEM "ELEMENTO 1",                  MENU_PAGINA1_ELEMENTO1
-        MENUITEM "ELEMENTO 2",                  ID_PAGINA1_ELEMENTO2
+        MENUITEM "Registro de Vacunas",         MENU_REGISTRO_VACUNAS
+        MENUITEM "Registro de Personas",        MENU_REGISTRO_PERSONAS
+        MENUITEM "Registro de Carnets",         MENU_REGISTRO_CARNETS
     END
-    MENUITEM "PAGINA 2",                    0
+    POPUP "REPORTE"
+    BEGIN
+        MENUITEM "Reporte de Vacunas",          MENU_REPORTE_VACUNAS
+        MENUITEM "Reporte de Personas",         MENU_REPORTE_PERSONAS
+        MENUITEM "Reporte de Carnets",          MENU_REPORTE_CARNETS
+    END
+    POPUP "AYUDA"
+    BEGIN
+        MENUITEM "Manual de Usuario",           MENU_AYUDA_MANUAL
+    END
+    POPUP "SISTEMA"
+    BEGIN
+        MENUITEM "Usuarios",                    MENU_SISTEMA_USUARIOS
+        MENUITEM "Cerrar Sesion",               MENU_SISTEMA_CERRARSESION
+        MENUITEM "Salir",                       MENU_SISTEMA_SALIR
+    END
 END
 
 #endif    // Español (México) resources
