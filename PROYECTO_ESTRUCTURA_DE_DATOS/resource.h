@@ -2,7 +2,7 @@
 // Archivo de inclusión generado de Microsoft Visual C++.
 // Usado por PROYECTO_ESTRUCTURA_DE_DATOS.rc
 //
-#define DLG_MENUPRINCIPAL               101
+#define DLG_VENTANAPRINCIPAL            101
 #define DLG_INICIOSESION                102
 #define IDR_MENU1                       103
 #define TXTB_USUARIO                    1001

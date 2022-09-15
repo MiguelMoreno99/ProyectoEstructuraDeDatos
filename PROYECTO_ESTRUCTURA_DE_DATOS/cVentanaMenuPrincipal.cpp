@@ -1,97 +1,78 @@
 #include <Windows.h>
 #include "resource.h"
 
-BOOL CALLBACK cMenuPrincipal(HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK cVentanaPrincipal(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK cInicioSesion(HWND, UINT, WPARAM, LPARAM);
-HWND hMenuPrincial;
+HWND hVentanaPrincial;
+HWND hInicioSesion;
 HMENU hMenuOpciones;
 
 int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdLine, int cShow) {
-
-	hMenuPrincial = CreateDialog(hInst, MAKEINTRESOURCE(DLG_MENUPRINCIPAL), NULL, cMenuPrincipal);
+	hVentanaPrincial = CreateDialog(hInst, MAKEINTRESOURCE(DLG_VENTANAPRINCIPAL), NULL, cVentanaPrincipal);
 	hMenuOpciones = LoadMenu(hInst, MAKEINTRESOURCE(IDR_MENU1));
-	SetMenu(hMenuPrincial, hMenuOpciones);
+	SetMenu(hVentanaPrincial, hMenuOpciones);
+	ShowWindow(hVentanaPrincial, SW_HIDE);
 
 	MSG msg;
 	ZeroMemory(&msg, sizeof(MSG));
-
-	ShowWindow(hMenuPrincial, cShow);
-
 	while (GetMessage(&msg, NULL, NULL, NULL)) {
-
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
 	return 0;
 }
 
-	BOOL CALLBACK cMenuPrincipal(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-
+	BOOL CALLBACK cVentanaPrincipal(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		switch (msg) {
-
 			case WM_INITDIALOG: {
-				//DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(DLG_INICIOSESION), hwnd, cInicioSesion);
-				break;
-			}
-
+				hInicioSesion = CreateDialog(GetModuleHandle(NULL), MAKEINTRESOURCE(DLG_INICIOSESION), hVentanaPrincial, cInicioSesion);
+				ShowWindow(hInicioSesion, SW_SHOW);
+			}break;
 			case WM_COMMAND: {
-
 				switch (LOWORD(wParam)) {
 					case MENU_REGISTRO_PERSONAS: {
-						MessageBox(hwnd, L"Comando: Prueba", L"Mensaje de menú", MB_OK);
-						break;
-					}
+					}break;
 					case MENU_SISTEMA_SALIR: {
 						PostQuitMessage(0);
-						break;
-					}
+					}break;
+					case MENU_SISTEMA_CERRARSESION: {
+						ShowWindow(hwnd, SW_HIDE);
+						ShowWindow(hInicioSesion, SW_SHOW);
+					}break;
 				}
-				break;
-			}
+			}break;
 			case	WM_CLOSE: {
 				DestroyWindow(hwnd);
-				break;
-			}
+			}break;
 			case WM_DESTROY: {
 				PostQuitMessage(1);
-				break;
-			}
-
+			}break;
 		}
 		return FALSE;
 	}
 
 	BOOL CALLBACK cInicioSesion(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-
 		switch (msg) {
 			case WM_INITDIALOG: {
 				SetFocus(GetDlgItem(hwnd, BTN_INGRESAR));
-				break;
-			}
-
+			}break;
 			case WM_COMMAND: {
 				switch (LOWORD(wParam)) {
 					case BTN_INGRESAR: {
-						EnableWindow(hMenuPrincial, 1);
-						EndDialog(hwnd, BTN_INGRESAR);
-						break;
-					}
+						ShowWindow(hInicioSesion, SW_HIDE);
+						ShowWindow(hVentanaPrincial, SW_SHOW);
+					}break;
 					case BTN_SALIR: {
-						PostQuitMessage(0);
-						break;
-					}
+						DestroyWindow(hwnd);
+					}break;
 				}
-				break;
-			}
-			case	WM_CLOSE: {
+			}break;
+			case WM_CLOSE: {
 				DestroyWindow(hwnd);
-				break;
-			}
+			}break;
 			case WM_DESTROY: {
-				PostQuitMessage(1);
-				break;
-			}
-
+				PostQuitMessage(0);
+			}break;
 		}
 		return FALSE;
 	}
