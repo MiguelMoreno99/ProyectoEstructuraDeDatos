@@ -8,6 +8,7 @@ HWND hInicioSesion;
 HMENU hMenuOpciones;
 
 int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdLine, int cShow) {
+
 	hVentanaPrincial = CreateDialog(hInst, MAKEINTRESOURCE(DLG_VENTANAPRINCIPAL), NULL, cVentanaPrincipal);
 	hMenuOpciones = LoadMenu(hInst, MAKEINTRESOURCE(IDR_MENU1));
 	SetMenu(hVentanaPrincial, hMenuOpciones);
