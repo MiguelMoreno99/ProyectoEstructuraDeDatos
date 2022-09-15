@@ -1,5 +1,6 @@
 #include <Windows.h>
 #include "resource.h"
+#include "cCapturaPersona.h"
 
 BOOL CALLBACK cVentanaPrincipal(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK cInicioSesion(HWND, UINT, WPARAM, LPARAM);
@@ -71,6 +72,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 					case BTN_INICIOSESION_SALIR: {
 						DestroyWindow(hwnd);
 					}break;
+					case BTN_INICIOSESION_REGISTRARSE: {
+						Persona* Ptr_Persona_Nueva = new Persona;
+						Ptr_Persona_Nueva->GuardarPersona();
+					}break;
 				}
 			}break;
 			case WM_CLOSE: {
@@ -95,7 +100,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 				ShowWindow(hVentanaPrincial, SW_SHOW);
 			}break;
 			case BTN_PERSONA_CAPTURAR: {
-
 			}break;
 			}
 		}break;
