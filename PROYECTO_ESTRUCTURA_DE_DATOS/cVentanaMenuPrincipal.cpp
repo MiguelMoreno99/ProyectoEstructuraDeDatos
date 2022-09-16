@@ -9,9 +9,12 @@ HWND hVentanaPrincial;
 HWND hInicioSesion;
 HWND hRegistroPersonas;
 HMENU hMenuOpciones;
+Persona Persona1;
 
 int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdLine, int cShow) {
 
+	PtrOrigen = NULL;
+	PtrAuxiliar = NULL;
 	hVentanaPrincial = CreateDialog(hInst, MAKEINTRESOURCE(DLG_VENTANAPRINCIPAL), NULL, cVentanaPrincipal);
 	hMenuOpciones = LoadMenu(hInst, MAKEINTRESOURCE(IDR_MENU1));
 	SetMenu(hVentanaPrincial, hMenuOpciones);
@@ -73,8 +76,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 						DestroyWindow(hwnd);
 					}break;
 					case BTN_INICIOSESION_REGISTRARSE: {
-						Persona* Ptr_Persona_Nueva = new Persona;
-						Ptr_Persona_Nueva->GuardarPersona();
+						Persona1.GuardarPersona("Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola");
+						Persona1.GuardarPersona("Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1");
 					}break;
 				}
 			}break;

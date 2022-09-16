@@ -43,7 +43,6 @@ public:
 		string _String_Persona_PerfilRiesgo,
 		string _String_Persona_PathDocumentoIdentidad);
 
-		void GuardarPersona() {}
 
 private:
 	int id = 1;
