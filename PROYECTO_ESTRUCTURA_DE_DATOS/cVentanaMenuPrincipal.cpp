@@ -7,15 +7,22 @@
 //Variables Globales
 BOOL CALLBACK cVentanaPrincipal(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK cInicioSesion(HWND, UINT, WPARAM, LPARAM);
-BOOL CALLBACK cRegistroPersonas(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK cInicioSesionRegistro(HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK cRegistroPersonas(HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK cRegistroCarnets(HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK cRegistroVacunas(HWND, UINT, WPARAM, LPARAM);
 HWND hVentanaPrincial;
 HWND hInicioSesion;
-HWND hRegistroPersonas;
 HWND hInicioSesionRegistro;
+HWND hRegistroPersonas;
+HWND hRegistroCarnets;
+HWND hRegistroVacunas;
 HMENU hMenuOpciones;
-Persona Persona1;
 Usuario Usuario1;
+Persona Persona1;
+//Carnet Carnet1;
+//Vacuna Vacuna1:
+
 
 int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdLine, int cShow) {
 
@@ -37,8 +44,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 		switch (msg) {
 			case WM_INITDIALOG: {
 				hInicioSesion = CreateDialog(GetModuleHandle(NULL), MAKEINTRESOURCE(DLG_INICIOSESION), hVentanaPrincial, cInicioSesion);
-				hRegistroPersonas = CreateDialog(GetModuleHandle(NULL), MAKEINTRESOURCE(DLG_REGISTROPERSONAS), hVentanaPrincial, cRegistroPersonas);
 				hInicioSesionRegistro = CreateDialog(GetModuleHandle(NULL), MAKEINTRESOURCE(DLG_INICIOSESION_REGISTRO), hInicioSesionRegistro, cInicioSesionRegistro);
+				hRegistroPersonas = CreateDialog(GetModuleHandle(NULL), MAKEINTRESOURCE(DLG_REGISTROPERSONAS), hVentanaPrincial, cRegistroPersonas);
+				hRegistroCarnets = CreateDialog(GetModuleHandle(NULL), MAKEINTRESOURCE(DLG_REGISTROCARNET), hVentanaPrincial, cRegistroCarnets);
+				hRegistroVacunas = CreateDialog(GetModuleHandle(NULL), MAKEINTRESOURCE(DLG_REGISTROVACUNAS), hVentanaPrincial, cRegistroVacunas);
 				ShowWindow(hInicioSesion, SW_SHOW);
 			}break;
 			case WM_COMMAND: {
@@ -46,6 +55,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 					case MENU_REGISTRO_PERSONAS: {
 						ShowWindow(hwnd, SW_HIDE);
 						ShowWindow(hRegistroPersonas, SW_SHOW);
+					}break;
+					case MENU_REGISTRO_CARNETS: {
+						ShowWindow(hwnd, SW_HIDE);
+						ShowWindow(hRegistroCarnets, SW_SHOW);
+					}break;
+					case MENU_REGISTRO_VACUNAS: {
+						ShowWindow(hwnd, SW_HIDE);
+						ShowWindow(hRegistroVacunas, SW_SHOW);
 					}break;
 					case MENU_SISTEMA_SALIR: {
 						PostQuitMessage(0);
@@ -105,8 +122,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 			switch (LOWORD(wParam)) {
 				case BTN_INICIOSESION_REGISTRO_REGISTRARSE: {
 					Usuario1.PasarInformacionUsuario(hwnd, TXTB_INICIOSESION_REGISTRO_USUARIO, TXTB_INICIOSESION_REGISTRO_CONTRASENA, TXTB_INICIOSESION_REGISTRO_NOMBRE, TXTB_INICIOSESION_REGISTRO_APELLIDOPATERNO, TXTB_INICIOSESION_REGISTRO_APELLIDOMATERNO);
-					ShowWindow(hInicioSesion, SW_SHOW);
-					ShowWindow(hInicioSesionRegistro, SW_HIDE);
+					MessageBox(hwnd, "Se ha registrado el Usuario Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
 				}break;
 				case BTN_INICIOSESION_REGISTRO_SALIR: {
 					ShowWindow(hInicioSesion, SW_SHOW);
@@ -162,6 +178,115 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 				TXTB_PERSONA_CURP,TXTB_PERSONA_RFC,DTP_PERSONA_FECHANACIMIENTO,TXTB_PERSONA_CALLE,TXTB_PERSONA_COLONIA,
 				TXTB_PERSONA_MUNICIPIO,TXTB_PERSONA_ESTADO,CB_PERSONA_ESTADOCIVIL,TXTB_PERSONA_TELEFONO,CB_PERSONA_SEXO,
 				CB_PERSONA_GRUPOOCUPACIONAL,CB_PERSONA_PERFILRIESGO,BTN_PERSONA_CARGARDOCUMENTO);
+				MessageBox(hwnd, "Se ha capturado la Persona Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
+
+
+			}break;
+			}
+		}break;
+		case WM_CLOSE: {
+			ShowWindow(hwnd, SW_HIDE);
+			ShowWindow(hVentanaPrincial, SW_SHOW);
+		}break;
+		}
+		return FALSE;
+	}
+
+	BOOL CALLBACK cRegistroCarnets(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+		switch (msg) {
+		case WM_INITDIALOG: {
+			SetFocus(GetDlgItem(hwnd, BTN_CARNET_CAPTURAR));
+			HWND hComboBox;
+
+			hComboBox = GetDlgItem(hwnd, CB_CARNET_IDVACUNA);
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"1");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"2");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"3");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"4");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"...");
+			hComboBox = GetDlgItem(hwnd, CB_CARNET_DOSIS);
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"1 RA");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"2 DA");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"3 RA");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"4 TA");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"5 TA");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"6 TA");
+			hComboBox = GetDlgItem(hwnd, CB_CARNET_CENTROVACUNACION);
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"NORTE");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"CENTRO");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"SUR");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"ESTE");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"OESTE");
+
+		}break;
+		case WM_COMMAND: {
+			switch (LOWORD(wParam)) {
+			case BTN_CARNET_REGRESAR: {
+				ShowWindow(hwnd, SW_HIDE);
+				ShowWindow(hVentanaPrincial, SW_SHOW);
+			}break;
+			case BTN_CARNET_CAPTURAR: {
+
+				//Carnet1.PasarInformacionCarnet(hwnd, TXTB_PERSONA_APELLIDOPATERNO, TXTB_PERSONA_APELLIDOMATERNO, TXTB_PERSONA_NOMBRE,
+				//	TXTB_PERSONA_CURP, TXTB_PERSONA_RFC, DTP_PERSONA_FECHANACIMIENTO, TXTB_PERSONA_CALLE, TXTB_PERSONA_COLONIA,
+				//	TXTB_PERSONA_MUNICIPIO, TXTB_PERSONA_ESTADO, CB_PERSONA_ESTADOCIVIL, TXTB_PERSONA_TELEFONO, CB_PERSONA_SEXO,
+				//	CB_PERSONA_GRUPOOCUPACIONAL, CB_PERSONA_PERFILRIESGO, BTN_PERSONA_CARGARDOCUMENTO);
+				MessageBox(hwnd, "Se ha registrado el Carnet Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
+
+			}break;
+			}
+		}break;
+		case WM_CLOSE: {
+			ShowWindow(hwnd, SW_HIDE);
+			ShowWindow(hVentanaPrincial, SW_SHOW);
+		}break;
+		}
+		return FALSE;
+	}
+
+	BOOL CALLBACK cRegistroVacunas(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+		switch (msg) {
+		case WM_INITDIALOG: {
+			SetFocus(GetDlgItem(hwnd, BTN_VACUNA_CAPTURAR));
+			HWND hComboBox;
+
+			hComboBox = GetDlgItem(hwnd, CB_VACUNA_MARCA);
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"PFIZER-BIONTECH");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"MODERNA");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"NOVAVAX");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"JANSSEN DE JOHNSON");
+			hComboBox = GetDlgItem(hwnd, CB_VACUNA_DOSIS);
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"1");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"2");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"3");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"4");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"5");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"6");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"7");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"8");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"9");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"10");
+			hComboBox = GetDlgItem(hwnd, CB_VACUNA_TIPO);
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"ARN MENSAJERO");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"SUB-UNIDADES PROTEICAS");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"VECTOR VIRAL");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"OTRO");
+
+		}break;
+		case WM_COMMAND: {
+			switch (LOWORD(wParam)) {
+			case BTN_VACUNA_REGRESAR: {
+				ShowWindow(hwnd, SW_HIDE);
+				ShowWindow(hVentanaPrincial, SW_SHOW);
+			}break;
+			case BTN_VACUNA_CAPTURAR: {
+
+				//Vacuna1.PasarInformacionVacuna(hwnd, TXTB_PERSONA_APELLIDOPATERNO, TXTB_PERSONA_APELLIDOMATERNO, TXTB_PERSONA_NOMBRE,
+				//	TXTB_PERSONA_CURP, TXTB_PERSONA_RFC, DTP_PERSONA_FECHANACIMIENTO, TXTB_PERSONA_CALLE, TXTB_PERSONA_COLONIA,
+				//	TXTB_PERSONA_MUNICIPIO, TXTB_PERSONA_ESTADO, CB_PERSONA_ESTADOCIVIL, TXTB_PERSONA_TELEFONO, CB_PERSONA_SEXO,
+				//	CB_PERSONA_GRUPOOCUPACIONAL, CB_PERSONA_PERFILRIESGO, BTN_PERSONA_CARGARDOCUMENTO);
+				MessageBox(hwnd, "Se ha registrado la Vacuna Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
+
 
 			}break;
 			}
