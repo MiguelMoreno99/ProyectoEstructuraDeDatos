@@ -2,6 +2,8 @@
 #include "resource.h"
 #include "cCapturaPersona.h"
 
+
+//Variables Globales
 BOOL CALLBACK cVentanaPrincipal(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK cInicioSesion(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK cRegistroPersonas(HWND, UINT, WPARAM, LPARAM);
@@ -13,8 +15,6 @@ Persona Persona1;
 
 int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdLine, int cShow) {
 
-	PtrOrigen = NULL;
-	PtrAuxiliar = NULL;
 	hVentanaPrincial = CreateDialog(hInst, MAKEINTRESOURCE(DLG_VENTANAPRINCIPAL), NULL, cVentanaPrincipal);
 	hMenuOpciones = LoadMenu(hInst, MAKEINTRESOURCE(IDR_MENU1));
 	SetMenu(hVentanaPrincial, hMenuOpciones);
@@ -76,8 +76,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 						DestroyWindow(hwnd);
 					}break;
 					case BTN_INICIOSESION_REGISTRARSE: {
-						Persona1.GuardarPersona("Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola", "Hola");
-						Persona1.GuardarPersona("Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1", "Hola1");
+
 					}break;
 				}
 			}break;
@@ -95,6 +94,27 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 		switch (msg) {
 		case WM_INITDIALOG: {
 			SetFocus(GetDlgItem(hwnd, BTN_PERSONA_CAPTURAR));
+			HWND hComboBox;
+
+			hComboBox =  GetDlgItem(hwnd, CB_PERSONA_ESTADOCIVIL);
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"SOLTERO(A)");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"CASADO(A)");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"DIVORCIADO(A)");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"VIUDO(A)");
+			hComboBox = GetDlgItem(hwnd, CB_PERSONA_SEXO);
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"MASCULINO");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"FEMENINO");
+			hComboBox = GetDlgItem(hwnd, CB_PERSONA_GRUPOOCUPACIONAL);
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"ESTUDIANTE");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"TRABAJADOR");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"DESEMPLEADO");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"AMA(O) DE CASA");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"OTRO");
+			hComboBox = GetDlgItem(hwnd, CB_PERSONA_PERFILRIESGO);
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"ALTO");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"MODERADO");
+			SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"BAJO");
+
 		}break;
 		case WM_COMMAND: {
 			switch (LOWORD(wParam)) {
@@ -103,6 +123,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 				ShowWindow(hVentanaPrincial, SW_SHOW);
 			}break;
 			case BTN_PERSONA_CAPTURAR: {
+
+				Persona1.PasarInformacion(hwnd, TXTB_PERSONA_APELLIDOPATERNO,TXTB_PERSONA_APELLIDOMATERNO,TXTB_PERSONA_NOMBRE,TXTB_PERSONA_CURP,TXTB_PERSONA_RFC,DTP_PERSONA_FECHANACIMIENTO,TXTB_PERSONA_CALLE,TXTB_PERSONA_COLONIA,TXTB_PERSONA_MUNICIPIO,TXTB_PERSONA_ESTADO,CB_PERSONA_ESTADOCIVIL,TXTB_PERSONA_TELEFONO,CB_PERSONA_SEXO,CB_PERSONA_GRUPOOCUPACIONAL,CB_PERSONA_PERFILRIESGO,BTN_PERSONA_CARGARDOCUMENTO);
+
 			}break;
 			}
 		}break;
