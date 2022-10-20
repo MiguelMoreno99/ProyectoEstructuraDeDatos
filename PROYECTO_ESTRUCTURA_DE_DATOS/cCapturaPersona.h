@@ -1,3 +1,4 @@
+#pragma once
 #include <Windows.h>
 #include "resource.h"
 #include <iostream>
@@ -29,7 +30,7 @@ public:
 	Persona* Ptr_Persona_siguiente = NULL;
 
 	//Funcciones
-	void PasarInformacion(HWND hwnd, int _int_Persona_ApellidoPaterno,
+	void PasarInformacionPersona(HWND hwnd, int _int_Persona_ApellidoPaterno,
 		int _int_Persona_ApellidoMaterno,
 		int _int_Persona_Nombre,
 		int _int_Persona_CURP,
@@ -137,56 +138,56 @@ public:
 
 	void GuardarPersona() {
 
-		if (PtrOrigen == NULL) {
-			PtrOrigen = new Persona;
-			PtrOrigen->id++;
-			PtrOrigen->String_Persona_ApellidoPaterno = String_Persona_ApellidoPaterno;
-			PtrOrigen->String_Persona_ApellidoMaterno = String_Persona_ApellidoMaterno;
-			PtrOrigen->String_Persona_Nombre = String_Persona_Nombre;
-			PtrOrigen->String_Persona_CURP = String_Persona_CURP;
-			PtrOrigen->String_Persona_RFC = String_Persona_RFC;
-			PtrOrigen->String_Persona_FechaNacimiento = String_Persona_FechaNacimiento;
-			PtrOrigen->String_Persona_Calle = String_Persona_Calle;
-			PtrOrigen->String_Persona_Colonia = String_Persona_Colonia;
-			PtrOrigen->String_Persona_Municipio = String_Persona_Municipio;
-			PtrOrigen->String_Persona_Estado = String_Persona_Estado;
-			PtrOrigen->String_Persona_EstadoCivil = String_Persona_EstadoCivil;
-			PtrOrigen->String_Persona_Telefono = String_Persona_Telefono;
-			PtrOrigen->String_Persona_Sexo = String_Persona_Sexo;
-			PtrOrigen->String_Persona_GrupoOcupacional = String_Persona_GrupoOcupacional;
-			PtrOrigen->String_Persona_PerfilRiesgo = String_Persona_PerfilRiesgo;
-			PtrOrigen->String_Persona_PathDocumentoIdentidad = String_Persona_PathDocumentoIdentidad;
-			PtrOrigen->Ptr_Persona_siguiente = NULL;
-			PtrOrigen->Ptr_Persona_anterior = NULL;
+		if (PtrOrigenPersona == NULL) {
+			PtrOrigenPersona = new Persona;
+			PtrOrigenPersona->id++;
+			PtrOrigenPersona->String_Persona_ApellidoPaterno = String_Persona_ApellidoPaterno;
+			PtrOrigenPersona->String_Persona_ApellidoMaterno = String_Persona_ApellidoMaterno;
+			PtrOrigenPersona->String_Persona_Nombre = String_Persona_Nombre;
+			PtrOrigenPersona->String_Persona_CURP = String_Persona_CURP;
+			PtrOrigenPersona->String_Persona_RFC = String_Persona_RFC;
+			PtrOrigenPersona->String_Persona_FechaNacimiento = String_Persona_FechaNacimiento;
+			PtrOrigenPersona->String_Persona_Calle = String_Persona_Calle;
+			PtrOrigenPersona->String_Persona_Colonia = String_Persona_Colonia;
+			PtrOrigenPersona->String_Persona_Municipio = String_Persona_Municipio;
+			PtrOrigenPersona->String_Persona_Estado = String_Persona_Estado;
+			PtrOrigenPersona->String_Persona_EstadoCivil = String_Persona_EstadoCivil;
+			PtrOrigenPersona->String_Persona_Telefono = String_Persona_Telefono;
+			PtrOrigenPersona->String_Persona_Sexo = String_Persona_Sexo;
+			PtrOrigenPersona->String_Persona_GrupoOcupacional = String_Persona_GrupoOcupacional;
+			PtrOrigenPersona->String_Persona_PerfilRiesgo = String_Persona_PerfilRiesgo;
+			PtrOrigenPersona->String_Persona_PathDocumentoIdentidad = String_Persona_PathDocumentoIdentidad;
+			PtrOrigenPersona->Ptr_Persona_siguiente = NULL;
+			PtrOrigenPersona->Ptr_Persona_anterior = NULL;
 		}
 		else {
-			PtrAuxiliar = PtrOrigen;
-			while (PtrAuxiliar->Ptr_Persona_siguiente != NULL) {
-				PtrAuxiliar = PtrAuxiliar->Ptr_Persona_siguiente;
+			PtrAuxiliarPersona = PtrOrigenPersona;
+			while (PtrAuxiliarPersona->Ptr_Persona_siguiente != NULL) {
+				PtrAuxiliarPersona = PtrAuxiliarPersona->Ptr_Persona_siguiente;
 			}
-			PtrAuxiliar->Ptr_Persona_siguiente = new Persona;
-			PtrAuxiliar->Ptr_Persona_siguiente->id = PtrAuxiliar->id + 1;
-			PtrAuxiliar->Ptr_Persona_siguiente->String_Persona_ApellidoPaterno = String_Persona_ApellidoPaterno;
-			PtrAuxiliar->Ptr_Persona_siguiente->String_Persona_ApellidoMaterno = String_Persona_ApellidoMaterno;
-			PtrAuxiliar->Ptr_Persona_siguiente->String_Persona_Nombre = String_Persona_Nombre;
-			PtrAuxiliar->Ptr_Persona_siguiente->String_Persona_CURP = String_Persona_CURP;
-			PtrAuxiliar->Ptr_Persona_siguiente->String_Persona_RFC = String_Persona_RFC;
-			PtrAuxiliar->Ptr_Persona_siguiente->String_Persona_FechaNacimiento = String_Persona_FechaNacimiento;
-			PtrAuxiliar->Ptr_Persona_siguiente->String_Persona_Calle = String_Persona_Calle;
-			PtrAuxiliar->Ptr_Persona_siguiente->String_Persona_Colonia = String_Persona_Colonia;
-			PtrAuxiliar->Ptr_Persona_siguiente->String_Persona_Municipio = String_Persona_Municipio;
-			PtrAuxiliar->Ptr_Persona_siguiente->String_Persona_Estado = String_Persona_Estado;
-			PtrAuxiliar->Ptr_Persona_siguiente->String_Persona_EstadoCivil = String_Persona_EstadoCivil;
-			PtrAuxiliar->Ptr_Persona_siguiente->String_Persona_Telefono = String_Persona_Telefono;
-			PtrAuxiliar->Ptr_Persona_siguiente->String_Persona_Sexo = String_Persona_Sexo;
-			PtrAuxiliar->Ptr_Persona_siguiente->String_Persona_GrupoOcupacional = String_Persona_GrupoOcupacional;
-			PtrAuxiliar->Ptr_Persona_siguiente->String_Persona_PerfilRiesgo = String_Persona_PerfilRiesgo;
-			PtrAuxiliar->Ptr_Persona_siguiente->String_Persona_PathDocumentoIdentidad = String_Persona_PathDocumentoIdentidad;
-			PtrAuxiliar->Ptr_Persona_siguiente->Ptr_Persona_siguiente = NULL;
-			PtrAuxiliar->Ptr_Persona_siguiente->Ptr_Persona_anterior = PtrAuxiliar;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente = new Persona;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente->id = PtrAuxiliarPersona->id + 1;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente->String_Persona_ApellidoPaterno = String_Persona_ApellidoPaterno;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente->String_Persona_ApellidoMaterno = String_Persona_ApellidoMaterno;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente->String_Persona_Nombre = String_Persona_Nombre;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente->String_Persona_CURP = String_Persona_CURP;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente->String_Persona_RFC = String_Persona_RFC;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente->String_Persona_FechaNacimiento = String_Persona_FechaNacimiento;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente->String_Persona_Calle = String_Persona_Calle;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente->String_Persona_Colonia = String_Persona_Colonia;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente->String_Persona_Municipio = String_Persona_Municipio;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente->String_Persona_Estado = String_Persona_Estado;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente->String_Persona_EstadoCivil = String_Persona_EstadoCivil;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente->String_Persona_Telefono = String_Persona_Telefono;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente->String_Persona_Sexo = String_Persona_Sexo;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente->String_Persona_GrupoOcupacional = String_Persona_GrupoOcupacional;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente->String_Persona_PerfilRiesgo = String_Persona_PerfilRiesgo;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente->String_Persona_PathDocumentoIdentidad = String_Persona_PathDocumentoIdentidad;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente->Ptr_Persona_siguiente = NULL;
+			PtrAuxiliarPersona->Ptr_Persona_siguiente->Ptr_Persona_anterior = PtrAuxiliarPersona;
 		}
-		PtrAuxiliar = PtrOrigen;
+		PtrAuxiliarPersona = PtrOrigenPersona;
 		return;
 	}
 
-}*PtrOrigen, *PtrAuxiliar;
+}*PtrOrigenPersona = NULL, * PtrAuxiliarPersona = NULL;

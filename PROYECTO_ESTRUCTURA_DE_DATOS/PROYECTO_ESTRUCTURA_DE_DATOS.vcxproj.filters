@@ -26,6 +26,9 @@
     <ClInclude Include="cCapturaPersona.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="cCapturaUsuario.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PROYECTO_ESTRUCTURA_DE_DATOS.rc">

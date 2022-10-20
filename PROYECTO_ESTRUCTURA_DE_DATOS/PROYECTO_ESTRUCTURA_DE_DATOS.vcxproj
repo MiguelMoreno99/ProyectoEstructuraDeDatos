@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cCapturaPersona.h" />
+    <ClInclude Include="cCapturaUsuario.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
