@@ -2,12 +2,18 @@
 // Archivo de inclusión generado de Microsoft Visual C++.
 // Usado por PROYECTO_ESTRUCTURA_DE_DATOS.rc
 //
+
+//DIALOGOS
 #define DLG_VENTANAPRINCIPAL            101
 #define DLG_INICIOSESION                102
 #define DLG_INICIOSESION_REGISTRO       103
-#define DLG_REGISTROPERSONAS            104
-#define IDR_MENU1                       105
+#define DLG_REGISTROCARNET              104
+#define DLG_REGISTROPERSONAS            105
+#define DLG_REGISTROVACUNAS             106
 
+#define IDR_MENU1                       107
+
+//DATOS CAPTURA
 #define TXTB_INICIOSESION_USUARIO       1001
 #define TXTB_INICIOSESION_CONTRASENA    1002
 #define BTN_INICIOSESION_INGRESAR       1003
@@ -31,8 +37,8 @@
 #define TXTB_PERSONA_CALLE              1019
 #define TXTB_PERSONA_MUNICIPIO          1020
 #define TXTB_PERSONA_TELEFONO           1021
-#define TXTB_PERSONA_COLONIA           1022
-#define TXTB_PERSONA_ESTADO           1023
+#define TXTB_PERSONA_COLONIA            1022
+#define TXTB_PERSONA_ESTADO             1023
 #define CB_PERSONA_ESTADOCIVIL          1024
 #define CB_PERSONA_SEXO                 1025
 #define CB_PERSONA_GRUPOOCUPACIONAL     1026
@@ -42,29 +48,48 @@
 #define BTN_PERSONA_CAPTURAR            1030
 #define BTN_PERSONA_REGRESAR            1031
 
+#define GB_CARNET_DATOSCARNET           1032
+#define TXTB_CARNET_CURP                1033
+#define TXTB_CARNET_LOTE                1034
+#define TXTB_CARNET_DOSIS               1035
+#define CB_CARNET_VACUNA                1036
+#define DTP_CARNET_FECHADOSIS           1037
+#define BTN_CARNET_CAPTURAR             1038
+#define BTN_CARNET_REGRESAR             1039
+
+#define GB_VACUNA_DATOSVACUNA                 1040
+#define CB_VACUNA_MARCA                 1041
+#define CB_VACUNA_DOSIS                 1042
+#define CB_DOSIS_CENTROVACUNACION       1043
+#define CB_VACUNA_TIPO                  1044
+#define TXTB_VACUNA_DESCRIPCION         1045
+#define TXTB_VACUNA_CLAVE               1046
+#define BTN_VACUNA_CAPTURAR             1047
+#define BTN_VACUNA_REGRESAR             1048
+
+
+//MENUS
 #define MENU_REGISTRO_VACUNAS           40017
 #define MENU_REGISTRO_PERSONAS          40018
-#define MENU_REGISTRO_CARNET            40019
+#define MENU_REGISTRO_CARNETS           40019
 
 #define MENU_REPORTE_VACUNAS            40020
 #define MENU_REPORTE_PERSONAS           40021
 #define MENU_REPORTE_CARNETS            40022
 
-#define MENU_REGISTRO_CARNETS           40023
+#define MENU_AYUDA_MANUAL               40023
 
-#define MENU_AYUDA_MANUAL               40024
-
-#define MENU_SISTEMA_USUARIOS           40025
-#define MENU_SISTEMA_CERRARSESION       40026
-#define MENU_SISTEMA_SALIR              40027
+#define MENU_SISTEMA_USUARIOS           40024
+#define MENU_SISTEMA_CERRARSESION       40025
+#define MENU_SISTEMA_SALIR              40026
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        114
+#define _APS_NEXT_RESOURCE_VALUE        120
 #define _APS_NEXT_COMMAND_VALUE         40028
-#define _APS_NEXT_CONTROL_VALUE         1030
+#define _APS_NEXT_CONTROL_VALUE         1042
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
