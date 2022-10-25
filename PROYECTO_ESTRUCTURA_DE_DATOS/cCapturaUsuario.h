@@ -3,6 +3,7 @@
 #include "resource.h"
 #include <iostream>
 #include <string.h>
+#include "cValidadores.h"
 using namespace std;
 
 class Usuario {
@@ -15,50 +16,43 @@ private:
 	string String_Usuario_ApellidoPaterno;
 	string String_Usuario_ApellidoMaterno;
 	int id = 0;
+	bool err = false;
 	Usuario* Ptr_Usuario_anterior = NULL;
 	Usuario* Ptr_Usuario_siguiente = NULL;
 
 public:
 	//Funcciones
-	void PasarInformacionUsuario(HWND hwnd, int _int_Usuario_Usuario, int _int_Usuario_Contraseña, int _int_Usuario_Nombre, 
+	void PasarInformacionUsuario(HWND hwnd, int _int_Usuario_Usuario, int _int_Usuario_Contraseña, int _int_Usuario_Nombre,
 		int _int_Usuario_ApellidoPaterno, int _int_Usuario_ApellidoMaterno) {
 
-		char DlgText[100] = "";
-		HWND Hdlgitem;
-		int Sizedlgitem;
-
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Usuario_Usuario);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Usuario_Usuario = DlgText;
+		err = ValidacionTexto(hwnd, _int_Usuario_Usuario);
+		String_Usuario_Usuario = ValidacionCapturaTexto(hwnd, _int_Usuario_Usuario);
 		SetDlgItemText(hwnd, _int_Usuario_Usuario, "");
 
-		Hdlgitem = GetDlgItem(hwnd, _int_Usuario_Contraseña);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Usuario_Contraseña= DlgText;
+		err = ValidacionTexto(hwnd, _int_Usuario_Contraseña);
+		String_Usuario_Contraseña = ValidacionCapturaTexto(hwnd, _int_Usuario_Contraseña);
 		SetDlgItemText(hwnd, _int_Usuario_Contraseña, "");
 
-		Hdlgitem = GetDlgItem(hwnd, _int_Usuario_Nombre);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Usuario_Nombre = DlgText;
+		err = ValidacionTexto(hwnd, _int_Usuario_Nombre);
+		String_Usuario_Nombre = ValidacionCapturaTexto(hwnd, _int_Usuario_Nombre);
 		SetDlgItemText(hwnd, _int_Usuario_Nombre, "");
 
-		Hdlgitem = GetDlgItem(hwnd, _int_Usuario_ApellidoPaterno);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Usuario_ApellidoPaterno = DlgText;
+		err = ValidacionTexto(hwnd, _int_Usuario_ApellidoPaterno);
+		String_Usuario_ApellidoPaterno = ValidacionCapturaTexto(hwnd, _int_Usuario_ApellidoPaterno);
 		SetDlgItemText(hwnd, _int_Usuario_ApellidoPaterno, "");
 
-		Hdlgitem = GetDlgItem(hwnd, _int_Usuario_ApellidoMaterno);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Usuario_ApellidoMaterno = DlgText;
+		err = ValidacionTexto(hwnd, _int_Usuario_ApellidoMaterno);
+		String_Usuario_ApellidoMaterno = ValidacionCapturaTexto(hwnd, _int_Usuario_ApellidoMaterno);
 		SetDlgItemText(hwnd, _int_Usuario_ApellidoMaterno, "");
 
-		GuardarUsuario();
+		if (!err){
+			GuardarUsuario();
+			MessageBox(hwnd, "Se ha registrado el Usuario Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
+		}
+		else{
+			MessageBox(hwnd, "Verifique que los datos ingresados sean válidos!", "ERROR", MB_ICONERROR);
+		}
+
 	}
 
 	void GuardarUsuario() {
