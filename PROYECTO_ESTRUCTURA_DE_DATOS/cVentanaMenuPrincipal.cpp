@@ -2,9 +2,11 @@
 #include "resource.h"
 #include "cCapturaPersona.h"
 #include "cCapturaUsuario.h"
+#include "cCapturaCarnet.h"
+#include "cCapturaVacuna.h"
 
 
-//Variables Globales
+//Variables Globales y Callbacks
 BOOL CALLBACK cVentanaPrincipal(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK cInicioSesion(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK cInicioSesionRegistro(HWND, UINT, WPARAM, LPARAM);
@@ -20,8 +22,8 @@ HWND hRegistroVacunas;
 HMENU hMenuOpciones;
 Usuario Usuario1;
 Persona Persona1;
-//Carnet Carnet1;
-//Vacuna Vacuna1:
+Carnet Carnet1;
+Vacuna Vacuna1;
 
 
 int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdLine, int cShow) {
@@ -227,10 +229,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 			}break;
 			case BTN_CARNET_CAPTURAR: {
 
-				//Carnet1.PasarInformacionCarnet(hwnd, TXTB_PERSONA_APELLIDOPATERNO, TXTB_PERSONA_APELLIDOMATERNO, TXTB_PERSONA_NOMBRE,
-				//	TXTB_PERSONA_CURP, TXTB_PERSONA_RFC, DTP_PERSONA_FECHANACIMIENTO, TXTB_PERSONA_CALLE, TXTB_PERSONA_COLONIA,
-				//	TXTB_PERSONA_MUNICIPIO, TXTB_PERSONA_ESTADO, CB_PERSONA_ESTADOCIVIL, TXTB_PERSONA_TELEFONO, CB_PERSONA_SEXO,
-				//	CB_PERSONA_GRUPOOCUPACIONAL, CB_PERSONA_PERFILRIESGO, BTN_PERSONA_CARGARDOCUMENTO);
+				Carnet1.PasarInformacionCarnet(hwnd, TXTB_CARNET_CURP, CB_CARNET_IDVACUNA, TXTB_CARNET_LOTE, 
+				DTP_CARNET_FECHADOSIS, CB_CARNET_DOSIS, CB_CARNET_CENTROVACUNACION);
 				MessageBox(hwnd, "Se ha registrado el Carnet Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
 
 			}break;
@@ -281,10 +281,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 			}break;
 			case BTN_VACUNA_CAPTURAR: {
 
-				//Vacuna1.PasarInformacionVacuna(hwnd, TXTB_PERSONA_APELLIDOPATERNO, TXTB_PERSONA_APELLIDOMATERNO, TXTB_PERSONA_NOMBRE,
-				//	TXTB_PERSONA_CURP, TXTB_PERSONA_RFC, DTP_PERSONA_FECHANACIMIENTO, TXTB_PERSONA_CALLE, TXTB_PERSONA_COLONIA,
-				//	TXTB_PERSONA_MUNICIPIO, TXTB_PERSONA_ESTADO, CB_PERSONA_ESTADOCIVIL, TXTB_PERSONA_TELEFONO, CB_PERSONA_SEXO,
-				//	CB_PERSONA_GRUPOOCUPACIONAL, CB_PERSONA_PERFILRIESGO, BTN_PERSONA_CARGARDOCUMENTO);
+				Vacuna1.PasarInformacionVacuna(hwnd, CB_VACUNA_TIPO, CB_VACUNA_MARCA, CB_VACUNA_DOSIS, TXTB_VACUNA_PRECIO, TXTB_VACUNA_DESCRIPCION);
 				MessageBox(hwnd, "Se ha registrado la Vacuna Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
 
 

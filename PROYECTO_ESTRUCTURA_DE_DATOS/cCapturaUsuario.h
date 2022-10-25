@@ -7,8 +7,8 @@ using namespace std;
 
 class Usuario {
 
-public:
-	// 4 Variables
+private:
+	// 5 Variables
 	string String_Usuario_Usuario;
 	string String_Usuario_Contraseña;
 	string String_Usuario_Nombre;
@@ -18,8 +18,10 @@ public:
 	Usuario* Ptr_Usuario_anterior = NULL;
 	Usuario* Ptr_Usuario_siguiente = NULL;
 
+public:
 	//Funcciones
-	void PasarInformacionUsuario(HWND hwnd, int _int_Usuario_Usuario, int _int_Usuario_Contraseña, int _int_Usuario_Nombre, int _int_Usuario_ApellidoPaterno, int _int_Usuario_ApellidoMaterno) {
+	void PasarInformacionUsuario(HWND hwnd, int _int_Usuario_Usuario, int _int_Usuario_Contraseña, int _int_Usuario_Nombre, 
+		int _int_Usuario_ApellidoPaterno, int _int_Usuario_ApellidoMaterno) {
 
 		char DlgText[100] = "";
 		HWND Hdlgitem;
@@ -30,26 +32,32 @@ public:
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Usuario_Usuario = DlgText;
+		SetDlgItemText(hwnd, _int_Usuario_Usuario, "");
 
 		Hdlgitem = GetDlgItem(hwnd, _int_Usuario_Contraseña);
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Usuario_Contraseña= DlgText;
+		SetDlgItemText(hwnd, _int_Usuario_Contraseña, "");
 
 		Hdlgitem = GetDlgItem(hwnd, _int_Usuario_Nombre);
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Usuario_Nombre = DlgText;
+		SetDlgItemText(hwnd, _int_Usuario_Nombre, "");
 
 		Hdlgitem = GetDlgItem(hwnd, _int_Usuario_ApellidoPaterno);
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Usuario_ApellidoPaterno = DlgText;
+		SetDlgItemText(hwnd, _int_Usuario_ApellidoPaterno, "");
 
 		Hdlgitem = GetDlgItem(hwnd, _int_Usuario_ApellidoMaterno);
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Usuario_ApellidoMaterno = DlgText;
+		SetDlgItemText(hwnd, _int_Usuario_ApellidoMaterno, "");
+
 		GuardarUsuario();
 	}
 

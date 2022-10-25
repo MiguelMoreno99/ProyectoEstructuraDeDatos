@@ -142,8 +142,10 @@
     <ClCompile Include="cVentanaMenuPrincipal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cCapturaCarnet.h" />
     <ClInclude Include="cCapturaPersona.h" />
     <ClInclude Include="cCapturaUsuario.h" />
+    <ClInclude Include="cCapturaVacuna.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

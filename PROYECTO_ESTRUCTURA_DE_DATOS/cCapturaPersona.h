@@ -56,82 +56,97 @@ public:
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Persona_ApellidoPaterno = DlgText;
+		SetDlgItemText(hwnd, _int_Persona_ApellidoPaterno, "");
 
 		Hdlgitem = GetDlgItem(hwnd, _int_Persona_ApellidoMaterno);
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Persona_ApellidoMaterno = DlgText;
+		SetDlgItemText(hwnd, _int_Persona_ApellidoMaterno, "");
 
 		Hdlgitem = GetDlgItem(hwnd, _int_Persona_Nombre);
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Persona_Nombre = DlgText;
+		SetDlgItemText(hwnd, _int_Persona_Nombre, "");
 
 		Hdlgitem = GetDlgItem(hwnd, _int_Persona_CURP);
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Persona_CURP = DlgText;
+		SetDlgItemText(hwnd, _int_Persona_CURP, "");
 
 		Hdlgitem = GetDlgItem(hwnd, _int_Persona_RFC);
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Persona_RFC = DlgText;
+		SetDlgItemText(hwnd, _int_Persona_RFC, "");
 
 		Hdlgitem = GetDlgItem(hwnd, _int_Persona_FechaNacimiento);
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Persona_FechaNacimiento = DlgText;
+		SetDlgItemText(hwnd, _int_Persona_FechaNacimiento, "");
 
 		Hdlgitem = GetDlgItem(hwnd, _int_Persona_Calle);
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Persona_Calle = DlgText;
+		SetDlgItemText(hwnd, _int_Persona_Calle, "");
 
 		Hdlgitem = GetDlgItem(hwnd, _int_Persona_Colonia);
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Persona_Colonia = DlgText;
+		SetDlgItemText(hwnd, _int_Persona_Colonia, "");
 
 		Hdlgitem = GetDlgItem(hwnd, _int_Persona_Municipio);
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Persona_Municipio = DlgText;
+		SetDlgItemText(hwnd, _int_Persona_Municipio, "");
 
 		Hdlgitem = GetDlgItem(hwnd, _int_Persona_Estado);
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Persona_Estado = DlgText;
+		SetDlgItemText(hwnd, _int_Persona_Estado, "");
 
 		Hdlgitem = GetDlgItem(hwnd, _int_Persona_EstadoCivil);
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Persona_EstadoCivil = DlgText;
+		SetDlgItemText(hwnd, _int_Persona_EstadoCivil, "");
 
 		Hdlgitem = GetDlgItem(hwnd, _int_Persona_Telefono);
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Persona_Telefono = DlgText;
+		SetDlgItemText(hwnd, _int_Persona_Telefono, "");
 
 		Hdlgitem = GetDlgItem(hwnd, _int_Persona_Sexo);
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Persona_Sexo = DlgText;
+		SetDlgItemText(hwnd, _int_Persona_Sexo, "");
 
 		Hdlgitem = GetDlgItem(hwnd, _int_Persona_GrupoOcupacional);
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Persona_GrupoOcupacional = DlgText;
+		SetDlgItemText(hwnd, _int_Persona_GrupoOcupacional, "");
 
 		Hdlgitem = GetDlgItem(hwnd, _int_Persona_PerfilRiesgo);
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Persona_PerfilRiesgo = DlgText;
+		SetDlgItemText(hwnd, _int_Persona_PerfilRiesgo, "");
 
 		Hdlgitem = GetDlgItem(hwnd, _int_Persona_PathDocumentoIdentidad);
 		Sizedlgitem = GetWindowTextLength(Hdlgitem);
 		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
 		String_Persona_PathDocumentoIdentidad = DlgText;
-
+		SetDlgItemText(hwnd, _int_Persona_PathDocumentoIdentidad, "");
 
 		GuardarPersona();
 	}

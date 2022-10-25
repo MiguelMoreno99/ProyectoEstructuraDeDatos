@@ -29,6 +29,12 @@
     <ClInclude Include="cCapturaUsuario.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="cCapturaCarnet.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="cCapturaVacuna.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PROYECTO_ESTRUCTURA_DE_DATOS.rc">
