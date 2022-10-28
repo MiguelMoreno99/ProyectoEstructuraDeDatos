@@ -3,6 +3,7 @@
 #include "resource.h"
 #include <iostream>
 #include <string.h>
+#include "cValidadores.h"
 using namespace std;
 
 class Carnet {
@@ -16,6 +17,7 @@ public:
 	string String_Carnet_NoDosis;
 	string String_Carnet_CentroVacunacion;
 	int id = 0;
+	bool err = false;
 	Carnet* Ptr_Carnet_anterior = NULL;
 	Carnet* Ptr_Carnet_siguiente = NULL;
 
@@ -27,48 +29,33 @@ public:
 		int _int_Carnet_NoDosis,
 		int _int_Carnet_CentroVacunacion) {
 
-		char DlgText[100] = "";
-		HWND Hdlgitem;
-		int Sizedlgitem;
+		err = false;
+		err = ValidacionTexto(hwnd, _int_Carnet_CURP, err);
+		err = ValidacionTexto(hwnd, _int_Carnet_IdVacuna, err);
+		err = ValidacionTexto(hwnd, _int_Carnet_Lote, err);
+		err = ValidacionTexto(hwnd, _int_Carnet_FechaDosis, err);
+		err = ValidacionTexto(hwnd, _int_Carnet_NoDosis, err);
+		err = ValidacionTexto(hwnd, _int_Carnet_CentroVacunacion, err);
 
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Carnet_CURP);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Carnet_CURP = DlgText;
-		SetDlgItemText(hwnd, _int_Carnet_CURP, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Carnet_IdVacuna);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Carnet_IdVacuna = DlgText;
-		SetDlgItemText(hwnd, _int_Carnet_IdVacuna, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Carnet_Lote);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Carnet_Lote = DlgText;
-		SetDlgItemText(hwnd, _int_Carnet_Lote, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Carnet_FechaDosis);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Carnet_FechaDosis = DlgText;
-		SetDlgItemText(hwnd, _int_Carnet_FechaDosis, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Carnet_NoDosis);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Carnet_NoDosis = DlgText;
-		SetDlgItemText(hwnd, _int_Carnet_NoDosis, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Carnet_CentroVacunacion);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Carnet_CentroVacunacion = DlgText;
-		SetDlgItemText(hwnd, _int_Carnet_CentroVacunacion, "");
-
-		GuardarCarnet();
+		if (!err) {
+			String_Carnet_CURP = ValidacionCapturaTexto(hwnd, _int_Carnet_CURP);
+			String_Carnet_IdVacuna = ValidacionCapturaTexto(hwnd, _int_Carnet_IdVacuna);
+			String_Carnet_Lote = ValidacionCapturaTexto(hwnd, _int_Carnet_Lote);
+			String_Carnet_FechaDosis = ValidacionCapturaTexto(hwnd, _int_Carnet_FechaDosis);
+			String_Carnet_NoDosis = ValidacionCapturaTexto(hwnd, _int_Carnet_NoDosis);
+			String_Carnet_CentroVacunacion = ValidacionCapturaTexto(hwnd, _int_Carnet_CentroVacunacion);
+			SetDlgItemText(hwnd, _int_Carnet_CURP, "");
+			SetDlgItemText(hwnd, _int_Carnet_IdVacuna, "");
+			SetDlgItemText(hwnd, _int_Carnet_Lote, "");
+			SetDlgItemText(hwnd, _int_Carnet_FechaDosis, "");
+			SetDlgItemText(hwnd, _int_Carnet_NoDosis, "");
+			SetDlgItemText(hwnd, _int_Carnet_CentroVacunacion, "");
+			GuardarCarnet();
+			MessageBox(hwnd, "Se ha registrado el Carnet Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
+		}
+		else {
+			MessageBox(hwnd, "Verifique que los datos ingresados sean válidos!", "ERROR", MB_ICONERROR);
+		}
 	}
 
 	void GuardarCarnet() {

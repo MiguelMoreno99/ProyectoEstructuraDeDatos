@@ -22,37 +22,36 @@ private:
 
 public:
 	//Funcciones
-	void PasarInformacionUsuario(HWND hwnd, int _int_Usuario_Usuario, int _int_Usuario_Contraseña, int _int_Usuario_Nombre,
-		int _int_Usuario_ApellidoPaterno, int _int_Usuario_ApellidoMaterno) {
+	void PasarInformacionUsuario(HWND hwnd, int _int_Usuario_Usuario,
+		int _int_Usuario_Contraseña,
+		int _int_Usuario_Nombre,
+		int _int_Usuario_ApellidoPaterno,
+		int _int_Usuario_ApellidoMaterno) {
 
-		err = ValidacionTexto(hwnd, _int_Usuario_Usuario);
-		String_Usuario_Usuario = ValidacionCapturaTexto(hwnd, _int_Usuario_Usuario);
-		SetDlgItemText(hwnd, _int_Usuario_Usuario, "");
-
-		err = ValidacionTexto(hwnd, _int_Usuario_Contraseña);
-		String_Usuario_Contraseña = ValidacionCapturaTexto(hwnd, _int_Usuario_Contraseña);
-		SetDlgItemText(hwnd, _int_Usuario_Contraseña, "");
-
-		err = ValidacionTexto(hwnd, _int_Usuario_Nombre);
-		String_Usuario_Nombre = ValidacionCapturaTexto(hwnd, _int_Usuario_Nombre);
-		SetDlgItemText(hwnd, _int_Usuario_Nombre, "");
-
-		err = ValidacionTexto(hwnd, _int_Usuario_ApellidoPaterno);
-		String_Usuario_ApellidoPaterno = ValidacionCapturaTexto(hwnd, _int_Usuario_ApellidoPaterno);
-		SetDlgItemText(hwnd, _int_Usuario_ApellidoPaterno, "");
-
-		err = ValidacionTexto(hwnd, _int_Usuario_ApellidoMaterno);
-		String_Usuario_ApellidoMaterno = ValidacionCapturaTexto(hwnd, _int_Usuario_ApellidoMaterno);
-		SetDlgItemText(hwnd, _int_Usuario_ApellidoMaterno, "");
+		err = false;
+		err = ValidacionTexto(hwnd, _int_Usuario_Usuario, err);
+		err = ValidacionTexto(hwnd, _int_Usuario_Contraseña, err);
+		err = ValidacionTexto(hwnd, _int_Usuario_Nombre, err);
+		err = ValidacionTexto(hwnd, _int_Usuario_ApellidoPaterno, err);
+		err = ValidacionTexto(hwnd, _int_Usuario_ApellidoMaterno, err);
 
 		if (!err){
+			String_Usuario_Usuario = ValidacionCapturaTexto(hwnd, _int_Usuario_Usuario);
+			String_Usuario_Contraseña = ValidacionCapturaTexto(hwnd, _int_Usuario_Contraseña);
+			String_Usuario_Nombre = ValidacionCapturaTexto(hwnd, _int_Usuario_Nombre);
+			String_Usuario_ApellidoPaterno = ValidacionCapturaTexto(hwnd, _int_Usuario_ApellidoPaterno);
+			String_Usuario_ApellidoMaterno = ValidacionCapturaTexto(hwnd, _int_Usuario_ApellidoMaterno);
+			SetDlgItemText(hwnd, _int_Usuario_Usuario, "");
+			SetDlgItemText(hwnd, _int_Usuario_Contraseña, "");
+			SetDlgItemText(hwnd, _int_Usuario_Nombre, "");
+			SetDlgItemText(hwnd, _int_Usuario_ApellidoPaterno, "");
+			SetDlgItemText(hwnd, _int_Usuario_ApellidoMaterno, "");
 			GuardarUsuario();
 			MessageBox(hwnd, "Se ha registrado el Usuario Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
 		}
 		else{
 			MessageBox(hwnd, "Verifique que los datos ingresados sean válidos!", "ERROR", MB_ICONERROR);
 		}
-
 	}
 
 	void GuardarUsuario() {
@@ -85,6 +84,46 @@ public:
 		}
 		PtrAuxiliarUsuario = PtrOrigenUsuario;
 		return;
+	}
+
+	void ValidarUsuario(HWND hInicioSesion, HWND hVentanaPrincipal, int _int_Usuario_Usuario, int _int_Usuario_Contraseña) {
+
+		if (PtrOrigenUsuario == NULL) {
+			MessageBox(hInicioSesion, "No hay nigun usuario registrado!", "ERROR", MB_ICONERROR);
+		}
+
+		else {
+			err = false;
+			err = ValidacionTexto(hInicioSesion, _int_Usuario_Usuario, err);
+			err = ValidacionTexto(hInicioSesion, _int_Usuario_Contraseña, err);
+
+			if (!err) {
+				err = true;
+				String_Usuario_Usuario = ValidacionCapturaTexto(hInicioSesion, _int_Usuario_Usuario);
+				String_Usuario_Contraseña = ValidacionCapturaTexto(hInicioSesion, _int_Usuario_Contraseña);
+				PtrAuxiliarUsuario = PtrOrigenUsuario;
+				do{
+					if (String_Usuario_Usuario == PtrAuxiliarUsuario->String_Usuario_Usuario && String_Usuario_Contraseña == PtrAuxiliarUsuario->String_Usuario_Contraseña){
+						SetDlgItemText(hInicioSesion, _int_Usuario_Usuario, "");
+						SetDlgItemText(hInicioSesion, _int_Usuario_Contraseña, "");
+						MessageBox(hInicioSesion, "Ha Ingresado Correctamente!!", "Bienvenido!", MB_ICONINFORMATION);
+						ShowWindow(hInicioSesion, SW_HIDE);
+						ShowWindow(hVentanaPrincipal, SW_SHOW);
+						err = false;
+						break;
+					}
+					PtrAuxiliarUsuario = PtrAuxiliarUsuario->Ptr_Usuario_siguiente;
+				} while (PtrAuxiliarUsuario != NULL);
+				if (err){
+					MessageBox(hVentanaPrincipal, "No se encontró ese Usuario y/o Contraseña!", "ERROR", MB_ICONERROR);
+				}
+			}
+			else {
+				MessageBox(hVentanaPrincipal, "Verifique los datos ingresados!", "ERROR", MB_ICONERROR);
+			}
+
+		}
+
 	}
 
 }*PtrOrigenUsuario=NULL, * PtrAuxiliarUsuario = NULL;

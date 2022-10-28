@@ -13,7 +13,7 @@ BOOL CALLBACK cInicioSesionRegistro(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK cRegistroPersonas(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK cRegistroCarnets(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK cRegistroVacunas(HWND, UINT, WPARAM, LPARAM);
-HWND hVentanaPrincial;
+HWND hVentanaPrincipal;
 HWND hInicioSesion;
 HWND hInicioSesionRegistro;
 HWND hRegistroPersonas;
@@ -28,10 +28,10 @@ Vacuna Vacuna1;
 
 int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdLine, int cShow) {
 
-	hVentanaPrincial = CreateDialog(hInst, MAKEINTRESOURCE(DLG_VENTANAPRINCIPAL), NULL, cVentanaPrincipal);
+	hVentanaPrincipal = CreateDialog(hInst, MAKEINTRESOURCE(DLG_VENTANAPRINCIPAL), NULL, cVentanaPrincipal);
 	hMenuOpciones = LoadMenu(hInst, MAKEINTRESOURCE(IDR_MENU1));
-	SetMenu(hVentanaPrincial, hMenuOpciones);
-	ShowWindow(hVentanaPrincial, SW_HIDE);
+	SetMenu(hVentanaPrincipal, hMenuOpciones);
+	ShowWindow(hVentanaPrincipal, SW_HIDE);
 
 	MSG msg;
 	ZeroMemory(&msg, sizeof(MSG));
@@ -45,11 +45,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 	BOOL CALLBACK cVentanaPrincipal(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		switch (msg) {
 			case WM_INITDIALOG: {
-				hInicioSesion = CreateDialog(GetModuleHandle(NULL), MAKEINTRESOURCE(DLG_INICIOSESION), hVentanaPrincial, cInicioSesion);
+				hInicioSesion = CreateDialog(GetModuleHandle(NULL), MAKEINTRESOURCE(DLG_INICIOSESION), hVentanaPrincipal, cInicioSesion);
 				hInicioSesionRegistro = CreateDialog(GetModuleHandle(NULL), MAKEINTRESOURCE(DLG_INICIOSESION_REGISTRO), hInicioSesionRegistro, cInicioSesionRegistro);
-				hRegistroPersonas = CreateDialog(GetModuleHandle(NULL), MAKEINTRESOURCE(DLG_REGISTROPERSONAS), hVentanaPrincial, cRegistroPersonas);
-				hRegistroCarnets = CreateDialog(GetModuleHandle(NULL), MAKEINTRESOURCE(DLG_REGISTROCARNET), hVentanaPrincial, cRegistroCarnets);
-				hRegistroVacunas = CreateDialog(GetModuleHandle(NULL), MAKEINTRESOURCE(DLG_REGISTROVACUNAS), hVentanaPrincial, cRegistroVacunas);
+				hRegistroPersonas = CreateDialog(GetModuleHandle(NULL), MAKEINTRESOURCE(DLG_REGISTROPERSONAS), hVentanaPrincipal, cRegistroPersonas);
+				hRegistroCarnets = CreateDialog(GetModuleHandle(NULL), MAKEINTRESOURCE(DLG_REGISTROCARNET), hVentanaPrincipal, cRegistroCarnets);
+				hRegistroVacunas = CreateDialog(GetModuleHandle(NULL), MAKEINTRESOURCE(DLG_REGISTROVACUNAS), hVentanaPrincipal, cRegistroVacunas);
 				ShowWindow(hInicioSesion, SW_SHOW);
 			}break;
 			case WM_COMMAND: {
@@ -93,8 +93,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 			case WM_COMMAND: {
 				switch (LOWORD(wParam)) {
 					case BTN_INICIOSESION_INGRESAR: {
-						ShowWindow(hInicioSesion, SW_HIDE);
-						ShowWindow(hVentanaPrincial, SW_SHOW);
+						Usuario1.ValidarUsuario(hInicioSesion, hVentanaPrincipal,TXTB_INICIOSESION_USUARIO, TXTB_INICIOSESION_CONTRASENA);
 					}break;
 					case BTN_INICIOSESION_SALIR: {
 						DestroyWindow(hwnd);
@@ -171,7 +170,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 			switch (LOWORD(wParam)) {
 			case BTN_PERSONA_REGRESAR: {
 				ShowWindow(hwnd, SW_HIDE);
-				ShowWindow(hVentanaPrincial, SW_SHOW);
+				ShowWindow(hVentanaPrincipal, SW_SHOW);
 			}break;
 			case BTN_PERSONA_CAPTURAR: {
 
@@ -185,7 +184,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 		}break;
 		case WM_CLOSE: {
 			ShowWindow(hwnd, SW_HIDE);
-			ShowWindow(hVentanaPrincial, SW_SHOW);
+			ShowWindow(hVentanaPrincipal, SW_SHOW);
 		}break;
 		}
 		return FALSE;
@@ -222,7 +221,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 			switch (LOWORD(wParam)) {
 			case BTN_CARNET_REGRESAR: {
 				ShowWindow(hwnd, SW_HIDE);
-				ShowWindow(hVentanaPrincial, SW_SHOW);
+				ShowWindow(hVentanaPrincipal, SW_SHOW);
 			}break;
 			case BTN_CARNET_CAPTURAR: {
 
@@ -234,7 +233,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 		}break;
 		case WM_CLOSE: {
 			ShowWindow(hwnd, SW_HIDE);
-			ShowWindow(hVentanaPrincial, SW_SHOW);
+			ShowWindow(hVentanaPrincipal, SW_SHOW);
 		}break;
 		}
 		return FALSE;
@@ -273,7 +272,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 			switch (LOWORD(wParam)) {
 			case BTN_VACUNA_REGRESAR: {
 				ShowWindow(hwnd, SW_HIDE);
-				ShowWindow(hVentanaPrincial, SW_SHOW);
+				ShowWindow(hVentanaPrincipal, SW_SHOW);
 			}break;
 			case BTN_VACUNA_CAPTURAR: {
 
@@ -285,7 +284,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 		}break;
 		case WM_CLOSE: {
 			ShowWindow(hwnd, SW_HIDE);
-			ShowWindow(hVentanaPrincial, SW_SHOW);
+			ShowWindow(hVentanaPrincipal, SW_SHOW);
 		}break;
 		}
 		return FALSE;

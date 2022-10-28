@@ -3,13 +3,14 @@
 #include "resource.h"
 #include <iostream>
 #include <string.h>
+#include "cValidadores.h"
 using namespace std;
 
 class Persona {
 
 public:
 	// 16 Variables
-	string String_Persona_ApellidoPaterno; 
+	string String_Persona_ApellidoPaterno;
 	string String_Persona_ApellidoMaterno;
 	string String_Persona_Nombre;
 	string String_Persona_CURP;
@@ -26,6 +27,7 @@ public:
 	string String_Persona_PerfilRiesgo;
 	string String_Persona_PathDocumentoIdentidad;
 	int id = 0;
+	bool err = false;
 	Persona* Ptr_Persona_anterior = NULL;
 	Persona* Ptr_Persona_siguiente = NULL;
 
@@ -47,108 +49,63 @@ public:
 		int _int_Persona_PerfilRiesgo,
 		int _int_Persona_PathDocumentoIdentidad) {
 
-		char DlgText[100] = "";
-		HWND Hdlgitem;
-		int Sizedlgitem;
+		err = false;
+		err = ValidacionTexto(hwnd, _int_Persona_ApellidoPaterno, err);
+		err = ValidacionTexto(hwnd, _int_Persona_ApellidoMaterno, err);
+		err = ValidacionTexto(hwnd, _int_Persona_Nombre, err);
+		err = ValidacionTexto(hwnd, _int_Persona_CURP, err);
+		err = ValidacionTexto(hwnd, _int_Persona_RFC, err);
+		err = ValidacionTexto(hwnd, _int_Persona_FechaNacimiento, err);
+		err = ValidacionTexto(hwnd, _int_Persona_Calle, err);
+		err = ValidacionTexto(hwnd, _int_Persona_Colonia, err);
+		err = ValidacionTexto(hwnd, _int_Persona_Municipio, err);
+		err = ValidacionTexto(hwnd, _int_Persona_Estado, err);
+		err = ValidacionTexto(hwnd, _int_Persona_EstadoCivil, err);
+		err = ValidacionTexto(hwnd, _int_Persona_Telefono, err);
+		err = ValidacionTexto(hwnd, _int_Persona_Sexo, err);
+		err = ValidacionTexto(hwnd, _int_Persona_GrupoOcupacional, err);
+		err = ValidacionTexto(hwnd, _int_Persona_PerfilRiesgo, err);
+		err = ValidacionTexto(hwnd, _int_Persona_PathDocumentoIdentidad, err);
 
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Persona_ApellidoPaterno);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Persona_ApellidoPaterno = DlgText;
-		SetDlgItemText(hwnd, _int_Persona_ApellidoPaterno, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Persona_ApellidoMaterno);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Persona_ApellidoMaterno = DlgText;
-		SetDlgItemText(hwnd, _int_Persona_ApellidoMaterno, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Persona_Nombre);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Persona_Nombre = DlgText;
-		SetDlgItemText(hwnd, _int_Persona_Nombre, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Persona_CURP);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Persona_CURP = DlgText;
-		SetDlgItemText(hwnd, _int_Persona_CURP, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Persona_RFC);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Persona_RFC = DlgText;
-		SetDlgItemText(hwnd, _int_Persona_RFC, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Persona_FechaNacimiento);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Persona_FechaNacimiento = DlgText;
-		SetDlgItemText(hwnd, _int_Persona_FechaNacimiento, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Persona_Calle);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Persona_Calle = DlgText;
-		SetDlgItemText(hwnd, _int_Persona_Calle, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Persona_Colonia);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Persona_Colonia = DlgText;
-		SetDlgItemText(hwnd, _int_Persona_Colonia, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Persona_Municipio);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Persona_Municipio = DlgText;
-		SetDlgItemText(hwnd, _int_Persona_Municipio, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Persona_Estado);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Persona_Estado = DlgText;
-		SetDlgItemText(hwnd, _int_Persona_Estado, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Persona_EstadoCivil);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Persona_EstadoCivil = DlgText;
-		SetDlgItemText(hwnd, _int_Persona_EstadoCivil, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Persona_Telefono);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Persona_Telefono = DlgText;
-		SetDlgItemText(hwnd, _int_Persona_Telefono, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Persona_Sexo);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Persona_Sexo = DlgText;
-		SetDlgItemText(hwnd, _int_Persona_Sexo, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Persona_GrupoOcupacional);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Persona_GrupoOcupacional = DlgText;
-		SetDlgItemText(hwnd, _int_Persona_GrupoOcupacional, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Persona_PerfilRiesgo);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Persona_PerfilRiesgo = DlgText;
-		SetDlgItemText(hwnd, _int_Persona_PerfilRiesgo, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Persona_PathDocumentoIdentidad);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Persona_PathDocumentoIdentidad = DlgText;
-		SetDlgItemText(hwnd, _int_Persona_PathDocumentoIdentidad, "");
-
-		GuardarPersona();
+		if (!err) {
+			String_Persona_ApellidoPaterno = ValidacionCapturaTexto(hwnd, _int_Persona_ApellidoPaterno);
+			String_Persona_ApellidoMaterno = ValidacionCapturaTexto(hwnd, _int_Persona_ApellidoMaterno);
+			String_Persona_Nombre = ValidacionCapturaTexto(hwnd, _int_Persona_Nombre);
+			String_Persona_CURP = ValidacionCapturaTexto(hwnd, _int_Persona_CURP);
+			String_Persona_RFC = ValidacionCapturaTexto(hwnd, _int_Persona_RFC);
+			String_Persona_FechaNacimiento = ValidacionCapturaTexto(hwnd, _int_Persona_FechaNacimiento);
+			String_Persona_Calle = ValidacionCapturaTexto(hwnd, _int_Persona_Calle);
+			String_Persona_Colonia = ValidacionCapturaTexto(hwnd, _int_Persona_Colonia);
+			String_Persona_Municipio = ValidacionCapturaTexto(hwnd, _int_Persona_Municipio);
+			String_Persona_Estado = ValidacionCapturaTexto(hwnd, _int_Persona_Estado);
+			String_Persona_EstadoCivil = ValidacionCapturaTexto(hwnd, _int_Persona_EstadoCivil);
+			String_Persona_Telefono = ValidacionCapturaTexto(hwnd, _int_Persona_Telefono);
+			String_Persona_Sexo = ValidacionCapturaTexto(hwnd, _int_Persona_Sexo);
+			String_Persona_GrupoOcupacional = ValidacionCapturaTexto(hwnd, _int_Persona_GrupoOcupacional);
+			String_Persona_PerfilRiesgo = ValidacionCapturaTexto(hwnd, _int_Persona_PerfilRiesgo);
+			String_Persona_PathDocumentoIdentidad = ValidacionCapturaTexto(hwnd, _int_Persona_PathDocumentoIdentidad);
+			SetDlgItemText(hwnd, _int_Persona_ApellidoPaterno, "");
+			SetDlgItemText(hwnd, _int_Persona_ApellidoMaterno, "");
+			SetDlgItemText(hwnd, _int_Persona_Nombre, "");
+			SetDlgItemText(hwnd, _int_Persona_CURP, "");
+			SetDlgItemText(hwnd, _int_Persona_RFC, "");
+			SetDlgItemText(hwnd, _int_Persona_FechaNacimiento, "");
+			SetDlgItemText(hwnd, _int_Persona_Calle, "");
+			SetDlgItemText(hwnd, _int_Persona_Colonia, "");
+			SetDlgItemText(hwnd, _int_Persona_Municipio, "");
+			SetDlgItemText(hwnd, _int_Persona_Estado, "");
+			SetDlgItemText(hwnd, _int_Persona_EstadoCivil, "");
+			SetDlgItemText(hwnd, _int_Persona_Telefono, "");
+			SetDlgItemText(hwnd, _int_Persona_Sexo, "");
+			SetDlgItemText(hwnd, _int_Persona_GrupoOcupacional, "");
+			SetDlgItemText(hwnd, _int_Persona_PerfilRiesgo, "");
+			SetDlgItemText(hwnd, _int_Persona_PathDocumentoIdentidad, "");
+			GuardarPersona();
+			MessageBox(hwnd, "Se ha registrado la Persona Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
+		}
+		else {
+			MessageBox(hwnd, "Verifique que los datos ingresados sean válidos!", "ERROR", MB_ICONERROR);
+		}
 	}
 
 	void GuardarPersona() {

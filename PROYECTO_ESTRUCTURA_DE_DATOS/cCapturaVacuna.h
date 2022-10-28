@@ -3,6 +3,7 @@
 #include "resource.h"
 #include <iostream>
 #include <string.h>
+#include "cValidadores.h"
 using namespace std;
 
 class Vacuna {
@@ -15,6 +16,7 @@ public:
 	string String_Vacuna_Precio;
 	string String_Vacuna_Desc;
 	int id = 0;
+	bool err = false;
 	Vacuna* Ptr_Vacuna_anterior = NULL;
 	Vacuna* Ptr_Vacuna_siguiente = NULL;
 
@@ -25,42 +27,30 @@ public:
 		int _int_Vacuna_Precio,
 		int _int_Vacuna_Desc) {
 
-		char DlgText[100] = "";
-		HWND Hdlgitem;
-		int Sizedlgitem;
+		err = false;
+		err = ValidacionTexto(hwnd, _int_Vacuna_Tipo, err);
+		err = ValidacionTexto(hwnd, _int_Vacuna_Marca, err);
+		err = ValidacionTexto(hwnd, _int_Vacuna_NoDosis, err);
+		err = ValidacionTexto(hwnd, _int_Vacuna_Precio, err);
+		err = ValidacionTexto(hwnd, _int_Vacuna_Desc, err);
 
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Vacuna_Tipo);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Vacuna_Tipo = DlgText;
-		SetDlgItemText(hwnd, _int_Vacuna_Tipo, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Vacuna_Marca);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Vacuna_Marca = DlgText;
-		SetDlgItemText(hwnd, _int_Vacuna_Marca, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Vacuna_NoDosis);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Vacuna_NoDosis = DlgText;
-		SetDlgItemText(hwnd, _int_Vacuna_NoDosis, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Vacuna_Precio);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Vacuna_Precio = DlgText;
-		SetDlgItemText(hwnd, _int_Vacuna_Precio, "");
-
-		Hdlgitem = GetDlgItem(hwnd, _int_Vacuna_Desc);
-		Sizedlgitem = GetWindowTextLength(Hdlgitem);
-		GetWindowText(Hdlgitem, DlgText, Sizedlgitem + 1);
-		String_Vacuna_Desc = DlgText;
-		SetDlgItemText(hwnd, _int_Vacuna_Desc, "");
-
-		GuardarVacuna();
+		if (!err) {
+			String_Vacuna_Tipo = ValidacionCapturaTexto(hwnd, _int_Vacuna_Tipo);
+			String_Vacuna_Marca = ValidacionCapturaTexto(hwnd, _int_Vacuna_Marca);
+			String_Vacuna_NoDosis = ValidacionCapturaTexto(hwnd, _int_Vacuna_NoDosis);
+			String_Vacuna_Precio = ValidacionCapturaTexto(hwnd, _int_Vacuna_Precio);
+			String_Vacuna_Desc = ValidacionCapturaTexto(hwnd, _int_Vacuna_Desc);
+			SetDlgItemText(hwnd, _int_Vacuna_Tipo, "");
+			SetDlgItemText(hwnd, _int_Vacuna_Marca, "");
+			SetDlgItemText(hwnd, _int_Vacuna_NoDosis, "");
+			SetDlgItemText(hwnd, _int_Vacuna_Precio, "");
+			SetDlgItemText(hwnd, _int_Vacuna_Desc, "");
+			GuardarVacuna();
+			MessageBox(hwnd, "Se ha registrado la Vacuna Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
+		}
+		else {
+			MessageBox(hwnd, "Verifique que los datos ingresados sean válidos!", "ERROR", MB_ICONERROR);
+		}
 	}
 
 	void GuardarVacuna() {
