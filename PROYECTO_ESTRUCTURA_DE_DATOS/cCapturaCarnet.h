@@ -16,7 +16,7 @@ public:
 	string String_Carnet_FechaDosis;
 	string String_Carnet_NoDosis;
 	string String_Carnet_CentroVacunacion;
-	int id = 0;
+	int id;
 	bool err = false;
 	Carnet* Ptr_Carnet_anterior = NULL;
 	Carnet* Ptr_Carnet_siguiente = NULL;

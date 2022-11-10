@@ -15,7 +15,7 @@ public:
 	string String_Vacuna_NoDosis;
 	string String_Vacuna_Precio;
 	string String_Vacuna_Desc;
-	int id = 0;
+	int id;
 	bool err = false;
 	Vacuna* Ptr_Vacuna_anterior = NULL;
 	Vacuna* Ptr_Vacuna_siguiente = NULL;

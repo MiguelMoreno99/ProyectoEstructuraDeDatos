@@ -6,6 +6,7 @@
 #include "cCapturaVacuna.h"
 
 
+
 //Variables Globales y Callbacks
 BOOL CALLBACK cVentanaPrincipal(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK cInicioSesion(HWND, UINT, WPARAM, LPARAM);
@@ -67,6 +68,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 						ShowWindow(hRegistroVacunas, SW_SHOW);
 					}break;
 					case MENU_SISTEMA_SALIR: {
+						Usuario1.GuardarUsuariosTxt(hwnd);
 						PostQuitMessage(0);
 					}break;
 					case MENU_SISTEMA_CERRARSESION: {
@@ -79,6 +81,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 				DestroyWindow(hwnd);
 			}break;
 			case WM_DESTROY: {
+				Usuario1.GuardarUsuariosTxt(hwnd);
 				PostQuitMessage(1);
 			}break;
 		}
@@ -88,6 +91,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 	BOOL CALLBACK cInicioSesion(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		switch (msg) {
 			case WM_INITDIALOG: {
+				Usuario1.CargarUsuariosTxt(hwnd);
 				SetFocus(GetDlgItem(hwnd, BTN_INICIOSESION_REGISTRARSE));
 			}break;
 			case WM_COMMAND: {
@@ -108,6 +112,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 				DestroyWindow(hwnd);
 			}break;
 			case WM_DESTROY: {
+				Usuario1.GuardarUsuariosTxt(hwnd);
 				PostQuitMessage(0);
 			}break;
 		}

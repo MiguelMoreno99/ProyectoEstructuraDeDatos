@@ -26,7 +26,7 @@ public:
 	string String_Persona_GrupoOcupacional;
 	string String_Persona_PerfilRiesgo;
 	string String_Persona_PathDocumentoIdentidad;
-	int id = 0;
+	int id;
 	bool err = false;
 	Persona* Ptr_Persona_anterior = NULL;
 	Persona* Ptr_Persona_siguiente = NULL;
@@ -99,7 +99,7 @@ public:
 			SetDlgItemText(hwnd, _int_Persona_Sexo, "");
 			SetDlgItemText(hwnd, _int_Persona_GrupoOcupacional, "");
 			SetDlgItemText(hwnd, _int_Persona_PerfilRiesgo, "");
-			SetDlgItemText(hwnd, _int_Persona_PathDocumentoIdentidad, "");
+			SetDlgItemText(hwnd, _int_Persona_PathDocumentoIdentidad, "TEXT");
 			GuardarPersona();
 			MessageBox(hwnd, "Se ha registrado la Persona Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
 		}

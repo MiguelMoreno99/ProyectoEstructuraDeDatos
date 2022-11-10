@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string.h>
 #include "cValidadores.h"
+#include <fstream>
 using namespace std;
 
 class Usuario {
@@ -15,7 +16,7 @@ private:
 	string String_Usuario_Nombre;
 	string String_Usuario_ApellidoPaterno;
 	string String_Usuario_ApellidoMaterno;
-	int id = 0;
+	int id;
 	bool err = false;
 	Usuario* Ptr_Usuario_anterior = NULL;
 	Usuario* Ptr_Usuario_siguiente = NULL;
@@ -50,7 +51,7 @@ public:
 			MessageBox(hwnd, "Se ha registrado el Usuario Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
 		}
 		else{
-			MessageBox(hwnd, "Verifique que los datos ingresados sean válidos!", "ERROR", MB_ICONERROR);
+			MessageBox(hwnd, "Verifique que los datos ingresados sean válidos y no se repitan!", "ERROR", MB_ICONERROR);
 		}
 	}
 
@@ -59,6 +60,7 @@ public:
 		if (PtrOrigenUsuario == NULL) {
 			PtrOrigenUsuario = new Usuario;
 			PtrOrigenUsuario->id++;
+			id++;
 			PtrOrigenUsuario->String_Usuario_Usuario = String_Usuario_Usuario;
 			PtrOrigenUsuario->String_Usuario_Contraseña = String_Usuario_Contraseña;
 			PtrOrigenUsuario->String_Usuario_Nombre = String_Usuario_Nombre;
@@ -74,6 +76,7 @@ public:
 			}
 			PtrAuxiliarUsuario->Ptr_Usuario_siguiente = new Usuario;
 			PtrAuxiliarUsuario->Ptr_Usuario_siguiente->id = PtrAuxiliarUsuario->id + 1;
+			id++;
 			PtrAuxiliarUsuario->Ptr_Usuario_siguiente->String_Usuario_Usuario = String_Usuario_Usuario;
 			PtrAuxiliarUsuario->Ptr_Usuario_siguiente->String_Usuario_Contraseña = String_Usuario_Contraseña;
 			PtrAuxiliarUsuario->Ptr_Usuario_siguiente->String_Usuario_Nombre = String_Usuario_Nombre;
@@ -124,6 +127,59 @@ public:
 
 		}
 
+	}
+
+	void GuardarUsuariosTxt(HWND hwnd) {
+
+		if (PtrOrigenUsuario != NULL) {
+			ofstream OfGuardar("CapturaUsuario.txt");
+			if (id == 1) {
+				OfGuardar << PtrOrigenUsuario->String_Usuario_Usuario << "\n";
+				OfGuardar << PtrOrigenUsuario->String_Usuario_Contraseña << "\n";
+				OfGuardar << PtrOrigenUsuario->String_Usuario_Nombre << "\n";
+				OfGuardar << PtrOrigenUsuario->String_Usuario_ApellidoPaterno << "\n";
+				OfGuardar << PtrOrigenUsuario->String_Usuario_ApellidoMaterno << "\n";
+				OfGuardar << PtrOrigenUsuario->id << "\n";
+			}
+			else {
+				PtrAuxiliarUsuario = PtrOrigenUsuario;
+				while (PtrAuxiliarUsuario != NULL) {
+					OfGuardar << PtrAuxiliarUsuario->String_Usuario_Usuario << "\n";
+					OfGuardar << PtrAuxiliarUsuario->String_Usuario_Contraseña << "\n";
+					OfGuardar << PtrAuxiliarUsuario->String_Usuario_Nombre << "\n";
+					OfGuardar << PtrAuxiliarUsuario->String_Usuario_ApellidoPaterno << "\n";
+					OfGuardar << PtrAuxiliarUsuario->String_Usuario_ApellidoMaterno << "\n";
+					OfGuardar << PtrAuxiliarUsuario->id << "\n";
+					PtrAuxiliarUsuario = PtrAuxiliarUsuario->Ptr_Usuario_siguiente;
+				}
+			}
+		OfGuardar.close();
+		}
+	}
+
+	void CargarUsuariosTxt(HWND hwnd) {
+
+			ifstream IfCargar("CapturaUsuario.txt", ios::app);
+			while (!IfCargar.eof()) {
+				IfCargar >> String_Usuario_Usuario;
+				IfCargar >> String_Usuario_Contraseña;
+				IfCargar >> String_Usuario_Nombre;
+				IfCargar >> String_Usuario_ApellidoPaterno;
+				IfCargar >> String_Usuario_ApellidoMaterno;
+				IfCargar >> id;
+				if (String_Usuario_ApellidoMaterno == "") {
+					break;
+				}
+				else {
+					GuardarUsuario();
+					String_Usuario_Usuario = "";
+					String_Usuario_Contraseña = "";
+					String_Usuario_Nombre = "";
+					String_Usuario_ApellidoPaterno = "";
+					String_Usuario_ApellidoMaterno = "";
+				}
+			}
+			IfCargar.close();
 	}
 
 }*PtrOrigenUsuario=NULL, * PtrAuxiliarUsuario = NULL;
