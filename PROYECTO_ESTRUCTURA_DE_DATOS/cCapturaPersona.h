@@ -8,7 +8,7 @@ using namespace std;
 
 class Persona {
 
-public:
+private:
 	// 16 Variables
 	string String_Persona_ApellidoPaterno;
 	string String_Persona_ApellidoMaterno;
@@ -31,6 +31,7 @@ public:
 	Persona* Ptr_Persona_anterior = NULL;
 	Persona* Ptr_Persona_siguiente = NULL;
 
+public:
 	//Funcciones
 	void PasarInformacionPersona(HWND hwnd, int _int_Persona_ApellidoPaterno,
 		int _int_Persona_ApellidoMaterno,
@@ -46,8 +47,7 @@ public:
 		int _int_Persona_Telefono,
 		int _int_Persona_Sexo,
 		int _int_Persona_GrupoOcupacional,
-		int _int_Persona_PerfilRiesgo,
-		int _int_Persona_PathDocumentoIdentidad) {
+		int _int_Persona_PerfilRiesgo) {
 
 		err = false;
 		err = ValidacionTexto(hwnd, _int_Persona_ApellidoPaterno, err);
@@ -65,7 +65,9 @@ public:
 		err = ValidacionTexto(hwnd, _int_Persona_Sexo, err);
 		err = ValidacionTexto(hwnd, _int_Persona_GrupoOcupacional, err);
 		err = ValidacionTexto(hwnd, _int_Persona_PerfilRiesgo, err);
-		err = ValidacionTexto(hwnd, _int_Persona_PathDocumentoIdentidad, err);
+		if (String_Persona_PathDocumentoIdentidad==""){
+			err = true;
+		}
 
 		if (!err) {
 			String_Persona_ApellidoPaterno = ValidacionCapturaTexto(hwnd, _int_Persona_ApellidoPaterno);
@@ -83,7 +85,6 @@ public:
 			String_Persona_Sexo = ValidacionCapturaTexto(hwnd, _int_Persona_Sexo);
 			String_Persona_GrupoOcupacional = ValidacionCapturaTexto(hwnd, _int_Persona_GrupoOcupacional);
 			String_Persona_PerfilRiesgo = ValidacionCapturaTexto(hwnd, _int_Persona_PerfilRiesgo);
-			String_Persona_PathDocumentoIdentidad = ValidacionCapturaTexto(hwnd, _int_Persona_PathDocumentoIdentidad);
 			SetDlgItemText(hwnd, _int_Persona_ApellidoPaterno, "");
 			SetDlgItemText(hwnd, _int_Persona_ApellidoMaterno, "");
 			SetDlgItemText(hwnd, _int_Persona_Nombre, "");
@@ -99,13 +100,62 @@ public:
 			SetDlgItemText(hwnd, _int_Persona_Sexo, "");
 			SetDlgItemText(hwnd, _int_Persona_GrupoOcupacional, "");
 			SetDlgItemText(hwnd, _int_Persona_PerfilRiesgo, "");
-			SetDlgItemText(hwnd, _int_Persona_PathDocumentoIdentidad, "TEXT");
+			CargarInfoComboBoxPersona(hwnd);
 			GuardarPersona();
+			String_Persona_PathDocumentoIdentidad = "";
 			MessageBox(hwnd, "Se ha registrado la Persona Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
 		}
 		else {
 			MessageBox(hwnd, "Verifique que los datos ingresados sean válidos!", "ERROR", MB_ICONERROR);
 		}
+	}
+
+	void GuardarImagenPersona(HWND hwnd) {
+
+		OPENFILENAME OfnPersonaDocumento;
+		ZeroMemory(&OfnPersonaDocumento, sizeof(OPENFILENAME));
+		char cDirFile[MAX_PATH] = "";
+		OfnPersonaDocumento.hwndOwner = hwnd;
+		OfnPersonaDocumento.lpstrFile = cDirFile;
+		OfnPersonaDocumento.lStructSize = sizeof(OPENFILENAME);
+		OfnPersonaDocumento.nMaxFile = MAX_PATH;
+		OfnPersonaDocumento.lpstrDefExt = "txt";
+		OfnPersonaDocumento.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_NOCHANGEDIR;
+		OfnPersonaDocumento.lpstrFilter = "ARCHIVOS BITMAP\0*.bmp*\0";
+		if (GetOpenFileName(&OfnPersonaDocumento)) {
+			HWND hDocumentoIdeintidad = GetDlgItem(hwnd, PC_PERSONA_DOCUMENTOIDENTIDAD);
+			HBITMAP hpcDocumentoIdentidad = (HBITMAP)LoadImage(NULL, cDirFile, IMAGE_BITMAP, 150, 150, LR_LOADFROMFILE);
+			SendMessage(hDocumentoIdeintidad, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hpcDocumentoIdentidad);
+			String_Persona_PathDocumentoIdentidad = cDirFile;
+			DeleteObject(hpcDocumentoIdentidad);
+		}
+	}
+
+	void CargarInfoComboBoxPersona(HWND hwnd) {
+
+		HWND hComboBox;
+		hComboBox = GetDlgItem(hwnd, CB_PERSONA_ESTADOCIVIL);
+		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"SOLTERO(A)");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"CASADO(A)");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"DIVORCIADO(A)");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"VIUDO(A)");
+		hComboBox = GetDlgItem(hwnd, CB_PERSONA_SEXO);
+		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"MASCULINO");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"FEMENINO");
+		hComboBox = GetDlgItem(hwnd, CB_PERSONA_GRUPOOCUPACIONAL);
+		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"ESTUDIANTE");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"TRABAJADOR");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"DESEMPLEADO");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"AMA(O) DE CASA");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"OTRO");
+		hComboBox = GetDlgItem(hwnd, CB_PERSONA_PERFILRIESGO);
+		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"ALTO");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"MODERADO");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"BAJO");
 	}
 
 	void GuardarPersona() {

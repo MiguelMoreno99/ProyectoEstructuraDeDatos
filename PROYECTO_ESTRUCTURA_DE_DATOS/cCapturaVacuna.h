@@ -8,7 +8,7 @@ using namespace std;
 
 class Vacuna {
 
-public:
+private:
 	// 5 Variables
 	string String_Vacuna_Tipo;
 	string String_Vacuna_Marca;
@@ -20,6 +20,7 @@ public:
 	Vacuna* Ptr_Vacuna_anterior = NULL;
 	Vacuna* Ptr_Vacuna_siguiente = NULL;
 
+public:
 	//Funcciones
 	void PasarInformacionVacuna(HWND hwnd, int _int_Vacuna_Tipo,
 		int _int_Vacuna_Marca,
@@ -45,12 +46,42 @@ public:
 			SetDlgItemText(hwnd, _int_Vacuna_NoDosis, "");
 			SetDlgItemText(hwnd, _int_Vacuna_Precio, "");
 			SetDlgItemText(hwnd, _int_Vacuna_Desc, "");
+			CargarInfoComboBoxVacuna(hwnd);
 			GuardarVacuna();
 			MessageBox(hwnd, "Se ha registrado la Vacuna Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
 		}
 		else {
 			MessageBox(hwnd, "Verifique que los datos ingresados sean válidos!", "ERROR", MB_ICONERROR);
 		}
+	}
+
+	void CargarInfoComboBoxVacuna(HWND hwnd) {
+
+		HWND hComboBox;			
+		hComboBox = GetDlgItem(hwnd, CB_VACUNA_MARCA);
+		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"PFIZER-BIONTECH");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"MODERNA");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"NOVAVAX");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"JANSSEN DE JOHNSON");
+		hComboBox = GetDlgItem(hwnd, CB_VACUNA_DOSIS);
+		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"1");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"2");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"3");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"4");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"5");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"6");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"7");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"8");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"9");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"10");
+		hComboBox = GetDlgItem(hwnd, CB_VACUNA_TIPO);
+		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"ARN MENSAJERO");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"SUB-UNIDADES PROTEICAS");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"VECTOR VIRAL");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"OTRO");
 	}
 
 	void GuardarVacuna() {

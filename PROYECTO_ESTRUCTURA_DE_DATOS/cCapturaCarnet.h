@@ -8,7 +8,7 @@ using namespace std;
 
 class Carnet {
 
-public:
+private:
 	// 6 Variables
 	string String_Carnet_CURP;
 	string String_Carnet_IdVacuna;
@@ -20,7 +20,7 @@ public:
 	bool err = false;
 	Carnet* Ptr_Carnet_anterior = NULL;
 	Carnet* Ptr_Carnet_siguiente = NULL;
-
+public:
 	//Funcciones
 	void PasarInformacionCarnet(HWND hwnd, int _int_Carnet_CURP,
 		int _int_Carnet_IdVacuna,
@@ -50,12 +50,40 @@ public:
 			SetDlgItemText(hwnd, _int_Carnet_FechaDosis, "");
 			SetDlgItemText(hwnd, _int_Carnet_NoDosis, "");
 			SetDlgItemText(hwnd, _int_Carnet_CentroVacunacion, "");
+			CargarInfoComboBoxCarnet(hwnd);
 			GuardarCarnet();
 			MessageBox(hwnd, "Se ha registrado el Carnet Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
 		}
 		else {
 			MessageBox(hwnd, "Verifique que los datos ingresados sean válidos!", "ERROR", MB_ICONERROR);
 		}
+	}
+
+	void CargarInfoComboBoxCarnet(HWND hwnd) {
+
+		HWND hComboBox;
+		hComboBox = GetDlgItem(hwnd, CB_CARNET_IDVACUNA);
+		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"1");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"2");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"3");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"4");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"...");
+		hComboBox = GetDlgItem(hwnd, CB_CARNET_DOSIS);
+		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"1 RA");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"2 DA");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"3 RA");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"4 TA");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"5 TA");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"6 TA");
+		hComboBox = GetDlgItem(hwnd, CB_CARNET_CENTROVACUNACION);
+		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"NORTE");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"CENTRO");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"SUR");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"ESTE");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"OESTE");
 	}
 
 	void GuardarCarnet() {

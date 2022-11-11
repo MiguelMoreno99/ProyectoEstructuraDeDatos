@@ -20,7 +20,6 @@ private:
 	bool err = false;
 	Usuario* Ptr_Usuario_anterior = NULL;
 	Usuario* Ptr_Usuario_siguiente = NULL;
-
 public:
 	//Funcciones
 	void PasarInformacionUsuario(HWND hwnd, int _int_Usuario_Usuario,
