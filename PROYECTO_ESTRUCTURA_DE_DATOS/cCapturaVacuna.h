@@ -22,11 +22,7 @@ private:
 
 public:
 	//Funcciones
-	void PasarInformacionVacuna(HWND hwnd, int _int_Vacuna_Tipo,
-		int _int_Vacuna_Marca,
-		int _int_Vacuna_NoDosis,
-		int _int_Vacuna_Precio,
-		int _int_Vacuna_Desc) {
+	void PasarInformacionVacuna(HWND hwnd, int _int_Vacuna_Tipo, int _int_Vacuna_Marca, int _int_Vacuna_NoDosis, int _int_Vacuna_Precio, int _int_Vacuna_Desc) {
 
 		err = false;
 		err = ValidacionTexto(hwnd, _int_Vacuna_Tipo, err);

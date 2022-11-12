@@ -22,11 +22,7 @@ private:
 	Usuario* Ptr_Usuario_siguiente = NULL;
 public:
 	//Funcciones
-	void PasarInformacionUsuario(HWND hwnd, int _int_Usuario_Usuario,
-		int _int_Usuario_Contraseña,
-		int _int_Usuario_Nombre,
-		int _int_Usuario_ApellidoPaterno,
-		int _int_Usuario_ApellidoMaterno) {
+	void PasarInformacionUsuario(HWND hwnd, int _int_Usuario_Usuario, int _int_Usuario_Contraseña, int _int_Usuario_Nombre, int _int_Usuario_ApellidoPaterno, int _int_Usuario_ApellidoMaterno) {
 
 		err = false;
 		err = ValidacionTexto(hwnd, _int_Usuario_Usuario, err);
@@ -35,22 +31,24 @@ public:
 		err = ValidacionTexto(hwnd, _int_Usuario_ApellidoPaterno, err);
 		err = ValidacionTexto(hwnd, _int_Usuario_ApellidoMaterno, err);
 
-		if (!err){
+		if (!err) {
 			String_Usuario_Usuario = ValidacionCapturaTexto(hwnd, _int_Usuario_Usuario);
 			String_Usuario_Contraseña = ValidacionCapturaTexto(hwnd, _int_Usuario_Contraseña);
 			String_Usuario_Nombre = ValidacionCapturaTexto(hwnd, _int_Usuario_Nombre);
 			String_Usuario_ApellidoPaterno = ValidacionCapturaTexto(hwnd, _int_Usuario_ApellidoPaterno);
 			String_Usuario_ApellidoMaterno = ValidacionCapturaTexto(hwnd, _int_Usuario_ApellidoMaterno);
-			SetDlgItemText(hwnd, _int_Usuario_Usuario, "");
-			SetDlgItemText(hwnd, _int_Usuario_Contraseña, "");
-			SetDlgItemText(hwnd, _int_Usuario_Nombre, "");
-			SetDlgItemText(hwnd, _int_Usuario_ApellidoPaterno, "");
-			SetDlgItemText(hwnd, _int_Usuario_ApellidoMaterno, "");
-			GuardarUsuario();
-			MessageBox(hwnd, "Se ha registrado el Usuario Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
+			if (BuscarUsuarioRepetido(hwnd, String_Usuario_Usuario)) {
+				SetDlgItemText(hwnd, _int_Usuario_Usuario, "");
+				SetDlgItemText(hwnd, _int_Usuario_Contraseña, "");
+				SetDlgItemText(hwnd, _int_Usuario_Nombre, "");
+				SetDlgItemText(hwnd, _int_Usuario_ApellidoPaterno, "");
+				SetDlgItemText(hwnd, _int_Usuario_ApellidoMaterno, "");
+				GuardarUsuario();
+				MessageBox(hwnd, "Se ha registrado el Usuario Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
+			}
 		}
 		else{
-			MessageBox(hwnd, "Verifique que los datos ingresados sean válidos y no se repitan!", "ERROR", MB_ICONERROR);
+			MessageBox(hwnd, "Verifique que los datos ingresados sean válidos!", "ERROR", MB_ICONERROR);
 		}
 	}
 
@@ -179,6 +177,26 @@ public:
 				}
 			}
 			IfCargar.close();
+	}
+
+	bool BuscarUsuarioRepetido(HWND hwnd, string _String_Usuario_Usuario) {
+
+		if (PtrOrigenUsuario!=NULL){
+			PtrAuxiliarUsuario = PtrOrigenUsuario;
+			do{
+				if (PtrAuxiliarUsuario->String_Usuario_Usuario == _String_Usuario_Usuario){
+					MessageBox(hwnd,"Ya hay un Usuario registrado con ese Nombre! Intenta otro diferente.","ERROR",MB_ICONEXCLAMATION);
+					return false;
+				}
+				else{
+					PtrAuxiliarUsuario = PtrAuxiliarUsuario->Ptr_Usuario_siguiente;
+				}
+			} while (PtrAuxiliarUsuario!=NULL);
+			return true;
+		}
+		else{
+			return true;
+		}
 	}
 
 }*PtrOrigenUsuario=NULL, * PtrAuxiliarUsuario = NULL;

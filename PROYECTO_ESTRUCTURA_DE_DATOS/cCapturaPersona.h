@@ -33,21 +33,7 @@ private:
 
 public:
 	//Funcciones
-	void PasarInformacionPersona(HWND hwnd, int _int_Persona_ApellidoPaterno,
-		int _int_Persona_ApellidoMaterno,
-		int _int_Persona_Nombre,
-		int _int_Persona_CURP,
-		int _int_Persona_RFC,
-		int _int_Persona_FechaNacimiento,
-		int _int_Persona_Calle,
-		int _int_Persona_Colonia,
-		int _int_Persona_Municipio,
-		int _int_Persona_Estado,
-		int _int_Persona_EstadoCivil,
-		int _int_Persona_Telefono,
-		int _int_Persona_Sexo,
-		int _int_Persona_GrupoOcupacional,
-		int _int_Persona_PerfilRiesgo) {
+	void PasarInformacionPersona(HWND hwnd, int _int_Persona_ApellidoPaterno, int _int_Persona_ApellidoMaterno, int _int_Persona_Nombre, int _int_Persona_CURP, int _int_Persona_RFC, int _int_Persona_FechaNacimiento, int _int_Persona_Calle, int _int_Persona_Colonia, int _int_Persona_Municipio, int _int_Persona_Estado, int _int_Persona_EstadoCivil, int _int_Persona_Telefono, int _int_Persona_Sexo, int _int_Persona_GrupoOcupacional, int _int_Persona_PerfilRiesgo) {
 
 		err = false;
 		err = ValidacionTexto(hwnd, _int_Persona_ApellidoPaterno, err);
@@ -85,25 +71,27 @@ public:
 			String_Persona_Sexo = ValidacionCapturaTexto(hwnd, _int_Persona_Sexo);
 			String_Persona_GrupoOcupacional = ValidacionCapturaTexto(hwnd, _int_Persona_GrupoOcupacional);
 			String_Persona_PerfilRiesgo = ValidacionCapturaTexto(hwnd, _int_Persona_PerfilRiesgo);
-			SetDlgItemText(hwnd, _int_Persona_ApellidoPaterno, "");
-			SetDlgItemText(hwnd, _int_Persona_ApellidoMaterno, "");
-			SetDlgItemText(hwnd, _int_Persona_Nombre, "");
-			SetDlgItemText(hwnd, _int_Persona_CURP, "");
-			SetDlgItemText(hwnd, _int_Persona_RFC, "");
-			SetDlgItemText(hwnd, _int_Persona_FechaNacimiento, "");
-			SetDlgItemText(hwnd, _int_Persona_Calle, "");
-			SetDlgItemText(hwnd, _int_Persona_Colonia, "");
-			SetDlgItemText(hwnd, _int_Persona_Municipio, "");
-			SetDlgItemText(hwnd, _int_Persona_Estado, "");
-			SetDlgItemText(hwnd, _int_Persona_EstadoCivil, "");
-			SetDlgItemText(hwnd, _int_Persona_Telefono, "");
-			SetDlgItemText(hwnd, _int_Persona_Sexo, "");
-			SetDlgItemText(hwnd, _int_Persona_GrupoOcupacional, "");
-			SetDlgItemText(hwnd, _int_Persona_PerfilRiesgo, "");
-			CargarInfoComboBoxPersona(hwnd);
-			GuardarPersona();
-			String_Persona_PathDocumentoIdentidad = "";
-			MessageBox(hwnd, "Se ha registrado la Persona Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
+			if (BuscarCURPyRFCRepetido(hwnd, String_Persona_CURP, String_Persona_RFC)){
+				SetDlgItemText(hwnd, _int_Persona_ApellidoPaterno, "");
+				SetDlgItemText(hwnd, _int_Persona_ApellidoMaterno, "");
+				SetDlgItemText(hwnd, _int_Persona_Nombre, "");
+				SetDlgItemText(hwnd, _int_Persona_CURP, "");
+				SetDlgItemText(hwnd, _int_Persona_RFC, "");
+				SetDlgItemText(hwnd, _int_Persona_FechaNacimiento, "");
+				SetDlgItemText(hwnd, _int_Persona_Calle, "");
+				SetDlgItemText(hwnd, _int_Persona_Colonia, "");
+				SetDlgItemText(hwnd, _int_Persona_Municipio, "");
+				SetDlgItemText(hwnd, _int_Persona_Estado, "");
+				SetDlgItemText(hwnd, _int_Persona_EstadoCivil, "");
+				SetDlgItemText(hwnd, _int_Persona_Telefono, "");
+				SetDlgItemText(hwnd, _int_Persona_Sexo, "");
+				SetDlgItemText(hwnd, _int_Persona_GrupoOcupacional, "");
+				SetDlgItemText(hwnd, _int_Persona_PerfilRiesgo, "");
+				CargarInfoComboBoxPersona(hwnd);
+				GuardarPersona();
+				String_Persona_PathDocumentoIdentidad = "";
+				MessageBox(hwnd, "Se ha registrado la Persona Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
+			}
 		}
 		else {
 			MessageBox(hwnd, "Verifique que los datos ingresados sean válidos!", "ERROR", MB_ICONERROR);
@@ -210,6 +198,26 @@ public:
 		}
 		PtrAuxiliarPersona = PtrOrigenPersona;
 		return;
+	}
+
+	bool BuscarCURPyRFCRepetido(HWND hwnd, string _String_Persona_CURP, string _String_Persona_RFC) {
+
+		if (PtrOrigenPersona != NULL) {
+			PtrAuxiliarPersona = PtrOrigenPersona;
+			do {
+				if ((PtrAuxiliarPersona->String_Persona_CURP == _String_Persona_CURP) || (PtrAuxiliarPersona->String_Persona_RFC == _String_Persona_RFC)) {
+					MessageBox(hwnd, "Ya hay un	CURP o RFC, Verifique los datos Capturados.", "ERROR", MB_ICONEXCLAMATION);
+					return false;
+				}
+				else {
+					PtrAuxiliarPersona = PtrAuxiliarPersona->Ptr_Persona_siguiente;
+				}
+			} while (PtrAuxiliarPersona != NULL);
+			return true;
+		}
+		else {
+			return true;
+		}
 	}
 
 }*PtrOrigenPersona = NULL, * PtrAuxiliarPersona = NULL;
