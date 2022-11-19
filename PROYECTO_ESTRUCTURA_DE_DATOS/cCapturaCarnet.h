@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string.h>
 #include "cValidadores.h"
+#include "cCapturaVacuna.h"
 using namespace std;
 
 class Carnet {
@@ -22,20 +23,15 @@ private:
 	Carnet* Ptr_Carnet_siguiente = NULL;
 public:
 	//Funcciones
-	void PasarInformacionCarnet(HWND hwnd, int _int_Carnet_CURP,
-		int _int_Carnet_IdVacuna,
-		int _int_Carnet_Lote,
-		int _int_Carnet_FechaDosis,
-		int _int_Carnet_NoDosis,
-		int _int_Carnet_CentroVacunacion) {
+	void PasarInformacionCarnet(HWND hwnd, int _int_Carnet_CURP, int _int_Carnet_IdVacuna, int _int_Carnet_Lote, int _int_Carnet_FechaDosis, int _int_Carnet_NoDosis, int _int_Carnet_CentroVacunacion) {
 
 		err = false;
-		err = ValidacionTexto(hwnd, _int_Carnet_CURP, err);
-		err = ValidacionTexto(hwnd, _int_Carnet_IdVacuna, err);
-		err = ValidacionTexto(hwnd, _int_Carnet_Lote, err);
-		err = ValidacionTexto(hwnd, _int_Carnet_FechaDosis, err);
-		err = ValidacionTexto(hwnd, _int_Carnet_NoDosis, err);
-		err = ValidacionTexto(hwnd, _int_Carnet_CentroVacunacion, err);
+		err = ValidacionLetraYNumeroSinEspacios(hwnd, _int_Carnet_CURP, err);
+		err = ValidacionMayorACero(hwnd, _int_Carnet_IdVacuna, err);
+		err = ValidacionLetraYNumeroSinEspacios(hwnd, _int_Carnet_Lote, err);
+		err = ValidacionFechaMenorAActual(hwnd, _int_Carnet_FechaDosis, err);
+		err = ValidacionMayorACero(hwnd, _int_Carnet_NoDosis, err);
+		err = ValidacionLetraSinEspacios(hwnd, _int_Carnet_CentroVacunacion, err);
 
 		if (!err) {
 			String_Carnet_CURP = ValidacionCapturaTexto(hwnd, _int_Carnet_CURP);
@@ -64,19 +60,31 @@ public:
 		HWND hComboBox;
 		hComboBox = GetDlgItem(hwnd, CB_CARNET_IDVACUNA);
 		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+		if (PtrOrigenVacuna!=NULL){
+			PtrAuxiliarVacuna = PtrOrigenVacuna;
+			int idVacuna = 1;
+			while (PtrAuxiliarVacuna!=NULL){
+				char cidVacuna[10] = "";
+				_itoa_s(idVacuna, cidVacuna, 10);
+				SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)cidVacuna);
+				idVacuna++;
+				PtrAuxiliarVacuna = PtrAuxiliarVacuna->Ptr_Vacuna_siguiente;
+			}
+		}else{
+			MessageBox(hwnd, "PRIMERO DEBE DE AGREGAR AL MENOS UNA VACUNA!", "PRECAUCIÓN", MB_ICONWARNING);
+		}
+		hComboBox = GetDlgItem(hwnd, CB_CARNET_DOSIS);
+		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"1");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"2");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"3");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"4");
-		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"...");
-		hComboBox = GetDlgItem(hwnd, CB_CARNET_DOSIS);
-		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
-		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"1 RA");
-		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"2 DA");
-		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"3 RA");
-		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"4 TA");
-		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"5 TA");
-		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"6 TA");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"5");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"6");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"7");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"8");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"9");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"10");
 		hComboBox = GetDlgItem(hwnd, CB_CARNET_CENTROVACUNACION);
 		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"NORTE");

@@ -98,12 +98,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 				switch (LOWORD(wParam)) {
 					case BTN_INICIOSESION_INGRESAR: {
 						Usuario1.ValidarUsuario(hInicioSesion, hVentanaPrincipal,TXTB_INICIOSESION_USUARIO, TXTB_INICIOSESION_CONTRASENA);
+						Usuario1.PasarNombreUsuarioVentana(hVentanaPrincipal, LBL_NOMBREUSUARIO1);
+						Usuario1.PasarNombreUsuarioVentana(hRegistroVacunas, LBL_NOMBREUSUARIO2);
+						Usuario1.PasarNombreUsuarioVentana(hRegistroPersonas, LBL_NOMBREUSUARIO3);
+						Usuario1.PasarNombreUsuarioVentana(hRegistroCarnets, LBL_NOMBREUSUARIO4);
 					}break;
 					case BTN_INICIOSESION_SALIR: {
 						DestroyWindow(hwnd);
 					}break;
 					case BTN_INICIOSESION_REGISTRARSE: {
-						ShowWindow(hInicioSesion, SW_HIDE);
+						ShowWindow(hwnd, SW_HIDE);
 						ShowWindow(hInicioSesionRegistro, SW_SHOW);
 					}break;
 				}
@@ -131,16 +135,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 					TXTB_INICIOSESION_REGISTRO_NOMBRE, TXTB_INICIOSESION_REGISTRO_APELLIDOPATERNO, TXTB_INICIOSESION_REGISTRO_APELLIDOMATERNO);
 				}break;
 				case BTN_INICIOSESION_REGISTRO_SALIR: {
+					ShowWindow(hwnd, SW_HIDE);
 					ShowWindow(hInicioSesion, SW_SHOW);
-					ShowWindow(hInicioSesionRegistro, SW_HIDE);
 				}break;
 			}
 		}break;
 		case WM_CLOSE: {
-			DestroyWindow(hwnd);
-		}break;
-		case WM_DESTROY: {
-			PostQuitMessage(0);
+			ShowWindow(hwnd, SW_HIDE);
+			ShowWindow(hInicioSesion, SW_SHOW);
 		}break;
 		}
 		return FALSE;
@@ -188,7 +190,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 				ShowWindow(hVentanaPrincipal, SW_SHOW);
 			}break;
 			case BTN_CARNET_CAPTURAR: {
-				Carnet1.PasarInformacionCarnet(hwnd, TXTB_CARNET_CURP, CB_CARNET_IDVACUNA, TXTB_CARNET_LOTE,
+				Carnet1.PasarInformacionCarnet(hwnd, CB_CARNET_CURP, CB_CARNET_IDVACUNA, TXTB_CARNET_LOTE,
 				DTP_CARNET_FECHADOSIS, CB_CARNET_DOSIS, CB_CARNET_CENTROVACUNACION);
 			}break;
 			}

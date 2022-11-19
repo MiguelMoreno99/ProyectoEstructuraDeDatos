@@ -36,21 +36,21 @@ public:
 	void PasarInformacionPersona(HWND hwnd, int _int_Persona_ApellidoPaterno, int _int_Persona_ApellidoMaterno, int _int_Persona_Nombre, int _int_Persona_CURP, int _int_Persona_RFC, int _int_Persona_FechaNacimiento, int _int_Persona_Calle, int _int_Persona_Colonia, int _int_Persona_Municipio, int _int_Persona_Estado, int _int_Persona_EstadoCivil, int _int_Persona_Telefono, int _int_Persona_Sexo, int _int_Persona_GrupoOcupacional, int _int_Persona_PerfilRiesgo) {
 
 		err = false;
-		err = ValidacionTexto(hwnd, _int_Persona_ApellidoPaterno, err);
-		err = ValidacionTexto(hwnd, _int_Persona_ApellidoMaterno, err);
-		err = ValidacionTexto(hwnd, _int_Persona_Nombre, err);
-		err = ValidacionTexto(hwnd, _int_Persona_CURP, err);
-		err = ValidacionTexto(hwnd, _int_Persona_RFC, err);
-		err = ValidacionTexto(hwnd, _int_Persona_FechaNacimiento, err);
-		err = ValidacionTexto(hwnd, _int_Persona_Calle, err);
-		err = ValidacionTexto(hwnd, _int_Persona_Colonia, err);
-		err = ValidacionTexto(hwnd, _int_Persona_Municipio, err);
-		err = ValidacionTexto(hwnd, _int_Persona_Estado, err);
-		err = ValidacionTexto(hwnd, _int_Persona_EstadoCivil, err);
-		err = ValidacionTexto(hwnd, _int_Persona_Telefono, err);
-		err = ValidacionTexto(hwnd, _int_Persona_Sexo, err);
-		err = ValidacionTexto(hwnd, _int_Persona_GrupoOcupacional, err);
-		err = ValidacionTexto(hwnd, _int_Persona_PerfilRiesgo, err);
+		err = ValidacionLetraConEspacios(hwnd, _int_Persona_ApellidoPaterno, err);
+		err = ValidacionLetraConEspacios(hwnd, _int_Persona_ApellidoMaterno, err);
+		err = ValidacionLetraConEspacios(hwnd, _int_Persona_Nombre, err);
+		err = ValidacionLetraYNumeroSinEspacios(hwnd, _int_Persona_CURP, err);
+		err = ValidacionLetraYNumeroSinEspacios(hwnd, _int_Persona_RFC, err);
+		err = ValidacionFechaMenorAActual(hwnd, _int_Persona_FechaNacimiento, err);
+		err = ValidacionLetraYNumeroConEspacios(hwnd, _int_Persona_Calle, err);
+		err = ValidacionLetraYNumeroConEspacios(hwnd, _int_Persona_Colonia, err);
+		err = ValidacionLetraYNumeroConEspacios(hwnd, _int_Persona_Municipio, err);
+		err = ValidacionLetraYNumeroConEspacios(hwnd, _int_Persona_Estado, err);
+		err = ValidacionLetraSinEspacios(hwnd, _int_Persona_EstadoCivil, err);
+		err = ValidacionMayorACero(hwnd, _int_Persona_Telefono, err);
+		err = ValidacionLetraSinEspacios(hwnd, _int_Persona_Sexo, err);
+		err = ValidacionLetraConEspacios(hwnd, _int_Persona_GrupoOcupacional, err);
+		err = ValidacionLetraSinEspacios(hwnd, _int_Persona_PerfilRiesgo, err);
 		if (String_Persona_PathDocumentoIdentidad==""){
 			err = true;
 		}
@@ -67,7 +67,7 @@ public:
 			String_Persona_Municipio = ValidacionCapturaTexto(hwnd, _int_Persona_Municipio);
 			String_Persona_Estado = ValidacionCapturaTexto(hwnd, _int_Persona_Estado);
 			String_Persona_EstadoCivil = ValidacionCapturaTexto(hwnd, _int_Persona_EstadoCivil);
-			String_Persona_Telefono = ValidacionCapturaTexto(hwnd, _int_Persona_Telefono);
+			String_Persona_Telefono = ValidacionANumero(hwnd, _int_Persona_Telefono);
 			String_Persona_Sexo = ValidacionCapturaTexto(hwnd, _int_Persona_Sexo);
 			String_Persona_GrupoOcupacional = ValidacionCapturaTexto(hwnd, _int_Persona_GrupoOcupacional);
 			String_Persona_PerfilRiesgo = ValidacionCapturaTexto(hwnd, _int_Persona_PerfilRiesgo);
@@ -124,10 +124,10 @@ public:
 		HWND hComboBox;
 		hComboBox = GetDlgItem(hwnd, CB_PERSONA_ESTADOCIVIL);
 		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
-		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"SOLTERO(A)");
-		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"CASADO(A)");
-		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"DIVORCIADO(A)");
-		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"VIUDO(A)");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"SOLTERO");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"CASADO");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"DIVORCIADO");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"VIUDO");
 		hComboBox = GetDlgItem(hwnd, CB_PERSONA_SEXO);
 		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"MASCULINO");
@@ -137,7 +137,7 @@ public:
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"ESTUDIANTE");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"TRABAJADOR");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"DESEMPLEADO");
-		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"AMA(O) DE CASA");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"AMA DE CASA");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"OTRO");
 		hComboBox = GetDlgItem(hwnd, CB_PERSONA_PERFILRIESGO);
 		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);

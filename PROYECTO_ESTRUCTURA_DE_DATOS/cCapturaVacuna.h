@@ -9,7 +9,7 @@ using namespace std;
 class Vacuna {
 
 private:
-	// 5 Variables
+	// 5 Variables Privadas
 	string String_Vacuna_Tipo;
 	string String_Vacuna_Marca;
 	string String_Vacuna_NoDosis;
@@ -17,25 +17,27 @@ private:
 	string String_Vacuna_Desc;
 	int id;
 	bool err = false;
+
+public:
+	// 2 Variables Publicas
 	Vacuna* Ptr_Vacuna_anterior = NULL;
 	Vacuna* Ptr_Vacuna_siguiente = NULL;
 
-public:
 	//Funcciones
 	void PasarInformacionVacuna(HWND hwnd, int _int_Vacuna_Tipo, int _int_Vacuna_Marca, int _int_Vacuna_NoDosis, int _int_Vacuna_Precio, int _int_Vacuna_Desc) {
 
 		err = false;
-		err = ValidacionTexto(hwnd, _int_Vacuna_Tipo, err);
-		err = ValidacionTexto(hwnd, _int_Vacuna_Marca, err);
-		err = ValidacionTexto(hwnd, _int_Vacuna_NoDosis, err);
-		err = ValidacionTexto(hwnd, _int_Vacuna_Precio, err);
-		err = ValidacionTexto(hwnd, _int_Vacuna_Desc, err);
+		err = ValidacionLetraConEspacios(hwnd, _int_Vacuna_Tipo, err);
+		err = ValidacionLetraConEspacios(hwnd, _int_Vacuna_Marca, err);
+		err = ValidacionMayorACero(hwnd, _int_Vacuna_NoDosis, err);
+		err = ValidacionMayorACero(hwnd, _int_Vacuna_Precio, err);
+		err = ValidacionLetraYNumeroConEspacios(hwnd, _int_Vacuna_Desc, err);
 
 		if (!err) {
 			String_Vacuna_Tipo = ValidacionCapturaTexto(hwnd, _int_Vacuna_Tipo);
 			String_Vacuna_Marca = ValidacionCapturaTexto(hwnd, _int_Vacuna_Marca);
 			String_Vacuna_NoDosis = ValidacionCapturaTexto(hwnd, _int_Vacuna_NoDosis);
-			String_Vacuna_Precio = ValidacionCapturaTexto(hwnd, _int_Vacuna_Precio);
+			String_Vacuna_Precio = ValidacionANumero(hwnd, _int_Vacuna_Precio);
 			String_Vacuna_Desc = ValidacionCapturaTexto(hwnd, _int_Vacuna_Desc);
 			SetDlgItemText(hwnd, _int_Vacuna_Tipo, "");
 			SetDlgItemText(hwnd, _int_Vacuna_Marca, "");
@@ -56,7 +58,7 @@ public:
 		HWND hComboBox;			
 		hComboBox = GetDlgItem(hwnd, CB_VACUNA_MARCA);
 		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
-		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"PFIZER-BIONTECH");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"PFIZER BIONTECH");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"MODERNA");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"NOVAVAX");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"JANSSEN DE JOHNSON");
@@ -75,7 +77,7 @@ public:
 		hComboBox = GetDlgItem(hwnd, CB_VACUNA_TIPO);
 		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"ARN MENSAJERO");
-		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"SUB-UNIDADES PROTEICAS");
+		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"SUB UNIDADES PROTEICAS");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"VECTOR VIRAL");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"OTRO");
 	}

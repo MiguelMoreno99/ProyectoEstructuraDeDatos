@@ -25,11 +25,11 @@ public:
 	void PasarInformacionUsuario(HWND hwnd, int _int_Usuario_Usuario, int _int_Usuario_Contraseña, int _int_Usuario_Nombre, int _int_Usuario_ApellidoPaterno, int _int_Usuario_ApellidoMaterno) {
 
 		err = false;
-		err = ValidacionTexto(hwnd, _int_Usuario_Usuario, err);
-		err = ValidacionTexto(hwnd, _int_Usuario_Contraseña, err);
-		err = ValidacionTexto(hwnd, _int_Usuario_Nombre, err);
-		err = ValidacionTexto(hwnd, _int_Usuario_ApellidoPaterno, err);
-		err = ValidacionTexto(hwnd, _int_Usuario_ApellidoMaterno, err);
+		err = ValidacionLetraYNumeroSinEspacios(hwnd, _int_Usuario_Usuario, err);
+		err = ValidacionContraseñaSinEspacios(hwnd, _int_Usuario_Contraseña, err);
+		err = ValidacionLetraConEspacios(hwnd, _int_Usuario_Nombre, err);
+		err = ValidacionLetraConEspacios(hwnd, _int_Usuario_ApellidoPaterno, err);
+		err = ValidacionLetraConEspacios(hwnd, _int_Usuario_ApellidoMaterno, err);
 
 		if (!err) {
 			String_Usuario_Usuario = ValidacionCapturaTexto(hwnd, _int_Usuario_Usuario);
@@ -94,8 +94,8 @@ public:
 
 		else {
 			err = false;
-			err = ValidacionTexto(hInicioSesion, _int_Usuario_Usuario, err);
-			err = ValidacionTexto(hInicioSesion, _int_Usuario_Contraseña, err);
+			err = ValidacionLetraYNumeroSinEspacios(hInicioSesion, _int_Usuario_Usuario, err);
+			err = ValidacionContraseñaSinEspacios(hInicioSesion, _int_Usuario_Contraseña, err);
 
 			if (!err) {
 				err = true;
@@ -107,6 +107,11 @@ public:
 						SetDlgItemText(hInicioSesion, _int_Usuario_Usuario, "");
 						SetDlgItemText(hInicioSesion, _int_Usuario_Contraseña, "");
 						MessageBox(hInicioSesion, "Ha Ingresado Correctamente!!", "Bienvenido!", MB_ICONINFORMATION);
+						String_Usuario_Nombre = PtrAuxiliarUsuario->String_Usuario_Nombre;
+						String_Usuario_ApellidoPaterno = PtrAuxiliarUsuario->String_Usuario_ApellidoPaterno;
+						String_Usuario_ApellidoMaterno = PtrAuxiliarUsuario->String_Usuario_ApellidoMaterno;
+						String_Usuario_ApellidoMaterno = PtrAuxiliarUsuario->String_Usuario_ApellidoMaterno;
+						id = PtrAuxiliarUsuario->id;
 						ShowWindow(hInicioSesion, SW_HIDE);
 						ShowWindow(hVentanaPrincipal, SW_SHOW);
 						err = false;
@@ -197,6 +202,13 @@ public:
 		else{
 			return true;
 		}
+	}
+
+	void PasarNombreUsuarioVentana(HWND hwnd, int _int_IDLabel) {
+		HWND hTextoUsuario;
+		hTextoUsuario = GetDlgItem(hwnd, _int_IDLabel);
+		string NombreCompleto = String_Usuario_Nombre + " " + String_Usuario_ApellidoPaterno + " " + String_Usuario_ApellidoMaterno;
+		SetWindowText(hTextoUsuario, NombreCompleto.c_str());
 	}
 
 }*PtrOrigenUsuario=NULL, * PtrAuxiliarUsuario = NULL;
