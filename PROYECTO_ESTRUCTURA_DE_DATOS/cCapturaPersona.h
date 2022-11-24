@@ -9,7 +9,7 @@ using namespace std;
 class Persona {
 
 private:
-	// 16 Variables
+	// 16 Variables Privadas
 	string String_Persona_ApellidoPaterno;
 	string String_Persona_ApellidoMaterno;
 	string String_Persona_Nombre;
@@ -28,6 +28,9 @@ private:
 	string String_Persona_PathDocumentoIdentidad;
 	int id;
 	bool err = false;
+
+	//2 Variables Publicas
+public:
 	Persona* Ptr_Persona_anterior = NULL;
 	Persona* Ptr_Persona_siguiente = NULL;
 
@@ -47,7 +50,7 @@ public:
 		err = ValidacionLetraYNumeroConEspacios(hwnd, _int_Persona_Municipio, err);
 		err = ValidacionLetraYNumeroConEspacios(hwnd, _int_Persona_Estado, err);
 		err = ValidacionLetraSinEspacios(hwnd, _int_Persona_EstadoCivil, err);
-		err = ValidacionMayorACero(hwnd, _int_Persona_Telefono, err);
+		err = ValidacionNumeroTelefonico(hwnd, _int_Persona_Telefono, err);
 		err = ValidacionLetraSinEspacios(hwnd, _int_Persona_Sexo, err);
 		err = ValidacionLetraConEspacios(hwnd, _int_Persona_GrupoOcupacional, err);
 		err = ValidacionLetraSinEspacios(hwnd, _int_Persona_PerfilRiesgo, err);
@@ -67,7 +70,7 @@ public:
 			String_Persona_Municipio = ValidacionCapturaTexto(hwnd, _int_Persona_Municipio);
 			String_Persona_Estado = ValidacionCapturaTexto(hwnd, _int_Persona_Estado);
 			String_Persona_EstadoCivil = ValidacionCapturaTexto(hwnd, _int_Persona_EstadoCivil);
-			String_Persona_Telefono = ValidacionANumero(hwnd, _int_Persona_Telefono);
+			String_Persona_Telefono = ValidacionCapturaTexto(hwnd, _int_Persona_Telefono);
 			String_Persona_Sexo = ValidacionCapturaTexto(hwnd, _int_Persona_Sexo);
 			String_Persona_GrupoOcupacional = ValidacionCapturaTexto(hwnd, _int_Persona_GrupoOcupacional);
 			String_Persona_PerfilRiesgo = ValidacionCapturaTexto(hwnd, _int_Persona_PerfilRiesgo);
@@ -220,4 +223,93 @@ public:
 		}
 	}
 
+	string PasarCURPCarnet(Persona *PtrAuxiliarPersona) {
+
+		return PtrAuxiliarPersona->String_Persona_CURP;
+	}
+
+	string PasarDatosdelCURPCarnet(string _String_Persona_CURP, int DatoSolicitado) {
+
+		if (PtrOrigenPersona != NULL) {
+			PtrAuxiliarPersona = PtrOrigenPersona;
+			do {
+				if (PtrAuxiliarPersona->String_Persona_CURP == _String_Persona_CURP) {
+					switch (DatoSolicitado){
+						case 1: {
+							return PtrAuxiliarPersona->String_Persona_ApellidoPaterno;
+							break;
+						}
+						case 2: {
+							return PtrAuxiliarPersona->String_Persona_ApellidoMaterno;
+							break;
+						}
+						case 3: {
+							return PtrAuxiliarPersona->String_Persona_Nombre;
+							break;
+						}
+						case 4: {
+							return PtrAuxiliarPersona->String_Persona_CURP;
+							break;
+						}
+						case 5: {
+							return PtrAuxiliarPersona->String_Persona_RFC;
+							break;
+						}
+						case 6: {
+							return PtrAuxiliarPersona->String_Persona_FechaNacimiento;
+							break;
+						}
+						case 7: {
+							return PtrAuxiliarPersona->String_Persona_Calle;
+							break;
+						}
+						case 8: {
+							return PtrAuxiliarPersona->String_Persona_Colonia;
+							break;
+						}
+						case 9: {
+							return PtrAuxiliarPersona->String_Persona_Municipio;
+							break;
+						}
+						case 10: {
+							return PtrAuxiliarPersona->String_Persona_Estado;
+							break;
+						}
+						case 11: {
+							return PtrAuxiliarPersona->String_Persona_EstadoCivil;
+							break;
+						}
+						case 12: {
+							return PtrAuxiliarPersona->String_Persona_Telefono;
+							break;
+						}
+						case 13: {
+							return PtrAuxiliarPersona->String_Persona_Sexo;
+							break;
+						}
+						case 14: {
+							return PtrAuxiliarPersona->String_Persona_GrupoOcupacional;
+							break;
+						}
+						case 15: {
+							return PtrAuxiliarPersona->String_Persona_PerfilRiesgo;
+							break;
+						}
+						case 16: {
+							return PtrAuxiliarPersona->String_Persona_PathDocumentoIdentidad;
+							break;
+						}
+						default:
+						break;
+					}
+				}
+				else {
+					PtrAuxiliarPersona = PtrAuxiliarPersona->Ptr_Persona_siguiente;
+				}
+			} while (PtrAuxiliarPersona != NULL);
+		}
+		return "";
+	}
+
 }*PtrOrigenPersona = NULL, * PtrAuxiliarPersona = NULL;
+Persona Persona1;

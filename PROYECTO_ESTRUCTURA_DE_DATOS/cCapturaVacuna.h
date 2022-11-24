@@ -114,4 +114,55 @@ public:
 		return;
 	}
 
+	string PasarIdVacunaCarnet(Vacuna* PtrAuxiliarVacuna) {
+
+		char id[10] = "";
+		_itoa_s(PtrAuxiliarVacuna->id, id, 10);
+		return id;
+	}
+
+	string PasarDatosdelIdVacunaCarnet(string _String_Vacuna_id, int DatoSolicitado) {
+
+		if (PtrOrigenVacuna!= NULL) {
+			PtrAuxiliarVacuna = PtrOrigenVacuna;
+			do {
+				char id[10] = "";
+				string sId = "";
+				_itoa_s(PtrAuxiliarVacuna->id, id, 10);
+				sId = id;
+				if (sId == _String_Vacuna_id) {
+					switch (DatoSolicitado) {
+					case 1: {
+						return PtrAuxiliarVacuna->String_Vacuna_Tipo;
+						break;
+					}
+					case 2: {
+						return PtrAuxiliarVacuna->String_Vacuna_Marca;
+						break;
+					}
+					case 3: {
+						return PtrAuxiliarVacuna->String_Vacuna_NoDosis;
+						break;
+					}
+					case 4: {
+						return PtrAuxiliarVacuna->String_Vacuna_Precio;
+						break;
+					}
+					case 5: {
+						return PtrAuxiliarVacuna->String_Vacuna_Desc;
+						break;
+					}
+					default:
+						break;
+					}
+				}
+				else {
+					PtrAuxiliarVacuna = PtrAuxiliarVacuna->Ptr_Vacuna_siguiente;
+				}
+			} while (PtrAuxiliarVacuna != NULL);
+		}
+		return "";
+	}
+
 }*PtrOrigenVacuna = NULL, * PtrAuxiliarVacuna = NULL;
+Vacuna Vacuna1;

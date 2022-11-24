@@ -75,6 +75,7 @@
 #define TXTB_CARNET_LOTE                7001
 #define CB_CARNET_CENTROVACUNACION      7002
 #define CB_CARNET_DOSIS                 7003
+#define DTP_CARNET_FECHAPROXDOSIS       7004
 #define BTN_CARNET_CAPTURAR             8000
 #define BTN_CARNET_REGRESAR             8001
 #define BTN_CARNET_BUSCARCURP           8002
