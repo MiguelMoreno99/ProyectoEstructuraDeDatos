@@ -136,7 +136,7 @@ public:
 
 		if (PtrOrigenUsuario != NULL) {
 			ofstream OfGuardar("CapturaUsuario.txt");
-			if (id == 1) {
+			if (PtrOrigenUsuario->Ptr_Usuario_siguiente==NULL) {
 				OfGuardar << PtrOrigenUsuario->String_Usuario_Usuario << "\n";
 				OfGuardar << PtrOrigenUsuario->String_Usuario_Contraseña << "\n";
 				OfGuardar << PtrOrigenUsuario->String_Usuario_Nombre << "\n";

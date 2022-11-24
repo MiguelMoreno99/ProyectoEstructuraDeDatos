@@ -28,6 +28,8 @@ private:
 	string String_Persona_PathDocumentoIdentidad;
 	int id;
 	bool err = false;
+	bool borrado = false;
+	bool vacunado = false;
 
 	//2 Variables Publicas
 public:
@@ -90,7 +92,7 @@ public:
 				SetDlgItemText(hwnd, _int_Persona_Sexo, "");
 				SetDlgItemText(hwnd, _int_Persona_GrupoOcupacional, "");
 				SetDlgItemText(hwnd, _int_Persona_PerfilRiesgo, "");
-				CargarInfoComboBoxPersona(hwnd);
+				CargarInfoComboBoxPersona(hwnd, _int_Persona_EstadoCivil, _int_Persona_Sexo, _int_Persona_GrupoOcupacional, _int_Persona_PerfilRiesgo);
 				GuardarPersona();
 				String_Persona_PathDocumentoIdentidad = "";
 				MessageBox(hwnd, "Se ha registrado la Persona Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
@@ -122,31 +124,51 @@ public:
 		}
 	}
 
-	void CargarInfoComboBoxPersona(HWND hwnd) {
+	void CargarInfoComboBoxPersona(HWND hwnd,int _CB_PERSONA_ESTADOCIVIL,int _CB_PERSONA_SEXO,int _CB_PERSONA_GRUPOOCUPACIONAL,int _CB_PERSONA_PERFILRIESGO) {
 
 		HWND hComboBox;
-		hComboBox = GetDlgItem(hwnd, CB_PERSONA_ESTADOCIVIL);
+		hComboBox = GetDlgItem(hwnd, _CB_PERSONA_ESTADOCIVIL);
 		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"SOLTERO");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"CASADO");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"DIVORCIADO");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"VIUDO");
-		hComboBox = GetDlgItem(hwnd, CB_PERSONA_SEXO);
+		hComboBox = GetDlgItem(hwnd, _CB_PERSONA_SEXO);
 		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"MASCULINO");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"FEMENINO");
-		hComboBox = GetDlgItem(hwnd, CB_PERSONA_GRUPOOCUPACIONAL);
+		hComboBox = GetDlgItem(hwnd, _CB_PERSONA_GRUPOOCUPACIONAL);
 		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"ESTUDIANTE");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"TRABAJADOR");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"DESEMPLEADO");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"AMA DE CASA");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"OTRO");
-		hComboBox = GetDlgItem(hwnd, CB_PERSONA_PERFILRIESGO);
+		hComboBox = GetDlgItem(hwnd, _CB_PERSONA_PERFILRIESGO);
 		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"ALTO");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"MODERADO");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"BAJO");
+	}
+
+	void CargarInfoComboBoxCURP(HWND hwnd, int _CB_PERSONA_CURP) {
+
+		HWND hComboBox;
+		hComboBox = GetDlgItem(hwnd, _CB_PERSONA_CURP);
+		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+		if (PtrOrigenPersona != NULL) {
+			PtrAuxiliarPersona = PtrOrigenPersona;
+			while (PtrAuxiliarPersona != NULL) {
+				string CURP = PasarCURPCarnet(PtrAuxiliarPersona);
+				if (CURP != "") {
+					SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)CURP.c_str());
+				}
+				PtrAuxiliarPersona = PtrAuxiliarPersona->Ptr_Persona_siguiente;
+			}
+		}
+		else {
+			MessageBox(hwnd, "PRIMERO DEBE DE AGREGAR AL MENOS UNA PERSONA!", "PRECAUCIÓN", MB_ICONWARNING);
+		}
 	}
 
 	void GuardarPersona() {
@@ -208,9 +230,14 @@ public:
 		if (PtrOrigenPersona != NULL) {
 			PtrAuxiliarPersona = PtrOrigenPersona;
 			do {
-				if ((PtrAuxiliarPersona->String_Persona_CURP == _String_Persona_CURP) || (PtrAuxiliarPersona->String_Persona_RFC == _String_Persona_RFC)) {
-					MessageBox(hwnd, "Ya hay un	CURP o RFC, Verifique los datos Capturados.", "ERROR", MB_ICONEXCLAMATION);
-					return false;
+				if (!PtrAuxiliarPersona->borrado) {
+					if ((PtrAuxiliarPersona->String_Persona_CURP == _String_Persona_CURP) || (PtrAuxiliarPersona->String_Persona_RFC == _String_Persona_RFC)) {
+						MessageBox(hwnd, "Ya hay un	CURP o RFC, Verifique los datos Capturados.", "ERROR", MB_ICONEXCLAMATION);
+						return false;
+					}
+					else {
+						PtrAuxiliarPersona = PtrAuxiliarPersona->Ptr_Persona_siguiente;
+					}
 				}
 				else {
 					PtrAuxiliarPersona = PtrAuxiliarPersona->Ptr_Persona_siguiente;
@@ -223,9 +250,60 @@ public:
 		}
 	}
 
-	string PasarCURPCarnet(Persona *PtrAuxiliarPersona) {
+	void CargarInformacionPersona(HWND hwnd, int _int_Persona_CURP_Buscar, int _int_Persona_ApellidoPaterno, int _int_Persona_ApellidoMaterno, int _int_Persona_Nombre, int _int_Persona_CURP, int _int_Persona_RFC, int _int_Persona_FechaNacimiento, int _int_Persona_Calle, int _int_Persona_Colonia, int _int_Persona_Municipio, int _int_Persona_Estado, int _int_Persona_EstadoCivil, int _int_Persona_Telefono, int _int_Persona_Sexo, int _int_Persona_GrupoOcupacional, int _int_Persona_PerfilRiesgo, int _int_Persona_PictureControl) {
 
-		return PtrAuxiliarPersona->String_Persona_CURP;
+		string CURP = ValidacionCapturaTexto(hwnd, _int_Persona_CURP_Buscar);
+		if (CURP != "") {
+			HWND hComboBox;
+			SetDlgItemText(hwnd, _int_Persona_ApellidoPaterno, PasarDatosdelCURPCarnet(CURP, 1).c_str());
+			SetDlgItemText(hwnd, _int_Persona_ApellidoMaterno, PasarDatosdelCURPCarnet(CURP, 2).c_str());
+			SetDlgItemText(hwnd, _int_Persona_Nombre, PasarDatosdelCURPCarnet(CURP, 3).c_str());
+			SetDlgItemText(hwnd, _int_Persona_CURP, PasarDatosdelCURPCarnet(CURP, 4).c_str());
+			SetDlgItemText(hwnd, _int_Persona_RFC, PasarDatosdelCURPCarnet(CURP, 5).c_str());
+			SetDlgItemText(hwnd, _int_Persona_FechaNacimiento, PasarDatosdelCURPCarnet(CURP, 6).c_str());
+			SetDlgItemText(hwnd, _int_Persona_Calle, PasarDatosdelCURPCarnet(CURP, 7).c_str());
+			SetDlgItemText(hwnd, _int_Persona_Colonia, PasarDatosdelCURPCarnet(CURP, 8).c_str());
+			SetDlgItemText(hwnd, _int_Persona_Municipio, PasarDatosdelCURPCarnet(CURP, 9).c_str());
+			SetDlgItemText(hwnd, _int_Persona_Estado, PasarDatosdelCURPCarnet(CURP, 10).c_str());
+
+			hComboBox = GetDlgItem(hwnd, _int_Persona_EstadoCivil);
+			SendMessage(hComboBox, CB_SELECTSTRING, NULL, (LPARAM)PasarDatosdelCURPCarnet(CURP, 11).c_str());
+			SetDlgItemText(hwnd, _int_Persona_EstadoCivil, PasarDatosdelCURPCarnet(CURP, 11).c_str());
+
+			SetDlgItemText(hwnd, _int_Persona_Telefono, PasarDatosdelCURPCarnet(CURP, 12).c_str());
+
+			hComboBox = GetDlgItem(hwnd, _int_Persona_Sexo);
+			SendMessage(hComboBox, CB_SELECTSTRING, NULL, (LPARAM)PasarDatosdelCURPCarnet(CURP, 13).c_str());
+			SetDlgItemText(hwnd, _int_Persona_Sexo, PasarDatosdelCURPCarnet(CURP, 13).c_str());
+
+			hComboBox = GetDlgItem(hwnd, _int_Persona_GrupoOcupacional);
+			SendMessage(hComboBox, CB_SELECTSTRING, NULL, (LPARAM)PasarDatosdelCURPCarnet(CURP, 14).c_str());
+			SetDlgItemText(hwnd, _int_Persona_GrupoOcupacional, PasarDatosdelCURPCarnet(CURP, 14).c_str());
+
+			hComboBox = GetDlgItem(hwnd, _int_Persona_PerfilRiesgo);
+			SendMessage(hComboBox, CB_SELECTSTRING, NULL, (LPARAM)PasarDatosdelCURPCarnet(CURP, 15).c_str());
+			SetDlgItemText(hwnd, _int_Persona_PerfilRiesgo, PasarDatosdelCURPCarnet(CURP, 15).c_str());
+
+			OPENFILENAME OfnPersonaDocumento;
+			ZeroMemory(&OfnPersonaDocumento, sizeof(OPENFILENAME));
+			HWND hDocumentoIdeintidad = GetDlgItem(hwnd, _int_Persona_PictureControl);
+			HBITMAP hpcDocumentoIdentidad = (HBITMAP)LoadImage(NULL, PasarDatosdelCURPCarnet(CURP, 16).c_str(), IMAGE_BITMAP, 150, 150, LR_LOADFROMFILE);
+			SendMessage(hDocumentoIdeintidad, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hpcDocumentoIdentidad);
+			DeleteObject(hpcDocumentoIdentidad);
+		}
+		else {
+			MessageBox(hwnd, "Seleccione un CURP primero!", "Advertencia", MB_ICONEXCLAMATION);
+		}
+
+	}
+
+	string PasarCURPCarnet(Persona *PtrAuxiliarPersona) {
+		if (!PtrAuxiliarPersona->borrado){
+			return PtrAuxiliarPersona->String_Persona_CURP;
+		}
+		else {
+			return "";
+		}
 	}
 
 	string PasarDatosdelCURPCarnet(string _String_Persona_CURP, int DatoSolicitado) {
@@ -233,7 +311,7 @@ public:
 		if (PtrOrigenPersona != NULL) {
 			PtrAuxiliarPersona = PtrOrigenPersona;
 			do {
-				if (PtrAuxiliarPersona->String_Persona_CURP == _String_Persona_CURP) {
+				if ((PtrAuxiliarPersona->String_Persona_CURP == _String_Persona_CURP) && !(PtrAuxiliarPersona->borrado)) {
 					switch (DatoSolicitado){
 						case 1: {
 							return PtrAuxiliarPersona->String_Persona_ApellidoPaterno;
