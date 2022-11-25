@@ -28,7 +28,7 @@ public:
 	Carnet* Ptr_Carnet_siguiente = NULL;
 
 	//Funciones
-	void PasarInformacionCarnet(HWND hwnd, int _int_Carnet_CURP, int _int_Carnet_IdVacuna, int _int_Carnet_Lote, int _int_Carnet_FechaDosis, int _int_Carnet_NoDosis, int _int_Carnet_CentroVacunacion, int _int_Carnet_FechaProximaDosis ,int _int_Persona_ApellidoPaterno, int _int_Persona_ApellidoMaterno, int _int_Persona_Nombre, int _int_Persona_CURP, int _int_Persona_RFC, int _int_Persona_FechaNacimiento, int _int_Persona_Calle, int _int_Persona_Colonia, int _int_Persona_Municipio, int _int_Persona_Estado, int _int_Persona_EstadoCivil, int _int_Persona_Telefono, int _int_Persona_Sexo, int _int_Persona_GrupoOcupacional, int _int_Persona_PerfilRiesgo, int _int_Vacuna_Tipo, int _int_Vacuna_Marca, int _int_Vacuna_NoDosis, int _int_Vacuna_Precio, int _int_Vacuna_Desc) {
+	void CapturarInformacionCarnet(HWND hwnd, int _int_Carnet_CURP, int _int_Carnet_IdVacuna, int _int_Carnet_Lote, int _int_Carnet_FechaDosis, int _int_Carnet_NoDosis, int _int_Carnet_CentroVacunacion, int _int_Carnet_FechaProximaDosis ,int _int_Persona_ApellidoPaterno, int _int_Persona_ApellidoMaterno, int _int_Persona_Nombre, int _int_Persona_CURP, int _int_Persona_RFC, int _int_Persona_FechaNacimiento, int _int_Persona_Calle, int _int_Persona_Colonia, int _int_Persona_Municipio, int _int_Persona_Estado, int _int_Persona_EstadoCivil, int _int_Persona_Telefono, int _int_Persona_Sexo, int _int_Persona_GrupoOcupacional, int _int_Persona_PerfilRiesgo, int _int_Vacuna_Tipo, int _int_Vacuna_Marca, int _int_Vacuna_NoDosis, int _int_Vacuna_Precio, int _int_Vacuna_Desc) {
 
 		err = false;
 		err = ValidacionLetraYNumeroSinEspacios(hwnd, _int_Carnet_CURP, err);
@@ -92,10 +92,10 @@ public:
 		}
 	}
 
-	void PasarInformacionCarnetEditar(HWND hwnd, int _int_Carnet_CURP, int _int_Carnet_IdVacuna, int _int_Carnet_Lote, int _int_Carnet_FechaDosis, int _int_Carnet_NoDosis, int _int_Carnet_CentroVacunacion, int _int_Carnet_FechaProximaDosis) {
+	void EditarInformacionCarnet(HWND hwnd, int _int_Carnet_IdEditar,int _int_Carnet_IdVacuna, int _int_Carnet_Lote, int _int_Carnet_FechaDosis, int _int_Carnet_NoDosis, int _int_Carnet_CentroVacunacion, int _int_Carnet_FechaProximaDosis) {
 
 		err = false;
-		err = ValidacionLetraYNumeroSinEspacios(hwnd, _int_Carnet_CURP, err);
+		err = ValidacionMayorACero(hwnd, _int_Carnet_IdEditar, err);
 		err = ValidacionMayorACero(hwnd, _int_Carnet_IdVacuna, err);
 		err = ValidacionLetraYNumeroSinEspacios(hwnd, _int_Carnet_Lote, err);
 		err = ValidacionFechaMayorIgualAActual(hwnd, _int_Carnet_FechaDosis, err);
@@ -104,14 +104,14 @@ public:
 		err = ValidacionFechaMayorACaptura(hwnd, _int_Carnet_FechaDosis, _int_Carnet_FechaProximaDosis, err);
 
 		if (!err) {
-			String_Carnet_CURP = ValidacionCapturaTexto(hwnd, _int_Carnet_CURP);
+			String_Carnet_CURP = ValidacionCapturaTexto(hwnd, _int_Carnet_IdEditar);
 			String_Carnet_IdVacuna = ValidacionCapturaTexto(hwnd, _int_Carnet_IdVacuna);
 			String_Carnet_Lote = ValidacionCapturaTexto(hwnd, _int_Carnet_Lote);
 			String_Carnet_FechaDosis = ValidacionCapturaTexto(hwnd, _int_Carnet_FechaDosis);
 			String_Carnet_NoDosis = ValidacionCapturaTexto(hwnd, _int_Carnet_NoDosis);
 			String_Carnet_CentroVacunacion = ValidacionCapturaTexto(hwnd, _int_Carnet_CentroVacunacion);
 			String_Carnet_FechaProximaDosis = ValidacionCapturaTexto(hwnd, _int_Carnet_FechaProximaDosis);
-			SetDlgItemText(hwnd, _int_Carnet_CURP, "");
+			SetDlgItemText(hwnd, _int_Carnet_IdEditar, "");
 			SetDlgItemText(hwnd, _int_Carnet_IdVacuna, "");
 			SetDlgItemText(hwnd, _int_Carnet_Lote, "");
 			SetDlgItemText(hwnd, _int_Carnet_FechaDosis, "");
@@ -119,8 +119,44 @@ public:
 			SetDlgItemText(hwnd, _int_Carnet_CentroVacunacion, "");
 			SetDlgItemText(hwnd, _int_Carnet_FechaProximaDosis, "");
 			CargarInfoComboBoxCarnet(hwnd, _int_Carnet_NoDosis, _int_Carnet_CentroVacunacion);
-			Vacuna1.CargarInfoComboBoxIds(hwnd, _int_Carnet_IdVacuna);
-			Persona1.CargarInfoComboBoxCURP(hwnd, _int_Carnet_CURP);
+			CargarInfoComboBoxIds(hwnd, _int_Carnet_IdEditar);
+			int id = atoi(String_Carnet_IdVacuna.c_str());
+			EditarCarnet(id);
+			MessageBox(hwnd, "Se ha Editado el Carnet Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
+		}
+		else {
+			MessageBox(hwnd, "Verifique que los datos ingresados sean válidos!", "ERROR", MB_ICONERROR);
+		}
+	}
+
+	void BorrarInformacionCarnet(HWND hwnd, int _int_Carnet_IdEditar, int _int_Carnet_IdVacuna, int _int_Carnet_Lote, int _int_Carnet_FechaDosis, int _int_Carnet_NoDosis, int _int_Carnet_CentroVacunacion, int _int_Carnet_FechaProximaDosis) {
+
+		err = false;
+		err = ValidacionMayorACero(hwnd, _int_Carnet_IdEditar, err);
+		err = ValidacionMayorACero(hwnd, _int_Carnet_IdVacuna, err);
+		err = ValidacionLetraYNumeroSinEspacios(hwnd, _int_Carnet_Lote, err);
+		err = ValidacionFechaMayorIgualAActual(hwnd, _int_Carnet_FechaDosis, err);
+		err = ValidacionMayorACero(hwnd, _int_Carnet_NoDosis, err);
+		err = ValidacionLetraSinEspacios(hwnd, _int_Carnet_CentroVacunacion, err);
+		err = ValidacionFechaMayorACaptura(hwnd, _int_Carnet_FechaDosis, _int_Carnet_FechaProximaDosis, err);
+
+		if (!err) {
+			String_Carnet_CURP = ValidacionCapturaTexto(hwnd, _int_Carnet_IdEditar);
+			String_Carnet_IdVacuna = ValidacionCapturaTexto(hwnd, _int_Carnet_IdVacuna);
+			String_Carnet_Lote = ValidacionCapturaTexto(hwnd, _int_Carnet_Lote);
+			String_Carnet_FechaDosis = ValidacionCapturaTexto(hwnd, _int_Carnet_FechaDosis);
+			String_Carnet_NoDosis = ValidacionCapturaTexto(hwnd, _int_Carnet_NoDosis);
+			String_Carnet_CentroVacunacion = ValidacionCapturaTexto(hwnd, _int_Carnet_CentroVacunacion);
+			String_Carnet_FechaProximaDosis = ValidacionCapturaTexto(hwnd, _int_Carnet_FechaProximaDosis);
+			SetDlgItemText(hwnd, _int_Carnet_IdEditar, "");
+			SetDlgItemText(hwnd, _int_Carnet_IdVacuna, "");
+			SetDlgItemText(hwnd, _int_Carnet_Lote, "");
+			SetDlgItemText(hwnd, _int_Carnet_FechaDosis, "");
+			SetDlgItemText(hwnd, _int_Carnet_NoDosis, "");
+			SetDlgItemText(hwnd, _int_Carnet_CentroVacunacion, "");
+			SetDlgItemText(hwnd, _int_Carnet_FechaProximaDosis, "");
+			CargarInfoComboBoxCarnet(hwnd, _int_Carnet_NoDosis, _int_Carnet_CentroVacunacion);
+			CargarInfoComboBoxIds(hwnd, _int_Carnet_IdEditar);
 			int id = atoi(String_Carnet_IdVacuna.c_str());
 			EditarCarnet(id);
 			MessageBox(hwnd, "Se ha Editado el Carnet Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
@@ -223,6 +259,26 @@ public:
 				PtrAuxiliarCarnet->Ptr_Carnet_siguiente->String_Carnet_FechaProximaDosis = String_Carnet_FechaProximaDosis;
 			}
 			else{
+				PtrAuxiliarCarnet = PtrAuxiliarCarnet->Ptr_Carnet_siguiente;
+			}
+			PtrAuxiliarCarnet = PtrOrigenCarnet;
+			return;
+		}
+	}
+
+	void BorrarCarnet(int _idCarnet) {
+
+		while (PtrAuxiliarCarnet != NULL) {
+			if (PtrAuxiliarCarnet->id == id) {
+				PtrAuxiliarCarnet->Ptr_Carnet_siguiente->String_Carnet_CURP = String_Carnet_CURP;
+				PtrAuxiliarCarnet->Ptr_Carnet_siguiente->String_Carnet_IdVacuna = String_Carnet_IdVacuna;
+				PtrAuxiliarCarnet->Ptr_Carnet_siguiente->String_Carnet_Lote = String_Carnet_Lote;
+				PtrAuxiliarCarnet->Ptr_Carnet_siguiente->String_Carnet_FechaDosis = String_Carnet_FechaDosis;
+				PtrAuxiliarCarnet->Ptr_Carnet_siguiente->String_Carnet_NoDosis = String_Carnet_NoDosis;
+				PtrAuxiliarCarnet->Ptr_Carnet_siguiente->String_Carnet_CentroVacunacion = String_Carnet_CentroVacunacion;
+				PtrAuxiliarCarnet->Ptr_Carnet_siguiente->String_Carnet_FechaProximaDosis = String_Carnet_FechaProximaDosis;
+			}
+			else {
 				PtrAuxiliarCarnet = PtrAuxiliarCarnet->Ptr_Carnet_siguiente;
 			}
 			PtrAuxiliarCarnet = PtrOrigenCarnet;

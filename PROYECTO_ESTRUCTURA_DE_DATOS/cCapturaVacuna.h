@@ -10,7 +10,7 @@ class Vacuna {
 
 private:
 	// 5 Variables Privadas
-string String_Vacuna_Tipo;
+	string String_Vacuna_Tipo;
 	string String_Vacuna_Marca;
 	string String_Vacuna_NoDosis;
 	string String_Vacuna_Precio;
@@ -25,7 +25,7 @@ public:
 	Vacuna* Ptr_Vacuna_siguiente = NULL;
 
 	//Funcciones
-	void PasarInformacionVacuna(HWND hwnd, int _int_Vacuna_Tipo, int _int_Vacuna_Marca, int _int_Vacuna_NoDosis, int _int_Vacuna_Precio, int _int_Vacuna_Desc) {
+	void GuardarInformacionVacuna(HWND hwnd, int _int_Vacuna_Tipo, int _int_Vacuna_Marca, int _int_Vacuna_NoDosis, int _int_Vacuna_Precio, int _int_Vacuna_Desc) {
 
 		err = false;
 		err = ValidacionLetraConEspacios(hwnd, _int_Vacuna_Tipo, err);
@@ -54,9 +54,10 @@ public:
 		}
 	}
 
-	void PasarInformacionVacunaEditar(HWND hwnd, int _int_Vacuna_Id, int _int_Vacuna_Tipo, int _int_Vacuna_Marca, int _int_Vacuna_NoDosis, int _int_Vacuna_Precio, int _int_Vacuna_Desc) {
+	void EditarInformacionVacuna(HWND hwnd, int _int_Vacuna_IdAEditar, int _int_Vacuna_Tipo, int _int_Vacuna_Marca, int _int_Vacuna_NoDosis, int _int_Vacuna_Precio, int _int_Vacuna_Desc) {
 
 		err = false;
+		err = ValidacionMayorACero(hwnd, _int_Vacuna_IdAEditar, err);
 		err = ValidacionLetraConEspacios(hwnd, _int_Vacuna_Tipo, err);
 		err = ValidacionLetraConEspacios(hwnd, _int_Vacuna_Marca, err);
 		err = ValidacionMayorACero(hwnd, _int_Vacuna_NoDosis, err);
@@ -64,6 +65,7 @@ public:
 		err = ValidacionLetraYNumeroConEspacios(hwnd, _int_Vacuna_Desc, err);
 
 		if (!err) {
+			id = atoi(ValidacionANumero(hwnd, _int_Vacuna_IdAEditar).c_str());
 			String_Vacuna_Tipo = ValidacionCapturaTexto(hwnd, _int_Vacuna_Tipo);
 			String_Vacuna_Marca = ValidacionCapturaTexto(hwnd, _int_Vacuna_Marca);
 			String_Vacuna_NoDosis = ValidacionCapturaTexto(hwnd, _int_Vacuna_NoDosis);
@@ -75,9 +77,31 @@ public:
 			SetDlgItemText(hwnd, _int_Vacuna_Precio, "");
 			SetDlgItemText(hwnd, _int_Vacuna_Desc, "");
 			CargarInfoComboBoxVacuna(hwnd, _int_Vacuna_Marca, _int_Vacuna_NoDosis, _int_Vacuna_Tipo);
-			//int id = atoi(String_Carnet_IdVacuna.c_str());
-			//EditarCarnet(id);
-			MessageBox(hwnd, "Se ha Editado el Carnet Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
+			CargarInfoComboBoxIds(hwnd, _int_Vacuna_IdAEditar);
+			EditarVacuna(id);
+			MessageBox(hwnd, "Se ha Editado la Vacuna Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
+		}
+		else {
+			MessageBox(hwnd, "Verifique que los datos ingresados sean válidos!", "ERROR", MB_ICONERROR);
+		}
+	}
+
+	void BorrarInformacionVacuna(HWND hwnd, int _int_Vacuna_IdABorrar, int _int_Vacuna_Tipo, int _int_Vacuna_Marca, int _int_Vacuna_NoDosis, int _int_Vacuna_Precio, int _int_Vacuna_Desc) {
+
+		err = false;
+		err = ValidacionMayorACero(hwnd, _int_Vacuna_IdABorrar, err);
+
+		if (!err) {
+			id = atoi(ValidacionANumero(hwnd, _int_Vacuna_IdABorrar).c_str());
+			SetDlgItemText(hwnd, _int_Vacuna_Tipo, "");
+			SetDlgItemText(hwnd, _int_Vacuna_Marca, "");
+			SetDlgItemText(hwnd, _int_Vacuna_NoDosis, "");
+			SetDlgItemText(hwnd, _int_Vacuna_Precio, "");
+			SetDlgItemText(hwnd, _int_Vacuna_Desc, "");
+			BorrarVacuna(id);
+			CargarInfoComboBoxVacuna(hwnd, _int_Vacuna_Marca, _int_Vacuna_NoDosis, _int_Vacuna_Tipo);
+			CargarInfoComboBoxIds(hwnd, _int_Vacuna_IdABorrar);
+			MessageBox(hwnd, "Se ha Borrado la Vacuna Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
 		}
 		else {
 			MessageBox(hwnd, "Verifique que los datos ingresados sean válidos!", "ERROR", MB_ICONERROR);
@@ -121,7 +145,7 @@ public:
 		if (PtrOrigenVacuna != NULL) {
 			PtrAuxiliarVacuna = PtrOrigenVacuna;
 			while (PtrAuxiliarVacuna != NULL) {
-				string id = PasarIdVacunaCarnet(PtrAuxiliarVacuna);
+				string id = PasarIdVacuna(PtrAuxiliarVacuna);
 				if (id != "") {
 					SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)id.c_str());
 				}
@@ -131,6 +155,32 @@ public:
 		else {
 			MessageBox(hwnd, "PRIMERO DEBE DE AGREGAR AL MENOS UNA VACUNA!", "PRECAUCIÓN", MB_ICONWARNING);
 		}
+	}
+
+	void CargarInformacionVacuna(HWND hwnd, int _int_Vacuna_Id, int _int_Vacuna_Tipo, int _int_Vacuna_Marca, int _int_Vacuna_NoDosis, int _int_Vacuna_Precio, int _int_Vacuna_Desc) {
+
+		string id = ValidacionCapturaTexto(hwnd, _int_Vacuna_Id);
+		if (id != "") {
+			HWND hComboBox;
+			hComboBox = GetDlgItem(hwnd, _int_Vacuna_Tipo);
+			SendMessage(hComboBox, CB_SELECTSTRING, NULL, (LPARAM)PasarDatosdelIdVacuna(id, 1).c_str());
+			SetDlgItemText(hwnd, _int_Vacuna_Tipo, PasarDatosdelIdVacuna(id, 1).c_str());
+
+			hComboBox = GetDlgItem(hwnd, _int_Vacuna_Marca);
+			SendMessage(hComboBox, CB_SELECTSTRING, NULL, (LPARAM)PasarDatosdelIdVacuna(id, 2).c_str());
+			SetDlgItemText(hwnd, _int_Vacuna_Marca, PasarDatosdelIdVacuna(id, 2).c_str());
+
+			hComboBox = GetDlgItem(hwnd, _int_Vacuna_NoDosis);
+			SendMessage(hComboBox, CB_SELECTSTRING, NULL, (LPARAM)PasarDatosdelIdVacuna(id, 3).c_str());
+			SetDlgItemText(hwnd, _int_Vacuna_NoDosis, PasarDatosdelIdVacuna(id, 3).c_str());
+
+			SetDlgItemText(hwnd, _int_Vacuna_Precio, PasarDatosdelIdVacuna(id, 4).c_str());
+			SetDlgItemText(hwnd, _int_Vacuna_Desc, PasarDatosdelIdVacuna(id, 5).c_str());
+		}
+		else {
+			MessageBox(hwnd, "Seleccione una Id de Vacuna primero!", "Advertencia", MB_ICONEXCLAMATION);
+		}
+
 	}
 
 	void GuardarVacuna() {
@@ -165,34 +215,39 @@ public:
 		return;
 	}
 
-	void CargarInformacionVacuna(HWND hwnd, int _int_Vacuna_Id, int _int_Vacuna_Tipo, int _int_Vacuna_Marca, int _int_Vacuna_NoDosis, int _int_Vacuna_Precio, int _int_Vacuna_Desc) {
-
-
-		string id = ValidacionCapturaTexto(hwnd, _int_Vacuna_Id);
-		if (id != "") {
-			HWND hComboBox;
-			hComboBox = GetDlgItem(hwnd, _int_Vacuna_Tipo);
-			SendMessage(hComboBox, CB_SELECTSTRING, NULL, (LPARAM)PasarDatosdelIdVacuna(id, 1).c_str());
-			SetDlgItemText(hwnd, _int_Vacuna_Tipo, PasarDatosdelIdVacuna(id, 1).c_str());
-
-			hComboBox = GetDlgItem(hwnd, _int_Vacuna_Marca);
-			SendMessage(hComboBox, CB_SELECTSTRING, NULL, (LPARAM)PasarDatosdelIdVacuna(id, 2).c_str());
-			SetDlgItemText(hwnd, _int_Vacuna_Marca, PasarDatosdelIdVacuna(id, 2).c_str());
-
-			hComboBox = GetDlgItem(hwnd, _int_Vacuna_NoDosis);
-			SendMessage(hComboBox, CB_SELECTSTRING, NULL, (LPARAM)PasarDatosdelIdVacuna(id, 3).c_str());
-			SetDlgItemText(hwnd, _int_Vacuna_NoDosis, PasarDatosdelIdVacuna(id, 3).c_str());
-
-			SetDlgItemText(hwnd, _int_Vacuna_Precio, PasarDatosdelIdVacuna(id, 4).c_str());
-			SetDlgItemText(hwnd, _int_Vacuna_Desc, PasarDatosdelIdVacuna(id, 5).c_str());
+	void EditarVacuna(int _id) {
+		PtrAuxiliarVacuna = PtrOrigenVacuna;
+		while (PtrAuxiliarVacuna != NULL) {
+			if (PtrAuxiliarVacuna->id == id) {
+				PtrAuxiliarVacuna->String_Vacuna_Tipo = String_Vacuna_Tipo;
+				PtrAuxiliarVacuna->String_Vacuna_Marca = String_Vacuna_Marca;
+				PtrAuxiliarVacuna->String_Vacuna_NoDosis = String_Vacuna_NoDosis;
+				PtrAuxiliarVacuna->String_Vacuna_Precio = String_Vacuna_Precio;
+				PtrAuxiliarVacuna->String_Vacuna_Desc = String_Vacuna_Desc;
+				return;
+			}
+			else {
+				PtrAuxiliarVacuna = PtrAuxiliarVacuna->Ptr_Vacuna_siguiente;
+			}
 		}
-		else {
-			MessageBox(hwnd, "Seleccione una Id de Vacuna primero!", "Advertencia", MB_ICONEXCLAMATION);
-		}
-
+		return;
 	}
 
-	string PasarIdVacunaCarnet(Vacuna* PtrAuxiliarVacuna) {
+	void BorrarVacuna(int _id) {
+		PtrAuxiliarVacuna = PtrOrigenVacuna;
+		while (PtrAuxiliarVacuna != NULL) {
+			if (PtrAuxiliarVacuna->id == id) {
+				PtrAuxiliarVacuna->borrado = true;
+				return;
+			}
+			else {
+				PtrAuxiliarVacuna = PtrAuxiliarVacuna->Ptr_Vacuna_siguiente;
+			}
+		}
+		return;
+	}
+
+	string PasarIdVacuna(Vacuna* PtrAuxiliarVacuna) {
 		if (!(PtrAuxiliarVacuna->borrado)){
 			char id[10] = "";
 			_itoa_s(PtrAuxiliarVacuna->id, id, 10);

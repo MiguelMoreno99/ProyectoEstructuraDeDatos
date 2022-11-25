@@ -38,7 +38,7 @@ public:
 
 public:
 	//Funcciones
-	void PasarInformacionPersona(HWND hwnd, int _int_Persona_ApellidoPaterno, int _int_Persona_ApellidoMaterno, int _int_Persona_Nombre, int _int_Persona_CURP, int _int_Persona_RFC, int _int_Persona_FechaNacimiento, int _int_Persona_Calle, int _int_Persona_Colonia, int _int_Persona_Municipio, int _int_Persona_Estado, int _int_Persona_EstadoCivil, int _int_Persona_Telefono, int _int_Persona_Sexo, int _int_Persona_GrupoOcupacional, int _int_Persona_PerfilRiesgo) {
+	void GuardarInformacionPersona(HWND hwnd, int _int_Persona_ApellidoPaterno, int _int_Persona_ApellidoMaterno, int _int_Persona_Nombre, int _int_Persona_CURP, int _int_Persona_RFC, int _int_Persona_FechaNacimiento, int _int_Persona_Calle, int _int_Persona_Colonia, int _int_Persona_Municipio, int _int_Persona_Estado, int _int_Persona_EstadoCivil, int _int_Persona_Telefono, int _int_Persona_Sexo, int _int_Persona_GrupoOcupacional, int _int_Persona_PerfilRiesgo) {
 
 		err = false;
 		err = ValidacionLetraConEspacios(hwnd, _int_Persona_ApellidoPaterno, err);
@@ -103,7 +103,99 @@ public:
 		}
 	}
 
-	void GuardarImagenPersona(HWND hwnd) {
+	void EditarInformacionPersona(HWND hwnd, int _int_Persona_ApellidoPaterno, int _int_Persona_ApellidoMaterno, int _int_Persona_Nombre, int _int_Persona_CURPaEditar, int _int_Persona_RFC, int _int_Persona_FechaNacimiento, int _int_Persona_Calle, int _int_Persona_Colonia, int _int_Persona_Municipio, int _int_Persona_Estado, int _int_Persona_EstadoCivil, int _int_Persona_Telefono, int _int_Persona_Sexo, int _int_Persona_GrupoOcupacional, int _int_Persona_PerfilRiesgo) {
+
+		err = false;
+		err = ValidacionLetraConEspacios(hwnd, _int_Persona_ApellidoPaterno, err);
+		err = ValidacionLetraConEspacios(hwnd, _int_Persona_ApellidoMaterno, err);
+		err = ValidacionLetraConEspacios(hwnd, _int_Persona_Nombre, err);
+		err = ValidacionLetraYNumeroSinEspacios(hwnd, _int_Persona_CURPaEditar, err);
+		err = ValidacionLetraYNumeroSinEspacios(hwnd, _int_Persona_RFC, err);
+		err = ValidacionFechaMenorAActual(hwnd, _int_Persona_FechaNacimiento, err);
+		err = ValidacionLetraYNumeroConEspacios(hwnd, _int_Persona_Calle, err);
+		err = ValidacionLetraYNumeroConEspacios(hwnd, _int_Persona_Colonia, err);
+		err = ValidacionLetraYNumeroConEspacios(hwnd, _int_Persona_Municipio, err);
+		err = ValidacionLetraYNumeroConEspacios(hwnd, _int_Persona_Estado, err);
+		err = ValidacionLetraSinEspacios(hwnd, _int_Persona_EstadoCivil, err);
+		err = ValidacionNumeroTelefonico(hwnd, _int_Persona_Telefono, err);
+		err = ValidacionLetraSinEspacios(hwnd, _int_Persona_Sexo, err);
+		err = ValidacionLetraConEspacios(hwnd, _int_Persona_GrupoOcupacional, err);
+		err = ValidacionLetraSinEspacios(hwnd, _int_Persona_PerfilRiesgo, err);
+		if (String_Persona_PathDocumentoIdentidad == "") {
+			err = true;
+		}
+		if (!err) {
+			String_Persona_ApellidoPaterno = ValidacionCapturaTexto(hwnd, _int_Persona_ApellidoPaterno);
+			String_Persona_ApellidoMaterno = ValidacionCapturaTexto(hwnd, _int_Persona_ApellidoMaterno);
+			String_Persona_Nombre = ValidacionCapturaTexto(hwnd, _int_Persona_Nombre);
+			String_Persona_CURP = ValidacionCapturaTexto(hwnd, _int_Persona_CURPaEditar);
+			String_Persona_RFC = ValidacionCapturaTexto(hwnd, _int_Persona_RFC);
+			String_Persona_FechaNacimiento = ValidacionCapturaTexto(hwnd, _int_Persona_FechaNacimiento);
+			String_Persona_Calle = ValidacionCapturaTexto(hwnd, _int_Persona_Calle);
+			String_Persona_Colonia = ValidacionCapturaTexto(hwnd, _int_Persona_Colonia);
+			String_Persona_Municipio = ValidacionCapturaTexto(hwnd, _int_Persona_Municipio);
+			String_Persona_Estado = ValidacionCapturaTexto(hwnd, _int_Persona_Estado);
+			String_Persona_EstadoCivil = ValidacionCapturaTexto(hwnd, _int_Persona_EstadoCivil);
+			String_Persona_Telefono = ValidacionCapturaTexto(hwnd, _int_Persona_Telefono);
+			String_Persona_Sexo = ValidacionCapturaTexto(hwnd, _int_Persona_Sexo);
+			String_Persona_GrupoOcupacional = ValidacionCapturaTexto(hwnd, _int_Persona_GrupoOcupacional);
+			String_Persona_PerfilRiesgo = ValidacionCapturaTexto(hwnd, _int_Persona_PerfilRiesgo);
+			SetDlgItemText(hwnd, _int_Persona_ApellidoPaterno, "");
+			SetDlgItemText(hwnd, _int_Persona_ApellidoMaterno, "");
+			SetDlgItemText(hwnd, _int_Persona_Nombre, "");
+			SetDlgItemText(hwnd, _int_Persona_CURPaEditar, "");
+			SetDlgItemText(hwnd, _int_Persona_RFC, "");
+			SetDlgItemText(hwnd, _int_Persona_FechaNacimiento, "");
+			SetDlgItemText(hwnd, _int_Persona_Calle, "");
+			SetDlgItemText(hwnd, _int_Persona_Colonia, "");
+			SetDlgItemText(hwnd, _int_Persona_Municipio, "");
+			SetDlgItemText(hwnd, _int_Persona_Estado, "");
+			SetDlgItemText(hwnd, _int_Persona_EstadoCivil, "");
+			SetDlgItemText(hwnd, _int_Persona_Telefono, "");
+			SetDlgItemText(hwnd, _int_Persona_Sexo, "");
+			SetDlgItemText(hwnd, _int_Persona_GrupoOcupacional, "");
+			SetDlgItemText(hwnd, _int_Persona_PerfilRiesgo, "");
+			CargarInfoComboBoxPersona(hwnd, _int_Persona_EstadoCivil, _int_Persona_Sexo, _int_Persona_GrupoOcupacional, _int_Persona_PerfilRiesgo);
+			CargarInfoComboBoxCURP(hwnd, _int_Persona_CURPaEditar);
+			EditarPersona(id);
+			String_Persona_PathDocumentoIdentidad = "";
+			MessageBox(hwnd, "Se ha Editado la Persona Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
+		}
+		else {
+			MessageBox(hwnd, "Verifique que los datos ingresados sean válidos!", "ERROR", MB_ICONERROR);
+		}
+	}
+
+	void BorrarInformacionPersona(HWND hwnd, int _int_Persona_ApellidoPaterno, int _int_Persona_ApellidoMaterno, int _int_Persona_Nombre, int _int_Persona_CURP, int _int_Persona_RFC, int _int_Persona_FechaNacimiento, int _int_Persona_Calle, int _int_Persona_Colonia, int _int_Persona_Municipio, int _int_Persona_Estado, int _int_Persona_EstadoCivil, int _int_Persona_Telefono, int _int_Persona_Sexo, int _int_Persona_GrupoOcupacional, int _int_Persona_PerfilRiesgo) {
+
+		err = false;
+		if (!err) {
+			SetDlgItemText(hwnd, _int_Persona_ApellidoPaterno, "");
+			SetDlgItemText(hwnd, _int_Persona_ApellidoMaterno, "");
+			SetDlgItemText(hwnd, _int_Persona_Nombre, "");
+			SetDlgItemText(hwnd, _int_Persona_RFC, "");
+			SetDlgItemText(hwnd, _int_Persona_FechaNacimiento, "");
+			SetDlgItemText(hwnd, _int_Persona_Calle, "");
+			SetDlgItemText(hwnd, _int_Persona_Colonia, "");
+			SetDlgItemText(hwnd, _int_Persona_Municipio, "");
+			SetDlgItemText(hwnd, _int_Persona_Estado, "");
+			SetDlgItemText(hwnd, _int_Persona_EstadoCivil, "");
+			SetDlgItemText(hwnd, _int_Persona_Telefono, "");
+			SetDlgItemText(hwnd, _int_Persona_Sexo, "");
+			SetDlgItemText(hwnd, _int_Persona_GrupoOcupacional, "");
+			SetDlgItemText(hwnd, _int_Persona_PerfilRiesgo, "");
+			CargarInfoComboBoxPersona(hwnd, _int_Persona_EstadoCivil, _int_Persona_Sexo, _int_Persona_GrupoOcupacional, _int_Persona_PerfilRiesgo);
+			CargarInfoComboBoxCURP(hwnd, _int_Persona_CURP);
+			BorrarPersona(id);
+			String_Persona_PathDocumentoIdentidad = "";
+			MessageBox(hwnd, "Se ha Borrado la Persona Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
+		}
+		else {
+			MessageBox(hwnd, "Verifique que los datos ingresados sean válidos!", "ERROR", MB_ICONERROR);
+		}
+	}
+
+	void GuardarImagenPersona(HWND hwnd, int _PC_PERSONA_DOCUMENTOIDENTIDAD) {
 
 		OPENFILENAME OfnPersonaDocumento;
 		ZeroMemory(&OfnPersonaDocumento, sizeof(OPENFILENAME));
@@ -116,7 +208,7 @@ public:
 		OfnPersonaDocumento.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_NOCHANGEDIR;
 		OfnPersonaDocumento.lpstrFilter = "ARCHIVOS BITMAP\0*.bmp*\0";
 		if (GetOpenFileName(&OfnPersonaDocumento)) {
-			HWND hDocumentoIdeintidad = GetDlgItem(hwnd, PC_PERSONA_DOCUMENTOIDENTIDAD);
+			HWND hDocumentoIdeintidad = GetDlgItem(hwnd, _PC_PERSONA_DOCUMENTOIDENTIDAD);
 			HBITMAP hpcDocumentoIdentidad = (HBITMAP)LoadImage(NULL, cDirFile, IMAGE_BITMAP, 150, 150, LR_LOADFROMFILE);
 			SendMessage(hDocumentoIdeintidad, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hpcDocumentoIdentidad);
 			String_Persona_PathDocumentoIdentidad = cDirFile;
@@ -169,6 +261,56 @@ public:
 		else {
 			MessageBox(hwnd, "PRIMERO DEBE DE AGREGAR AL MENOS UNA PERSONA!", "PRECAUCIÓN", MB_ICONWARNING);
 		}
+	}
+
+	void CargarInformacionPersona(HWND hwnd, int _int_Persona_CURP_Buscar, int _int_Persona_ApellidoPaterno, int _int_Persona_ApellidoMaterno, int _int_Persona_Nombre, int _int_Persona_CURP, int _int_Persona_RFC, int _int_Persona_FechaNacimiento, int _int_Persona_Calle, int _int_Persona_Colonia, int _int_Persona_Municipio, int _int_Persona_Estado, int _int_Persona_EstadoCivil, int _int_Persona_Telefono, int _int_Persona_Sexo, int _int_Persona_GrupoOcupacional, int _int_Persona_PerfilRiesgo, int _int_Persona_PictureControl) {
+
+		string CURP = ValidacionCapturaTexto(hwnd, _int_Persona_CURP_Buscar);
+		if (CURP != "") {
+			HWND hComboBox;
+			SetDlgItemText(hwnd, _int_Persona_ApellidoPaterno, PasarDatosdelCURPCarnet(CURP, 1).c_str());
+			SetDlgItemText(hwnd, _int_Persona_ApellidoMaterno, PasarDatosdelCURPCarnet(CURP, 2).c_str());
+			SetDlgItemText(hwnd, _int_Persona_Nombre, PasarDatosdelCURPCarnet(CURP, 3).c_str());
+			SetDlgItemText(hwnd, _int_Persona_CURP, PasarDatosdelCURPCarnet(CURP, 4).c_str());
+			SetDlgItemText(hwnd, _int_Persona_RFC, PasarDatosdelCURPCarnet(CURP, 5).c_str());
+			SetDlgItemText(hwnd, _int_Persona_FechaNacimiento, PasarDatosdelCURPCarnet(CURP, 6).c_str());
+			SetDlgItemText(hwnd, _int_Persona_Calle, PasarDatosdelCURPCarnet(CURP, 7).c_str());
+			SetDlgItemText(hwnd, _int_Persona_Colonia, PasarDatosdelCURPCarnet(CURP, 8).c_str());
+			SetDlgItemText(hwnd, _int_Persona_Municipio, PasarDatosdelCURPCarnet(CURP, 9).c_str());
+			SetDlgItemText(hwnd, _int_Persona_Estado, PasarDatosdelCURPCarnet(CURP, 10).c_str());
+
+			hComboBox = GetDlgItem(hwnd, _int_Persona_EstadoCivil);
+			SendMessage(hComboBox, CB_SELECTSTRING, NULL, (LPARAM)PasarDatosdelCURPCarnet(CURP, 11).c_str());
+			SetDlgItemText(hwnd, _int_Persona_EstadoCivil, PasarDatosdelCURPCarnet(CURP, 11).c_str());
+
+			SetDlgItemText(hwnd, _int_Persona_Telefono, PasarDatosdelCURPCarnet(CURP, 12).c_str());
+
+			hComboBox = GetDlgItem(hwnd, _int_Persona_Sexo);
+			SendMessage(hComboBox, CB_SELECTSTRING, NULL, (LPARAM)PasarDatosdelCURPCarnet(CURP, 13).c_str());
+			SetDlgItemText(hwnd, _int_Persona_Sexo, PasarDatosdelCURPCarnet(CURP, 13).c_str());
+
+			hComboBox = GetDlgItem(hwnd, _int_Persona_GrupoOcupacional);
+			SendMessage(hComboBox, CB_SELECTSTRING, NULL, (LPARAM)PasarDatosdelCURPCarnet(CURP, 14).c_str());
+			SetDlgItemText(hwnd, _int_Persona_GrupoOcupacional, PasarDatosdelCURPCarnet(CURP, 14).c_str());
+
+			hComboBox = GetDlgItem(hwnd, _int_Persona_PerfilRiesgo);
+			SendMessage(hComboBox, CB_SELECTSTRING, NULL, (LPARAM)PasarDatosdelCURPCarnet(CURP, 15).c_str());
+			SetDlgItemText(hwnd, _int_Persona_PerfilRiesgo, PasarDatosdelCURPCarnet(CURP, 15).c_str());
+
+			String_Persona_PathDocumentoIdentidad = PasarDatosdelCURPCarnet(CURP, 16);
+			id = atoi(PasarDatosdelCURPCarnet(CURP, 17).c_str());
+
+			OPENFILENAME OfnPersonaDocumento;
+			ZeroMemory(&OfnPersonaDocumento, sizeof(OPENFILENAME));
+			HWND hDocumentoIdeintidad = GetDlgItem(hwnd, _int_Persona_PictureControl);
+			HBITMAP hpcDocumentoIdentidad = (HBITMAP)LoadImage(NULL, String_Persona_PathDocumentoIdentidad.c_str(), IMAGE_BITMAP, 150, 150, LR_LOADFROMFILE);
+			SendMessage(hDocumentoIdeintidad, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hpcDocumentoIdentidad);
+			DeleteObject(hpcDocumentoIdentidad);
+		}
+		else {
+			MessageBox(hwnd, "Seleccione un CURP primero!", "Advertencia", MB_ICONEXCLAMATION);
+		}
+
 	}
 
 	void GuardarPersona() {
@@ -225,6 +367,48 @@ public:
 		return;
 	}
 
+	void EditarPersona(int _id) {
+		PtrAuxiliarPersona = PtrOrigenPersona;
+		while (PtrAuxiliarPersona != NULL) {
+			if (PtrAuxiliarPersona->id == id) {
+				PtrAuxiliarPersona->String_Persona_ApellidoPaterno = String_Persona_ApellidoPaterno;
+				PtrAuxiliarPersona->String_Persona_ApellidoMaterno = String_Persona_ApellidoMaterno;
+				PtrAuxiliarPersona->String_Persona_Nombre = String_Persona_Nombre;
+				PtrAuxiliarPersona->String_Persona_RFC = String_Persona_RFC;
+				PtrAuxiliarPersona->String_Persona_FechaNacimiento = String_Persona_FechaNacimiento;
+				PtrAuxiliarPersona->String_Persona_Calle = String_Persona_Calle;
+				PtrAuxiliarPersona->String_Persona_Colonia = String_Persona_Colonia;
+				PtrAuxiliarPersona->String_Persona_Municipio = String_Persona_Municipio;
+				PtrAuxiliarPersona->String_Persona_Estado = String_Persona_Estado;
+				PtrAuxiliarPersona->String_Persona_EstadoCivil = String_Persona_EstadoCivil;
+				PtrAuxiliarPersona->String_Persona_Telefono = String_Persona_Telefono;
+				PtrAuxiliarPersona->String_Persona_Sexo = String_Persona_Sexo;
+				PtrAuxiliarPersona->String_Persona_GrupoOcupacional = String_Persona_GrupoOcupacional;
+				PtrAuxiliarPersona->String_Persona_PerfilRiesgo = String_Persona_PerfilRiesgo;
+				PtrAuxiliarPersona->String_Persona_PathDocumentoIdentidad = String_Persona_PathDocumentoIdentidad;
+				return;
+			}
+			else {
+				PtrAuxiliarPersona = PtrAuxiliarPersona->Ptr_Persona_siguiente;
+			}
+		}
+		return;
+	}
+
+	void BorrarPersona(int _id) {
+		PtrAuxiliarPersona = PtrOrigenPersona;
+		while (PtrAuxiliarPersona != NULL) {
+			if (PtrAuxiliarPersona->id == id) {
+				PtrAuxiliarPersona->borrado = true;
+				return;
+			}
+			else {
+				PtrAuxiliarPersona = PtrAuxiliarPersona->Ptr_Persona_siguiente;
+			}
+		}
+		return;
+	}
+
 	bool BuscarCURPyRFCRepetido(HWND hwnd, string _String_Persona_CURP, string _String_Persona_RFC) {
 
 		if (PtrOrigenPersona != NULL) {
@@ -248,53 +432,6 @@ public:
 		else {
 			return true;
 		}
-	}
-
-	void CargarInformacionPersona(HWND hwnd, int _int_Persona_CURP_Buscar, int _int_Persona_ApellidoPaterno, int _int_Persona_ApellidoMaterno, int _int_Persona_Nombre, int _int_Persona_CURP, int _int_Persona_RFC, int _int_Persona_FechaNacimiento, int _int_Persona_Calle, int _int_Persona_Colonia, int _int_Persona_Municipio, int _int_Persona_Estado, int _int_Persona_EstadoCivil, int _int_Persona_Telefono, int _int_Persona_Sexo, int _int_Persona_GrupoOcupacional, int _int_Persona_PerfilRiesgo, int _int_Persona_PictureControl) {
-
-		string CURP = ValidacionCapturaTexto(hwnd, _int_Persona_CURP_Buscar);
-		if (CURP != "") {
-			HWND hComboBox;
-			SetDlgItemText(hwnd, _int_Persona_ApellidoPaterno, PasarDatosdelCURPCarnet(CURP, 1).c_str());
-			SetDlgItemText(hwnd, _int_Persona_ApellidoMaterno, PasarDatosdelCURPCarnet(CURP, 2).c_str());
-			SetDlgItemText(hwnd, _int_Persona_Nombre, PasarDatosdelCURPCarnet(CURP, 3).c_str());
-			SetDlgItemText(hwnd, _int_Persona_CURP, PasarDatosdelCURPCarnet(CURP, 4).c_str());
-			SetDlgItemText(hwnd, _int_Persona_RFC, PasarDatosdelCURPCarnet(CURP, 5).c_str());
-			SetDlgItemText(hwnd, _int_Persona_FechaNacimiento, PasarDatosdelCURPCarnet(CURP, 6).c_str());
-			SetDlgItemText(hwnd, _int_Persona_Calle, PasarDatosdelCURPCarnet(CURP, 7).c_str());
-			SetDlgItemText(hwnd, _int_Persona_Colonia, PasarDatosdelCURPCarnet(CURP, 8).c_str());
-			SetDlgItemText(hwnd, _int_Persona_Municipio, PasarDatosdelCURPCarnet(CURP, 9).c_str());
-			SetDlgItemText(hwnd, _int_Persona_Estado, PasarDatosdelCURPCarnet(CURP, 10).c_str());
-
-			hComboBox = GetDlgItem(hwnd, _int_Persona_EstadoCivil);
-			SendMessage(hComboBox, CB_SELECTSTRING, NULL, (LPARAM)PasarDatosdelCURPCarnet(CURP, 11).c_str());
-			SetDlgItemText(hwnd, _int_Persona_EstadoCivil, PasarDatosdelCURPCarnet(CURP, 11).c_str());
-
-			SetDlgItemText(hwnd, _int_Persona_Telefono, PasarDatosdelCURPCarnet(CURP, 12).c_str());
-
-			hComboBox = GetDlgItem(hwnd, _int_Persona_Sexo);
-			SendMessage(hComboBox, CB_SELECTSTRING, NULL, (LPARAM)PasarDatosdelCURPCarnet(CURP, 13).c_str());
-			SetDlgItemText(hwnd, _int_Persona_Sexo, PasarDatosdelCURPCarnet(CURP, 13).c_str());
-
-			hComboBox = GetDlgItem(hwnd, _int_Persona_GrupoOcupacional);
-			SendMessage(hComboBox, CB_SELECTSTRING, NULL, (LPARAM)PasarDatosdelCURPCarnet(CURP, 14).c_str());
-			SetDlgItemText(hwnd, _int_Persona_GrupoOcupacional, PasarDatosdelCURPCarnet(CURP, 14).c_str());
-
-			hComboBox = GetDlgItem(hwnd, _int_Persona_PerfilRiesgo);
-			SendMessage(hComboBox, CB_SELECTSTRING, NULL, (LPARAM)PasarDatosdelCURPCarnet(CURP, 15).c_str());
-			SetDlgItemText(hwnd, _int_Persona_PerfilRiesgo, PasarDatosdelCURPCarnet(CURP, 15).c_str());
-
-			OPENFILENAME OfnPersonaDocumento;
-			ZeroMemory(&OfnPersonaDocumento, sizeof(OPENFILENAME));
-			HWND hDocumentoIdeintidad = GetDlgItem(hwnd, _int_Persona_PictureControl);
-			HBITMAP hpcDocumentoIdentidad = (HBITMAP)LoadImage(NULL, PasarDatosdelCURPCarnet(CURP, 16).c_str(), IMAGE_BITMAP, 150, 150, LR_LOADFROMFILE);
-			SendMessage(hDocumentoIdeintidad, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hpcDocumentoIdentidad);
-			DeleteObject(hpcDocumentoIdentidad);
-		}
-		else {
-			MessageBox(hwnd, "Seleccione un CURP primero!", "Advertencia", MB_ICONEXCLAMATION);
-		}
-
 	}
 
 	string PasarCURPCarnet(Persona *PtrAuxiliarPersona) {
@@ -375,6 +512,12 @@ public:
 						}
 						case 16: {
 							return PtrAuxiliarPersona->String_Persona_PathDocumentoIdentidad;
+							break;
+						}
+						case 17: {
+							char id[10] = "";
+							_itoa_s(PtrAuxiliarPersona->id, id, 10);
+							return id;
 							break;
 						}
 						default:
