@@ -1,3 +1,2 @@
 ﻿  cVentanaMenuPrincipal.cpp
-D:\ARCHIVOS_PROYECTO_ESTDAT\PROYECTO_ESTRUCTURA_DE_DATOS\cCapturaCarnet.h(378): warning C4715: 'Carnet::BusquedaIdCarnet': no todas las rutas de acceso de control devuelven un valor
   PROYECTO_ESTRUCTURA_DE_DATOS.vcxproj -> D:\ARCHIVOS_PROYECTO_ESTDAT\PROYECTO_ESTRUCTURA_DE_DATOS\Debug\PROYECTO_ESTRUCTURA_DE_DATOS.exe

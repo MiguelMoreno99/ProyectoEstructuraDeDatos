@@ -252,15 +252,17 @@ public:
 		if (PtrOrigenPersona != NULL) {
 			PtrAuxiliarPersona = PtrOrigenPersona;
 			while (PtrAuxiliarPersona != NULL) {
-				string CURP = PasarCURPCarnet(PtrAuxiliarPersona);
-				if (CURP != "") {
-					SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)CURP.c_str());
+				if (!(PtrAuxiliarPersona->borrado)) {
+					string CURP = PtrAuxiliarPersona->String_Persona_CURP;
+					if (CURP != "") {
+						SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)CURP.c_str());
+					}
 				}
 				PtrAuxiliarPersona = PtrAuxiliarPersona->Ptr_Persona_siguiente;
 			}
 		}
 		else {
-			MessageBox(hwnd, "PRIMERO DEBE DE AGREGAR AL MENOS UNA PERSONA!", "PRECAUCIÓN", MB_ICONWARNING);
+			MessageBox(hwnd, "PRIMERO DEBE DE AGREGAR AL MENOS UN CARNET!", "PRECAUCIÓN", MB_ICONWARNING);
 		}
 	}
 
@@ -435,13 +437,16 @@ public:
 		}
 	}
 
-	string PasarCURPCarnet(Persona *PtrAuxiliarPersona) {
-		if (!PtrAuxiliarPersona->borrado){
-			return PtrAuxiliarPersona->String_Persona_CURP;
+	string PasarCURPsiIgualNombre(string _APaterno, string _AMaterno, string _Nombre) {
+
+		PtrAuxiliarPersona = PtrOrigenPersona;
+		while (PtrAuxiliarPersona!=NULL){
+			if ((PtrAuxiliarPersona->String_Persona_ApellidoPaterno ==_APaterno) && (PtrAuxiliarPersona->String_Persona_ApellidoMaterno == _AMaterno) && (PtrAuxiliarPersona->String_Persona_Nombre == _Nombre)){
+				return PtrAuxiliarPersona->String_Persona_CURP;
+			}
+			PtrAuxiliarPersona = PtrAuxiliarPersona->Ptr_Persona_siguiente;
 		}
-		else {
-			return "";
-		}
+	return "";
 	}
 
 	string PasarDatosdelCURPCarnet(string _String_Persona_CURP, int DatoSolicitado) {
