@@ -34,24 +34,26 @@ bool ValidacionFechaMenorAActual(HWND hwnd, int int_CampoParaValidar, bool flag)
 	Hdlgitem = GetDlgItem(hwnd, int_CampoParaValidar);
 	Sizedlgitem = GetWindowTextLength(Hdlgitem);
 	GetWindowText(Hdlgitem, FechaCapturada, Sizedlgitem + 1);
-	time_t rawtime;
-	tm* timeinfoFechaActual;
-	tm timeinfoFechaCapturada;
-	time(&rawtime);
-	timeinfoFechaActual = localtime(&rawtime);
-	string Fecha = FechaCapturada;
-	timeinfoFechaCapturada.tm_year = atoi(Fecha.substr(6, 4).c_str()) - 1900;
-	timeinfoFechaCapturada.tm_mon = atoi(Fecha.substr(3, 2).c_str()) - 1;
-	timeinfoFechaCapturada.tm_mday = atoi(Fecha.substr(0, 2).c_str());
-	if (!flag){
-		if (timeinfoFechaCapturada.tm_year < timeinfoFechaActual->tm_year) {
-			return false;
-		}
-		else if (timeinfoFechaCapturada.tm_year == timeinfoFechaActual->tm_year && timeinfoFechaCapturada.tm_mon < timeinfoFechaActual->tm_mon) {
-			return false;
-		}
-		else if ((timeinfoFechaCapturada.tm_year == timeinfoFechaActual->tm_year) && (timeinfoFechaCapturada.tm_mon == timeinfoFechaActual->tm_mon) && (timeinfoFechaCapturada.tm_mday < timeinfoFechaActual->tm_mday)) {
-			return false;
+	if (Sizedlgitem !=0){
+		time_t rawtime;
+		tm* timeinfoFechaActual;
+		tm timeinfoFechaCapturada;
+		time(&rawtime);
+		timeinfoFechaActual = localtime(&rawtime);
+		string Fecha = FechaCapturada;
+		timeinfoFechaCapturada.tm_year = atoi(Fecha.substr(6, 4).c_str()) - 1900;
+		timeinfoFechaCapturada.tm_mon = atoi(Fecha.substr(3, 2).c_str()) - 1;
+		timeinfoFechaCapturada.tm_mday = atoi(Fecha.substr(0, 2).c_str());
+		if (!flag) {
+			if (timeinfoFechaCapturada.tm_year < timeinfoFechaActual->tm_year) {
+				return false;
+			}
+			else if (timeinfoFechaCapturada.tm_year == timeinfoFechaActual->tm_year && timeinfoFechaCapturada.tm_mon < timeinfoFechaActual->tm_mon) {
+				return false;
+			}
+			else if ((timeinfoFechaCapturada.tm_year == timeinfoFechaActual->tm_year) && (timeinfoFechaCapturada.tm_mon == timeinfoFechaActual->tm_mon) && (timeinfoFechaCapturada.tm_mday < timeinfoFechaActual->tm_mday)) {
+				return false;
+			}
 		}
 	}
 	return true;
@@ -65,24 +67,26 @@ bool ValidacionFechaMayorIgualAActual(HWND hwnd, int int_CampoParaValidar, bool 
 	Hdlgitem = GetDlgItem(hwnd, int_CampoParaValidar);
 	Sizedlgitem = GetWindowTextLength(Hdlgitem);
 	GetWindowText(Hdlgitem, FechaCapturada, Sizedlgitem + 1);
-	time_t rawtime;
-	tm* timeinfoFechaActual;
-	tm timeinfoFechaCapturada;
-	time(&rawtime);
-	timeinfoFechaActual = localtime(&rawtime);
-	string Fecha = FechaCapturada;
-	timeinfoFechaCapturada.tm_year = atoi(Fecha.substr(6, 4).c_str()) - 1900;
-	timeinfoFechaCapturada.tm_mon = atoi(Fecha.substr(3, 2).c_str()) - 1;
-	timeinfoFechaCapturada.tm_mday = atoi(Fecha.substr(0, 2).c_str());
-	if (!flag) {
-		if (timeinfoFechaCapturada.tm_year > timeinfoFechaActual->tm_year) {
-			return false;
-		}
-		else if (timeinfoFechaCapturada.tm_year == timeinfoFechaActual->tm_year && timeinfoFechaCapturada.tm_mon > timeinfoFechaActual->tm_mon) {
-			return false;
-		}
-		else if ((timeinfoFechaCapturada.tm_year == timeinfoFechaActual->tm_year) && (timeinfoFechaCapturada.tm_mon == timeinfoFechaActual->tm_mon) && (timeinfoFechaCapturada.tm_mday >= timeinfoFechaActual->tm_mday)) {
-			return false;
+	if (Sizedlgitem != 0){
+		time_t rawtime;
+		tm* timeinfoFechaActual;
+		tm timeinfoFechaCapturada;
+		time(&rawtime);
+		timeinfoFechaActual = localtime(&rawtime);
+		string Fecha = FechaCapturada;
+		timeinfoFechaCapturada.tm_year = atoi(Fecha.substr(6, 4).c_str()) - 1900;
+		timeinfoFechaCapturada.tm_mon = atoi(Fecha.substr(3, 2).c_str()) - 1;
+		timeinfoFechaCapturada.tm_mday = atoi(Fecha.substr(0, 2).c_str());
+		if (!flag) {
+			if (timeinfoFechaCapturada.tm_year > timeinfoFechaActual->tm_year) {
+				return false;
+			}
+			else if (timeinfoFechaCapturada.tm_year == timeinfoFechaActual->tm_year && timeinfoFechaCapturada.tm_mon > timeinfoFechaActual->tm_mon) {
+				return false;
+			}
+			else if ((timeinfoFechaCapturada.tm_year == timeinfoFechaActual->tm_year) && (timeinfoFechaCapturada.tm_mon == timeinfoFechaActual->tm_mon) && (timeinfoFechaCapturada.tm_mday >= timeinfoFechaActual->tm_mday)) {
+				return false;
+			}
 		}
 	}
 	return true;
@@ -101,25 +105,27 @@ bool ValidacionFechaMayorACaptura(HWND hwnd, int int_CampoFechaDosis, int _Fecha
 	Hdlgitem = GetDlgItem(hwnd, _FechaProxDosis);
 	Sizedlgitem2 = GetWindowTextLength(Hdlgitem);
 	GetWindowText(Hdlgitem, FechaProxDosis, Sizedlgitem2 + 1);
-	tm timeinfoFechaDosis;
-	tm timeinfoFechaProxDosis;
-	string sFechaDosis = FechaDosis;
-	string sFechaProxDosis = FechaProxDosis;
-	timeinfoFechaDosis.tm_year = atoi(sFechaDosis.substr(6, 4).c_str()) - 1900;
-	timeinfoFechaDosis.tm_mon = atoi(sFechaDosis.substr(3, 2).c_str()) - 1;
-	timeinfoFechaDosis.tm_mday = atoi(sFechaDosis.substr(0, 2).c_str());
-	timeinfoFechaProxDosis.tm_year = atoi(sFechaProxDosis.substr(6, 4).c_str()) - 1900;
-	timeinfoFechaProxDosis.tm_mon = atoi(sFechaProxDosis.substr(3, 2).c_str()) - 1;
-	timeinfoFechaProxDosis.tm_mday = atoi(sFechaProxDosis.substr(0, 2).c_str());
-	if (!flag) {
-		if (timeinfoFechaDosis.tm_year < timeinfoFechaProxDosis.tm_year) {
-			return false;
-		}
-		else if (timeinfoFechaDosis.tm_year == timeinfoFechaProxDosis.tm_year && timeinfoFechaDosis.tm_mon < timeinfoFechaProxDosis.tm_mon) {
-			return false;
-		}
-		else if ((timeinfoFechaDosis.tm_year == timeinfoFechaProxDosis.tm_year) && (timeinfoFechaDosis.tm_mon == timeinfoFechaProxDosis.tm_mon) && (timeinfoFechaDosis.tm_mday < timeinfoFechaProxDosis.tm_mday)) {
-			return false;
+	if (Sizedlgitem1 != 0 && Sizedlgitem2 != 0){
+		tm timeinfoFechaDosis;
+		tm timeinfoFechaProxDosis;
+		string sFechaDosis = FechaDosis;
+		string sFechaProxDosis = FechaProxDosis;
+		timeinfoFechaDosis.tm_year = atoi(sFechaDosis.substr(6, 4).c_str()) - 1900;
+		timeinfoFechaDosis.tm_mon = atoi(sFechaDosis.substr(3, 2).c_str()) - 1;
+		timeinfoFechaDosis.tm_mday = atoi(sFechaDosis.substr(0, 2).c_str());
+		timeinfoFechaProxDosis.tm_year = atoi(sFechaProxDosis.substr(6, 4).c_str()) - 1900;
+		timeinfoFechaProxDosis.tm_mon = atoi(sFechaProxDosis.substr(3, 2).c_str()) - 1;
+		timeinfoFechaProxDosis.tm_mday = atoi(sFechaProxDosis.substr(0, 2).c_str());
+		if (!flag) {
+			if (timeinfoFechaDosis.tm_year < timeinfoFechaProxDosis.tm_year) {
+				return false;
+			}
+			else if (timeinfoFechaDosis.tm_year == timeinfoFechaProxDosis.tm_year && timeinfoFechaDosis.tm_mon < timeinfoFechaProxDosis.tm_mon) {
+				return false;
+			}
+			else if ((timeinfoFechaDosis.tm_year == timeinfoFechaProxDosis.tm_year) && (timeinfoFechaDosis.tm_mon == timeinfoFechaProxDosis.tm_mon) && (timeinfoFechaDosis.tm_mday < timeinfoFechaProxDosis.tm_mday)) {
+				return false;
+			}
 		}
 	}
 	return true;
@@ -262,4 +268,5 @@ string ValidacionANumero(HWND hwnd, int int_CampoParaCapturar) {
 	_itoa_s(Number,DlgText,10);
 	return DlgText;
 }
+
 

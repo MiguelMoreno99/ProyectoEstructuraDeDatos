@@ -166,9 +166,10 @@ public:
 		}
 	}
 
-	void BorrarInformacionPersona(HWND hwnd, int _int_Persona_ApellidoPaterno, int _int_Persona_ApellidoMaterno, int _int_Persona_Nombre, int _int_Persona_CURP, int _int_Persona_RFC, int _int_Persona_FechaNacimiento, int _int_Persona_Calle, int _int_Persona_Colonia, int _int_Persona_Municipio, int _int_Persona_Estado, int _int_Persona_EstadoCivil, int _int_Persona_Telefono, int _int_Persona_Sexo, int _int_Persona_GrupoOcupacional, int _int_Persona_PerfilRiesgo) {
+	void BorrarInformacionPersona(HWND hwnd, int _int_Persona_ApellidoPaterno, int _int_Persona_ApellidoMaterno, int _int_Persona_Nombre, int _int_Persona_CURPaBorrar, int _int_Persona_RFC, int _int_Persona_FechaNacimiento, int _int_Persona_Calle, int _int_Persona_Colonia, int _int_Persona_Municipio, int _int_Persona_Estado, int _int_Persona_EstadoCivil, int _int_Persona_Telefono, int _int_Persona_Sexo, int _int_Persona_GrupoOcupacional, int _int_Persona_PerfilRiesgo) {
 
 		err = false;
+		err = ValidacionLetraYNumeroSinEspacios(hwnd, _int_Persona_CURPaBorrar, err);
 		if (!err) {
 			SetDlgItemText(hwnd, _int_Persona_ApellidoPaterno, "");
 			SetDlgItemText(hwnd, _int_Persona_ApellidoMaterno, "");
@@ -184,9 +185,9 @@ public:
 			SetDlgItemText(hwnd, _int_Persona_Sexo, "");
 			SetDlgItemText(hwnd, _int_Persona_GrupoOcupacional, "");
 			SetDlgItemText(hwnd, _int_Persona_PerfilRiesgo, "");
-			CargarInfoComboBoxPersona(hwnd, _int_Persona_EstadoCivil, _int_Persona_Sexo, _int_Persona_GrupoOcupacional, _int_Persona_PerfilRiesgo);
-			CargarInfoComboBoxCURP(hwnd, _int_Persona_CURP);
 			BorrarPersona(id);
+			CargarInfoComboBoxPersona(hwnd, _int_Persona_EstadoCivil, _int_Persona_Sexo, _int_Persona_GrupoOcupacional, _int_Persona_PerfilRiesgo);
+			CargarInfoComboBoxCURP(hwnd, _int_Persona_CURPaBorrar);
 			String_Persona_PathDocumentoIdentidad = "";
 			MessageBox(hwnd, "Se ha Borrado la Persona Correctamente!!", "Felicidades!", MB_ICONINFORMATION);
 		}

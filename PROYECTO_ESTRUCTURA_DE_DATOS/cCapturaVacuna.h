@@ -128,7 +128,6 @@ public:
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"7");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"8");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"9");
-		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"10");
 		hComboBox = GetDlgItem(hwnd, _CB_VACUNA_TIPO);
 		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"ARN MENSAJERO");
