@@ -470,5 +470,90 @@ private:
 		return -1;
 	}
 
+	void OrdenarElementosPorId() {
+
+		if (PtrOrigenCarnet != NULL) {
+			int CantidadCarnets = 0;
+			PtrAuxiliarCarnet = PtrOrigenCarnet;
+			while (PtrAuxiliarCarnet != NULL) {
+				CantidadCarnets++;
+				PtrAuxiliarCarnet = PtrAuxiliarCarnet->Ptr_Carnet_siguiente;
+			}
+			HeapShort(CantidadCarnets);
+		}
+	}
+
+	void HeapShort(int _CantidadCarnets) {
+		for (int i = _CantidadCarnets-1; i > 0; i--){
+			Heapify(i);
+			Intercambio(IrACarnet(0), IrACarnet(i));
+		}
+	}
+
+	void Heapify(int size) {
+		int mid, node;
+		for (int i = 0; i <= size; i++){
+			node = i;
+			mid = (node == 0) ? 0 : (int)node / 2;
+			while (mid >=0 && node != 0){
+				if (IrACarnet(mid)->id < IrACarnet(node)->id){
+					Intercambio(IrACarnet(mid), IrACarnet(node));
+				}
+				node = mid;
+				mid = (node == 0) ? 0 : (int)node / 2;
+			}
+		}
+	}
+
+	Carnet* IrACarnet(int _iteraciones) {
+
+		PtrAuxiliarCarnet = PtrOrigenCarnet;
+		for (int i = 0; i < _iteraciones; i++){
+			PtrAuxiliarCarnet = PtrAuxiliarCarnet->Ptr_Carnet_siguiente;
+		}
+		return PtrAuxiliarCarnet;
+	}
+
+	void Intercambio(Carnet* Carnet1, Carnet* Carnet2) {
+		Carnet* CarnetTemporal1Ant = NULL;
+		Carnet* CarnetTemporal1Sig = NULL;
+		Carnet* CarnetTemporal1 = NULL;
+		CarnetTemporal1Ant = Carnet1->Ptr_Carnet_anterior;
+		CarnetTemporal1Sig = Carnet1->Ptr_Carnet_siguiente;
+		CarnetTemporal1 = Carnet1;
+		if (CarnetTemporal1Sig == Carnet2) {
+			Carnet1->Ptr_Carnet_siguiente = Carnet2->Ptr_Carnet_siguiente;
+			if (Carnet1->Ptr_Carnet_siguiente != NULL) {
+				Carnet1->Ptr_Carnet_siguiente->Ptr_Carnet_anterior = Carnet1;
+			}
+			Carnet1->Ptr_Carnet_anterior = Carnet2;
+			Carnet2->Ptr_Carnet_siguiente = CarnetTemporal1;
+			Carnet2->Ptr_Carnet_anterior = CarnetTemporal1Ant;
+			if (Carnet2->Ptr_Carnet_anterior == NULL) {
+				PtrOrigenCarnet = Carnet2;
+			}
+			else {
+				Carnet2->Ptr_Carnet_anterior->Ptr_Carnet_siguiente = Carnet2;
+			}
+		}
+		else {
+			Carnet1->Ptr_Carnet_siguiente = Carnet2->Ptr_Carnet_siguiente;
+			Carnet1->Ptr_Carnet_anterior = Carnet2->Ptr_Carnet_anterior;
+			Carnet1->Ptr_Carnet_anterior->Ptr_Carnet_siguiente = Carnet1;
+			if (Carnet1->Ptr_Carnet_siguiente != NULL) {
+				Carnet1->Ptr_Carnet_siguiente->Ptr_Carnet_anterior = Carnet1;
+			}
+			Carnet2->Ptr_Carnet_siguiente = CarnetTemporal1Sig;
+			Carnet2->Ptr_Carnet_anterior = CarnetTemporal1Ant;
+			Carnet2->Ptr_Carnet_siguiente->Ptr_Carnet_anterior = Carnet2;
+			if (Carnet2->Ptr_Carnet_anterior == NULL) {
+				PtrOrigenCarnet = Carnet2;
+			}
+			else {
+				Carnet2->Ptr_Carnet_anterior->Ptr_Carnet_siguiente = Carnet2;
+			}
+		}
+	}
+
 }*PtrOrigenCarnet = NULL, * PtrAuxiliarCarnet = NULL;
 Carnet Carnet1;
