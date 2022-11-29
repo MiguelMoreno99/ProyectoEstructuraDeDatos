@@ -163,7 +163,6 @@ public:
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"7");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"8");
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"9");
-		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"10");
 		hComboBox = GetDlgItem(hwnd, _CB_CARNET_CENTROVACUNACION);
 		SendMessage(hComboBox, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 		SendMessage(hComboBox, CB_ADDSTRING, NULL, (LPARAM)"NORTE");
@@ -291,6 +290,42 @@ public:
 		}
 		else {
 			MessageBox(hwnd, "Ingrese Apellido Paterno, Materno y Nombre primero!", "Advertencia", MB_ICONEXCLAMATION);
+		}
+	}
+
+	void CargarInformacionListBoxPorCURP(HWND hwnd, int _LB_REPORTE_CARNET_LISTA) {
+		OrdenarElementosAZ();
+		PtrAuxiliarCarnet = PtrOrigenCarnet;
+		HWND hListBox;
+		hListBox = GetDlgItem(hwnd, _LB_REPORTE_CARNET_LISTA);
+		SendMessage(hListBox, LB_RESETCONTENT, NULL, NULL);
+		while (PtrAuxiliarCarnet!=NULL){
+			char Cid[10] = "";
+			_itoa(PtrAuxiliarCarnet->id, Cid, 10);
+			string Sid = Cid;
+			string DatosCarnet = PtrAuxiliarCarnet->String_Carnet_CURP + " // " + Sid + " // " + PtrAuxiliarCarnet->String_Carnet_IdVacuna + " // "  + PtrAuxiliarCarnet->String_Carnet_Lote + " // "  +
+		    PtrAuxiliarCarnet->String_Carnet_FechaDosis + " // " + PtrAuxiliarCarnet->String_Carnet_NoDosis + " // " + PtrAuxiliarCarnet->String_Carnet_CentroVacunacion + " // " + 
+			PtrAuxiliarCarnet->String_Carnet_FechaProximaDosis;
+			SendMessage(hListBox, LB_ADDSTRING, NULL, (LPARAM)DatosCarnet.c_str());
+			PtrAuxiliarCarnet = PtrAuxiliarCarnet->Ptr_Carnet_siguiente;
+		}
+	}
+
+	void CargarInformacionListBoxPorID(HWND hwnd, int _LB_REPORTE_CARNET_LISTA) {
+		OrdenarElementosPorId();
+		PtrAuxiliarCarnet = PtrOrigenCarnet;
+		HWND hListBox;
+		hListBox = GetDlgItem(hwnd, _LB_REPORTE_CARNET_LISTA);
+		SendMessage(hListBox, LB_RESETCONTENT, NULL, NULL);
+		while (PtrAuxiliarCarnet != NULL) {
+			char Cid[10] = "";
+			_itoa(PtrAuxiliarCarnet->id, Cid, 10);
+			string Sid = Cid;
+			string DatosCarnet = Sid + " // " + PtrAuxiliarCarnet->String_Carnet_CURP + " // " + PtrAuxiliarCarnet->String_Carnet_IdVacuna + " // " + PtrAuxiliarCarnet->String_Carnet_Lote + " // " +
+			PtrAuxiliarCarnet->String_Carnet_FechaDosis + " // " + PtrAuxiliarCarnet->String_Carnet_NoDosis + " // " + PtrAuxiliarCarnet->String_Carnet_CentroVacunacion + " // " +
+			PtrAuxiliarCarnet->String_Carnet_FechaProximaDosis;
+			SendMessage(hListBox, LB_ADDSTRING, NULL, (LPARAM)DatosCarnet.c_str());
+			PtrAuxiliarCarnet = PtrAuxiliarCarnet->Ptr_Carnet_siguiente;
 		}
 	}
 
@@ -486,7 +521,7 @@ private:
 	void HeapShort(int _CantidadCarnets) {
 		for (int i = _CantidadCarnets-1; i > 0; i--){
 			Heapify(i);
-			Intercambio(IrACarnet(0), IrACarnet(i));
+			Intercambio(IrACarnetHeapShort(0), IrACarnetHeapShort(i));
 		}
 	}
 
@@ -496,8 +531,8 @@ private:
 			node = i;
 			mid = (node == 0) ? 0 : (int)node / 2;
 			while (mid >=0 && node != 0){
-				if (IrACarnet(mid)->id < IrACarnet(node)->id){
-					Intercambio(IrACarnet(mid), IrACarnet(node));
+				if (IrACarnetHeapShort(mid)->id < IrACarnetHeapShort(node)->id){
+					Intercambio(IrACarnetHeapShort(mid), IrACarnetHeapShort(node));
 				}
 				node = mid;
 				mid = (node == 0) ? 0 : (int)node / 2;
@@ -505,10 +540,61 @@ private:
 		}
 	}
 
-	Carnet* IrACarnet(int _iteraciones) {
+	void OrdenarElementosAZ() {
+
+		if (PtrOrigenCarnet != NULL) {
+			int CantidadCarnets = 0;
+			PtrAuxiliarCarnet = PtrOrigenCarnet;
+			while (PtrAuxiliarCarnet != NULL) {
+				CantidadCarnets++;
+				PtrAuxiliarCarnet = PtrAuxiliarCarnet->Ptr_Carnet_siguiente;
+			}
+			QuickShort(1, CantidadCarnets);
+		}
+	}
+
+	void QuickShort(int LowerIndex, int UpperIndex) {
+		if (LowerIndex < UpperIndex) {
+			int PivotIndex = CorrectPivot(LowerIndex, UpperIndex);
+			QuickShort(LowerIndex, PivotIndex - 1);
+			QuickShort(PivotIndex + 1, UpperIndex);
+		}
+	}
+
+	int CorrectPivot(int LowerIndex, int UpperIndex) {
+		Carnet* pivot = IrACarnetQuickShort(UpperIndex);
+		int i = (LowerIndex - 1);
+		for (int j = LowerIndex; j <= UpperIndex - 1; j++) {
+			if (AZ(IrACarnetQuickShort(j), pivot)) {
+				i++;
+				Intercambio(IrACarnetQuickShort(i), IrACarnetQuickShort(j));
+			}
+		}
+		i++;
+		Intercambio(IrACarnetQuickShort(i), IrACarnetQuickShort(UpperIndex));
+		return (i);
+	}
+
+	bool AZ(Carnet* Carnet1, Carnet* Carnet2) {
+		if (strcmp(Carnet2->String_Carnet_CURP.c_str(), Carnet1->String_Carnet_CURP.c_str()) < 0) {
+			return false;
+		}
+		return true;
+	}
+
+	Carnet* IrACarnetHeapShort(int _iteraciones) {
 
 		PtrAuxiliarCarnet = PtrOrigenCarnet;
 		for (int i = 0; i < _iteraciones; i++){
+			PtrAuxiliarCarnet = PtrAuxiliarCarnet->Ptr_Carnet_siguiente;
+		}
+		return PtrAuxiliarCarnet;
+	}
+
+	Carnet* IrACarnetQuickShort(int _iteraciones) {
+
+		PtrAuxiliarCarnet = PtrOrigenCarnet;
+		for (int i = 1; i < _iteraciones; i++) {
 			PtrAuxiliarCarnet = PtrAuxiliarCarnet->Ptr_Carnet_siguiente;
 		}
 		return PtrAuxiliarCarnet;
@@ -539,13 +625,17 @@ private:
 		else {
 			Carnet1->Ptr_Carnet_siguiente = Carnet2->Ptr_Carnet_siguiente;
 			Carnet1->Ptr_Carnet_anterior = Carnet2->Ptr_Carnet_anterior;
-			Carnet1->Ptr_Carnet_anterior->Ptr_Carnet_siguiente = Carnet1;
+			if (Carnet1->Ptr_Carnet_anterior != NULL) {
+				Carnet1->Ptr_Carnet_anterior->Ptr_Carnet_siguiente = Carnet1;
+			}
 			if (Carnet1->Ptr_Carnet_siguiente != NULL) {
 				Carnet1->Ptr_Carnet_siguiente->Ptr_Carnet_anterior = Carnet1;
 			}
 			Carnet2->Ptr_Carnet_siguiente = CarnetTemporal1Sig;
 			Carnet2->Ptr_Carnet_anterior = CarnetTemporal1Ant;
-			Carnet2->Ptr_Carnet_siguiente->Ptr_Carnet_anterior = Carnet2;
+			if (Carnet2->Ptr_Carnet_siguiente != NULL) {
+				Carnet2->Ptr_Carnet_siguiente->Ptr_Carnet_anterior = Carnet2;
+			}
 			if (Carnet2->Ptr_Carnet_anterior == NULL) {
 				PtrOrigenCarnet = Carnet2;
 			}
