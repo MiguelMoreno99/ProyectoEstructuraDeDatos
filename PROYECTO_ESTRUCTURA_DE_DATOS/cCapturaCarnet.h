@@ -197,7 +197,7 @@ public:
 	}
 
 	void CargarInformacionCarnetConID(HWND hwnd, int _int_Carnet_Id, int _int_Carnet_ApellidoPaterno, int _int_Carnet_ApellidoMaterno, int _int_Carnet_Nombre, int _int_Carnet_IdVacuna, int _int_Carnet_CURP, int _int_Carnet_Lote, int _int_Carnet_FechaDosis, int _int_Carnet_NoDosis, int _int_Carnet_CentroVacunacion, int _int_Carnet_FechaProximaDosis) {
-
+		OrdenarElementosPorId();
 		string StringId = ValidacionCapturaTexto(hwnd, _int_Carnet_Id);
 		if (StringId != "") {
 
@@ -239,7 +239,7 @@ public:
 	}
 
 	void CargarInformacionCarnetConNombre(HWND hwnd, int _int_Carnet_Id, int _int_Carnet_ApellidoPaterno, int _int_Carnet_ApellidoMaterno, int _int_Carnet_Nombre , int _int_Carnet_IdVacuna, int _int_Carnet_CURP, int _int_Carnet_Lote, int _int_Carnet_FechaDosis, int _int_Carnet_NoDosis, int _int_Carnet_CentroVacunacion, int _int_Carnet_FechaProximaDosis) {
-
+		OrdenarElementosPorId();
 		string StringApellidoPaterno = ValidacionCapturaTexto(hwnd, _int_Carnet_ApellidoPaterno);
 		string StringApellidoMaterno = ValidacionCapturaTexto(hwnd, _int_Carnet_ApellidoMaterno);
 		string StringApellidoNombre = ValidacionCapturaTexto(hwnd, _int_Carnet_Nombre);

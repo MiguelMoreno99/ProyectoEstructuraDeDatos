@@ -94,6 +94,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 						Vacuna1.CargarInfoComboBoxIds(hReporteCarnets, CB_REPORTE_CARNET_IDVACUNA);
 						ShowWindow(hReporteCarnets, SW_SHOW);
 					}break;
+					case MENU_AYUDA_MANUAL: {
+						ShowWindow(hwnd, SW_HIDE);
+						system("MANUAL_DE_USUARIO.docx");
+						ShowWindow(hwnd, SW_SHOW);
+					}break;
 					case MENU_SISTEMA_SALIR: {
 						Usuario1.GuardarUsuariosTxt(hwnd);
 						PostQuitMessage(0);
