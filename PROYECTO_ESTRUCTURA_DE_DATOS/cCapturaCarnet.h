@@ -5,6 +5,7 @@
 #include <string.h>
 #include "cValidadores.h"
 #include "cCapturaVacuna.h"
+#include <fstream>
 using namespace std;
 
 class Carnet {
@@ -328,6 +329,75 @@ public:
 			PtrAuxiliarCarnet = PtrAuxiliarCarnet->Ptr_Carnet_siguiente;
 		}
 	}
+
+	void GuardarReportePersonasVacunadasTxtPorId(HWND hwnd) {
+
+		if (PtrOrigenCarnet != NULL) {
+			ofstream OfGuardar("ReportePersonasVacunadasPorId.txt");
+			if (PtrOrigenCarnet->Ptr_Carnet_siguiente == NULL) {
+				OfGuardar << PtrOrigenCarnet->String_Carnet_CURP << "\n";
+				OfGuardar << PtrOrigenCarnet->String_Carnet_IdVacuna << "\n";
+				OfGuardar << PtrOrigenCarnet->String_Carnet_Lote << "\n";
+				OfGuardar << PtrOrigenCarnet->String_Carnet_FechaDosis << "\n";
+				OfGuardar << PtrOrigenCarnet->String_Carnet_NoDosis << "\n";
+				OfGuardar << PtrOrigenCarnet->String_Carnet_CentroVacunacion << "\n";
+				OfGuardar << PtrOrigenCarnet->String_Carnet_FechaProximaDosis << "\n";
+				OfGuardar << PtrOrigenCarnet->id << "\n";
+				OfGuardar << PtrOrigenCarnet->borrado << "\n";
+			}
+			else {
+				PtrAuxiliarCarnet = PtrOrigenCarnet;
+				while (PtrAuxiliarCarnet != NULL) {
+					OfGuardar << PtrAuxiliarCarnet->String_Carnet_CURP << "\n";
+					OfGuardar << PtrAuxiliarCarnet->String_Carnet_IdVacuna << "\n";
+					OfGuardar << PtrAuxiliarCarnet->String_Carnet_Lote << "\n";
+					OfGuardar << PtrAuxiliarCarnet->String_Carnet_FechaDosis << "\n";
+					OfGuardar << PtrAuxiliarCarnet->String_Carnet_NoDosis << "\n";
+					OfGuardar << PtrAuxiliarCarnet->String_Carnet_CentroVacunacion << "\n";
+					OfGuardar << PtrAuxiliarCarnet->String_Carnet_FechaProximaDosis << "\n";
+					OfGuardar << PtrAuxiliarCarnet->id << "\n";
+					OfGuardar << PtrAuxiliarCarnet->borrado << "\n";
+					PtrAuxiliarCarnet = PtrAuxiliarCarnet->Ptr_Carnet_siguiente;
+				}
+			}
+			OfGuardar.close();
+		}
+	}
+
+	void GuardarReportePersonasVacunadasTxtPorNombre(HWND hwnd) {
+
+		if (PtrOrigenCarnet != NULL) {
+			ofstream OfGuardar("ReportePersonasVacunadasPorNombre.txt");
+			if (PtrOrigenCarnet->Ptr_Carnet_siguiente == NULL) {
+				OfGuardar << PtrOrigenCarnet->String_Carnet_CURP << "\n";
+				OfGuardar << PtrOrigenCarnet->String_Carnet_IdVacuna << "\n";
+				OfGuardar << PtrOrigenCarnet->String_Carnet_Lote << "\n";
+				OfGuardar << PtrOrigenCarnet->String_Carnet_FechaDosis << "\n";
+				OfGuardar << PtrOrigenCarnet->String_Carnet_NoDosis << "\n";
+				OfGuardar << PtrOrigenCarnet->String_Carnet_CentroVacunacion << "\n";
+				OfGuardar << PtrOrigenCarnet->String_Carnet_FechaProximaDosis << "\n";
+				OfGuardar << PtrOrigenCarnet->id << "\n";
+				OfGuardar << PtrOrigenCarnet->borrado << "\n";
+			}
+			else {
+				PtrAuxiliarCarnet = PtrOrigenCarnet;
+				while (PtrAuxiliarCarnet != NULL) {
+					OfGuardar << PtrAuxiliarCarnet->String_Carnet_CURP << "\n";
+					OfGuardar << PtrAuxiliarCarnet->String_Carnet_IdVacuna << "\n";
+					OfGuardar << PtrAuxiliarCarnet->String_Carnet_Lote << "\n";
+					OfGuardar << PtrAuxiliarCarnet->String_Carnet_FechaDosis << "\n";
+					OfGuardar << PtrAuxiliarCarnet->String_Carnet_NoDosis << "\n";
+					OfGuardar << PtrAuxiliarCarnet->String_Carnet_CentroVacunacion << "\n";
+					OfGuardar << PtrAuxiliarCarnet->String_Carnet_FechaProximaDosis << "\n";
+					OfGuardar << PtrAuxiliarCarnet->id << "\n";
+					OfGuardar << PtrAuxiliarCarnet->borrado << "\n";
+					PtrAuxiliarCarnet = PtrAuxiliarCarnet->Ptr_Carnet_siguiente;
+				}
+			}
+			OfGuardar.close();
+		}
+	}
+
 
 private:
 	//Funciones Privadas

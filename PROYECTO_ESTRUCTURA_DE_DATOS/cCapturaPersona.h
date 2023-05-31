@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string.h>
 #include "cValidadores.h"
+#include <fstream>
 using namespace std;
 
 class Persona {
@@ -410,6 +411,110 @@ public:
 			}
 		}
 		return;
+	}
+
+	void GuardarPersonasTxt(HWND hwnd) {
+		/*
+		if (PtrOrigenPersona != NULL) {
+			ofstream OfGuardar("CapturaPersona.txt");
+			if (PtrOrigenPersona->Ptr_Persona_siguiente == NULL) {
+				OfGuardar << PtrOrigenPersona->String_Persona_ApellidoPaterno << "\n";
+				OfGuardar << PtrOrigenPersona->String_Persona_ApellidoMaterno << "\n";
+				OfGuardar << PtrOrigenPersona->String_Persona_Nombre << "\n";
+				OfGuardar << PtrOrigenPersona->String_Persona_CURP << "\n";
+				OfGuardar << PtrOrigenPersona->String_Persona_RFC << "\n";
+				OfGuardar << PtrOrigenPersona->String_Persona_FechaNacimiento << "\n";
+				OfGuardar << PtrOrigenPersona->String_Persona_Calle << "\n";
+				OfGuardar << PtrOrigenPersona->String_Persona_Colonia << "\n";
+				OfGuardar << PtrOrigenPersona->String_Persona_Municipio << "\n";
+				OfGuardar << PtrOrigenPersona->String_Persona_Estado << "\n";
+				OfGuardar << PtrOrigenPersona->String_Persona_EstadoCivil << "\n";
+				OfGuardar << PtrOrigenPersona->String_Persona_Telefono << "\n";
+				OfGuardar << PtrOrigenPersona->String_Persona_Sexo << "\n";
+				OfGuardar << PtrOrigenPersona->String_Persona_GrupoOcupacional << "\n";
+				OfGuardar << PtrOrigenPersona->String_Persona_PerfilRiesgo << "\n";
+				OfGuardar << PtrOrigenPersona->String_Persona_PathDocumentoIdentidad << "\n";
+				OfGuardar << PtrOrigenPersona->id << "\n";
+				OfGuardar << PtrOrigenPersona->borrado << "\n";
+				OfGuardar << PtrOrigenPersona->vacunado << "\n";
+			}
+			else {
+				PtrAuxiliarPersona = PtrOrigenPersona;
+				while (PtrAuxiliarPersona != NULL) {
+					OfGuardar << PtrAuxiliarPersona->String_Persona_ApellidoPaterno << "\n";
+					OfGuardar << PtrAuxiliarPersona->String_Persona_ApellidoMaterno << "\n";
+					OfGuardar << PtrAuxiliarPersona->String_Persona_Nombre << "\n";
+					OfGuardar << PtrAuxiliarPersona->String_Persona_CURP << "\n";
+					OfGuardar << PtrAuxiliarPersona->String_Persona_RFC << "\n";
+					OfGuardar << PtrAuxiliarPersona->String_Persona_FechaNacimiento << "\n";
+					OfGuardar << PtrAuxiliarPersona->String_Persona_Calle << "\n";
+					OfGuardar << PtrAuxiliarPersona->String_Persona_Colonia << "\n";
+					OfGuardar << PtrAuxiliarPersona->String_Persona_Municipio << "\n";
+					OfGuardar << PtrAuxiliarPersona->String_Persona_Estado << "\n";
+					OfGuardar << PtrAuxiliarPersona->String_Persona_EstadoCivil << "\n";
+					OfGuardar << PtrAuxiliarPersona->String_Persona_Telefono << "\n";
+					OfGuardar << PtrAuxiliarPersona->String_Persona_Sexo << "\n";
+					OfGuardar << PtrAuxiliarPersona->String_Persona_GrupoOcupacional << "\n";
+					OfGuardar << PtrAuxiliarPersona->String_Persona_PerfilRiesgo << "\n";
+					OfGuardar << PtrAuxiliarPersona->String_Persona_PathDocumentoIdentidad << "\n";
+					OfGuardar << PtrAuxiliarPersona->id << "\n";
+					OfGuardar << PtrAuxiliarPersona->borrado << "\n";
+					OfGuardar << PtrAuxiliarPersona->vacunado << "\n";
+					PtrAuxiliarPersona = PtrAuxiliarPersona->Ptr_Persona_siguiente;
+				}
+			}
+			OfGuardar.close();
+		}*/
+	}
+
+	void CargarPersonasTxt(HWND hwnd) {
+		/*
+		ifstream IfCargar("CapturaPersona.txt", ios::app);
+		while (!IfCargar.eof()) {
+			IfCargar >> String_Persona_ApellidoPaterno;
+			IfCargar >> String_Persona_ApellidoMaterno;
+			IfCargar >> String_Persona_Nombre;
+			IfCargar >> String_Persona_CURP;
+			IfCargar >> String_Persona_RFC;
+			IfCargar >> String_Persona_FechaNacimiento;
+			IfCargar >> String_Persona_Calle;
+			IfCargar >> String_Persona_Colonia;
+			IfCargar >> String_Persona_Municipio;
+			IfCargar >> String_Persona_Estado;
+			IfCargar >> String_Persona_EstadoCivil;
+			IfCargar >> String_Persona_Telefono;
+			IfCargar >> String_Persona_Sexo;
+			IfCargar >> String_Persona_GrupoOcupacional;
+			IfCargar >> String_Persona_PerfilRiesgo;
+			IfCargar >> String_Persona_PathDocumentoIdentidad;
+			IfCargar >> id;
+			IfCargar >> borrado;
+			IfCargar >> vacunado;
+			if (String_Persona_ApellidoMaterno == "") {
+				break;
+			}
+			else {
+				GuardarPersona();
+				String_Persona_ApellidoPaterno = "";
+				String_Persona_ApellidoMaterno = "";
+				String_Persona_Nombre = "";
+				String_Persona_CURP = "";
+				String_Persona_RFC = "";
+				String_Persona_FechaNacimiento = "";
+				String_Persona_Calle = "";
+				String_Persona_Colonia = "";
+				String_Persona_Municipio = "";
+				String_Persona_Estado = "";
+				String_Persona_EstadoCivil = "";
+				String_Persona_Telefono = "";
+				String_Persona_Sexo = "";
+				String_Persona_GrupoOcupacional = "";
+				String_Persona_PerfilRiesgo = "";
+				String_Persona_PathDocumentoIdentidad = "";
+			}
+		}
+		IfCargar.close();
+		 */
 	}
 
 	bool BuscarCURPyRFCRepetido(HWND hwnd, string _String_Persona_CURP, string _String_Persona_RFC) {

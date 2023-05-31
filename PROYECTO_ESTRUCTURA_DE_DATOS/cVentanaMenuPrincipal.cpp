@@ -101,6 +101,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 					}break;
 					case MENU_SISTEMA_SALIR: {
 						Usuario1.GuardarUsuariosTxt(hwnd);
+						Persona1.GuardarPersonasTxt(hwnd);
 						PostQuitMessage(0);
 					}break;
 					case MENU_SISTEMA_CERRARSESION: {
@@ -114,6 +115,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 			}break;
 			case WM_DESTROY: {
 				Usuario1.GuardarUsuariosTxt(hwnd);
+				Persona1.GuardarPersonasTxt(hwnd);
 				PostQuitMessage(1);
 			}break;
 		}
@@ -124,6 +126,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 		switch (msg) {
 			case WM_INITDIALOG: {
 				Usuario1.CargarUsuariosTxt(hwnd);
+				Persona1.CargarPersonasTxt(hwnd);
 				SetFocus(GetDlgItem(hwnd, BTN_INICIOSESION_REGISTRARSE));
 			}break;
 			case WM_COMMAND: {
@@ -153,6 +156,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 			}break;
 			case WM_DESTROY: {
 				Usuario1.GuardarUsuariosTxt(hwnd);
+				Persona1.GuardarPersonasTxt(hwnd);
 				PostQuitMessage(0);
 			}break;
 		}
@@ -379,9 +383,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hPrev, _In_ PSTR cmdL
 			}break;
 			case BTN_REPORTE_CARNET_ORDENARPERSONASID: {
 				Carnet1.CargarInformacionListBoxPorID(hwnd, LB_REPORTE_CARNET_LISTA);
+				Carnet1.GuardarReportePersonasVacunadasTxtPorId(hwnd);
 			}break;
 			case BTN_REPORTE_CARNET_ORDENARPERSONASNOMBRE: {
 				Carnet1.CargarInformacionListBoxPorCURP(hwnd, LB_REPORTE_CARNET_LISTA);
+				Carnet1.GuardarReportePersonasVacunadasTxtPorNombre(hwnd);
 			}break;
 			}
 		}break;
